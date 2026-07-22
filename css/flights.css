@@ -1,0 +1,127 @@
+/* ==========================================================================
+   Voyara — Flights page styles
+   ========================================================================== */
+
+.listing-grid--flights {
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+.flight-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
+}
+
+.flight-card-airline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-width: 150px;
+}
+
+.flight-card-airline-name {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+
+.flight-card-class {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  margin-bottom: 0;
+}
+
+.flight-card-route {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.flight-card-time {
+  display: flex;
+  flex-direction: column;
+}
+
+.flight-card-time .time {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  color: var(--color-navy);
+}
+
+.flight-card-time .airport {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+}
+
+.flight-card-path {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3xs);
+  min-width: 120px;
+}
+
+.flight-card-path .duration {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+}
+
+.flight-card-path .path-line {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-grey-300);
+}
+
+.flight-card-path .path-line::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-gold);
+  transform: translateY(-50%);
+}
+
+.flight-card-path .stops {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+}
+
+.flight-card-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2xs);
+  min-width: 140px;
+}
+
+.flight-card-action .listing-card-price {
+  margin: 0;
+}
+
+@media (max-width: 899px) {
+  .flight-card {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .flight-card-route {
+    grid-template-columns: 1fr auto 1fr;
+  }
+
+  .flight-card-action {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+}

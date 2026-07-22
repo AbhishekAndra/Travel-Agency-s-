@@ -1,0 +1,147 @@
+/* ==========================================================================
+   Voyara — Confirmation page styles
+   ========================================================================== */
+
+.confirmation-content[hidden] {
+  display: none;
+}
+
+.confirmation-hero {
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: var(--space-2xl) 0 var(--space-xl);
+}
+
+.confirmation-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  color: var(--color-success);
+  background-color: rgba(63, 107, 79, 0.08);
+  margin-bottom: var(--space-lg);
+  animation: confirmationPop 450ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.confirmation-icon svg {
+  width: 44px;
+  height: 44px;
+}
+
+.confirmation-icon svg path {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: confirmationDraw 400ms ease 350ms forwards;
+}
+
+@keyframes confirmationPop {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes confirmationDraw {
+  to { stroke-dashoffset: 0; }
+}
+
+.confirmation-hero p {
+  color: var(--color-text-muted);
+}
+
+.confirmation-reference {
+  font-size: var(--fs-md);
+  color: var(--color-navy);
+  margin-top: var(--space-md);
+}
+
+.confirmation-reference strong {
+  font-family: var(--font-display);
+  letter-spacing: var(--ls-wide);
+  color: var(--color-gold-dark);
+}
+
+/* ---- Layout ---- */
+
+.confirmation-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  padding-bottom: var(--space-xl);
+}
+
+@media (max-width: 899px) {
+  .confirmation-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.confirmation-summary,
+.confirmation-details {
+  background-color: var(--color-surface);
+  border: var(--border-hairline);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+.confirmation-summary h2,
+.confirmation-details h2 {
+  font-size: var(--fs-md);
+  margin-bottom: var(--space-md);
+}
+
+.confirmation-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-2xs) 0;
+  font-size: var(--fs-sm);
+  border-bottom: var(--border-hairline);
+  margin-bottom: var(--space-2xs);
+}
+
+.confirmation-item-title {
+  color: var(--color-navy);
+  font-weight: var(--fw-medium);
+}
+
+.confirmation-item-meta {
+  color: var(--color-text-muted);
+  font-size: var(--fs-xs);
+}
+
+.confirmation-traveler-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-sm);
+  padding: var(--space-3xs) 0;
+}
+
+.confirmation-traveler-row span:first-child {
+  color: var(--color-text-muted);
+}
+
+/* ---- Actions ---- */
+
+.confirmation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding-bottom: var(--space-2xl);
+  text-align: center;
+}
+
+.confirmation-note {
+  width: 100%;
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.confirmation-note[hidden] {
+  display: none;
+}

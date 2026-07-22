@@ -1,0 +1,145 @@
+/* ==========================================================================
+   Voyara — Destination Detail page styles
+   ========================================================================== */
+
+.detail-content[hidden] {
+  display: none;
+}
+
+/* ---- Hero banner ---- */
+
+.hero-banner {
+  position: relative;
+  height: 60vh;
+  min-height: 360px;
+  max-height: 560px;
+  background-color: var(--color-grey-200);
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-banner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  background: linear-gradient(180deg, rgba(11, 31, 58, 0) 40%, rgba(11, 31, 58, 0.75) 100%);
+  padding-bottom: var(--space-xl);
+}
+
+.hero-banner-overlay h1 {
+  color: var(--color-cream);
+  margin-bottom: var(--space-3xs);
+}
+
+.hero-banner-overlay p {
+  color: var(--color-grey-200);
+  font-size: var(--fs-md);
+  margin-bottom: 0;
+}
+
+/* ---- Layout ---- */
+
+.destination-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  align-items: start;
+  gap: var(--space-xl);
+  padding-bottom: var(--space-2xl);
+}
+
+@media (max-width: 899px) {
+  .destination-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.destination-main > p {
+  color: var(--color-text-muted);
+  max-width: 70ch;
+  margin-bottom: var(--space-xl);
+}
+
+.related-section {
+  padding-top: var(--space-lg);
+  border-top: var(--border-hairline);
+  margin-bottom: var(--space-lg);
+}
+
+.related-section[hidden] {
+  display: none;
+}
+
+.related-section h2 {
+  font-size: var(--fs-xl);
+  margin-bottom: var(--space-md);
+}
+
+.related-section-destination {
+  color: var(--color-gold-dark);
+}
+
+.listing-grid--related {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 1099px) {
+  .listing-grid--related {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 599px) {
+  .listing-grid--related {
+    grid-template-columns: 1fr;
+  }
+}
+
+.related-card-meta {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2xs);
+}
+
+.related-card .listing-card-body .btn {
+  width: 100%;
+  margin-top: var(--space-sm);
+}
+
+/* ---- Best time to visit card ---- */
+
+.best-time-card {
+  background-color: var(--color-surface);
+  border: var(--border-hairline);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-lg);
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-lg));
+}
+
+.best-time-card svg {
+  width: 28px;
+  height: 28px;
+  color: var(--color-gold);
+  margin-bottom: var(--space-sm);
+}
+
+.best-time-card h3 {
+  font-size: var(--fs-md);
+  margin-bottom: var(--space-sm);
+}
+
+.best-time-period {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+  color: var(--color-navy);
+  margin-bottom: var(--space-2xs);
+}
+
+.best-time-card p:last-child {
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+  margin-bottom: 0;
+}

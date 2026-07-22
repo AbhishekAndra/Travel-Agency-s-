@@ -1,0 +1,25 @@
+/* ==========================================================================
+   Voyara — Tours page styles
+   ========================================================================== */
+
+.listing-grid--tours {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 1099px) {
+  .listing-grid--tours {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 599px) {
+  .listing-grid--tours {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tour-card-meta {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2xs);
+}

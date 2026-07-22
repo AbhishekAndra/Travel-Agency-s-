@@ -1,0 +1,102 @@
+/* ==========================================================================
+   Voyara — Cart page styles
+   ========================================================================== */
+
+.cart-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  align-items: start;
+  gap: var(--space-xl);
+  padding-bottom: var(--space-2xl);
+}
+
+@media (max-width: 899px) {
+  .cart-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  gap: var(--space-md);
+  background-color: var(--color-surface);
+  border: var(--border-hairline);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+
+.cart-item-image {
+  width: 120px;
+  height: 90px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-grey-100);
+  background-size: cover;
+  background-position: center;
+}
+
+.cart-item-body h3 {
+  font-size: var(--fs-md);
+  margin-bottom: var(--space-3xs);
+}
+
+.cart-item-meta {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.cart-item-qty {
+  gap: var(--space-md);
+}
+
+.cart-item-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  text-align: right;
+}
+
+.cart-item-price {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  color: var(--color-gold-dark);
+}
+
+.cart-item-remove {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  transition: color var(--transition-fast);
+}
+
+.cart-item-remove:hover {
+  color: var(--color-error);
+}
+
+#order-summary .btn {
+  width: 100%;
+  margin-top: var(--space-sm);
+}
+
+@media (max-width: 599px) {
+  .cart-item {
+    grid-template-columns: 90px 1fr;
+  }
+
+  .cart-item-actions {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+  }
+}

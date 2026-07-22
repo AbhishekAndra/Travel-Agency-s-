@@ -1,0 +1,229 @@
+/* ==========================================================================
+   Voyara — Package Detail page styles
+   ========================================================================== */
+
+.detail-content[hidden] {
+  display: none;
+}
+
+.detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  align-items: start;
+  gap: var(--space-xl);
+  padding-bottom: var(--space-2xl);
+}
+
+@media (max-width: 899px) {
+  .detail-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Gallery ---- */
+
+.gallery-main {
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-grey-100);
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-sm);
+}
+
+.gallery-thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-sm);
+}
+
+.gallery-thumb {
+  aspect-ratio: 4 / 3;
+  background-color: var(--color-grey-100);
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.gallery-thumb:hover {
+  border-color: var(--color-grey-300);
+}
+
+.gallery-thumb.is-active {
+  border-color: var(--color-gold);
+}
+
+/* ---- Header / meta ---- */
+
+.detail-header {
+  padding: var(--space-lg) 0;
+  border-bottom: var(--border-hairline);
+}
+
+.detail-header h1 {
+  margin-bottom: var(--space-2xs);
+}
+
+.detail-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+}
+
+/* ---- Itinerary ---- */
+
+.itinerary-day {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+  border-bottom: var(--border-hairline);
+}
+
+.itinerary-day:last-child {
+  border-bottom: none;
+}
+
+.itinerary-day-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--color-navy);
+  color: var(--color-cream);
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  flex-shrink: 0;
+}
+
+.itinerary-day h4 {
+  margin-bottom: var(--space-3xs);
+}
+
+.itinerary-day p {
+  color: var(--color-text-muted);
+  margin-bottom: 0;
+}
+
+/* ---- Inclusions / Exclusions ---- */
+
+.inclusions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+}
+
+@media (max-width: 599px) {
+  .inclusions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.inclusions-list,
+.exclusions-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.inclusions-list li,
+.exclusions-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2xs);
+  font-size: var(--fs-sm);
+}
+
+.inclusions-list svg {
+  color: var(--color-success);
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.exclusions-list svg {
+  color: var(--color-grey-500);
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.exclusions-list li {
+  color: var(--color-text-muted);
+}
+
+/* ---- Reviews ---- */
+
+.review-card {
+  padding: var(--space-md) 0;
+  border-bottom: var(--border-hairline);
+}
+
+.review-card:last-child {
+  border-bottom: none;
+}
+
+.review-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-2xs);
+}
+
+.review-card-name {
+  font-weight: var(--fw-medium);
+  color: var(--color-navy);
+}
+
+.review-card-date {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+}
+
+.review-card p {
+  color: var(--color-text);
+  margin-bottom: 0;
+}
+
+/* ---- Booking card (page-specific tweaks; base .summary-card is shared) ---- */
+
+.summary-card .listing-card-price {
+  font-size: var(--fs-2xl);
+  margin: 0 0 var(--space-md);
+}
+
+.summary-card #travel-date {
+  width: 100%;
+}
+
+.summary-card .btn {
+  width: 100%;
+  margin-bottom: var(--space-sm);
+}
+
+.summary-card .btn:last-of-type {
+  margin-bottom: 0;
+}
+
+.booking-feedback {
+  margin: var(--space-sm) 0 0;
+  text-align: center;
+  font-size: var(--fs-sm);
+  color: var(--color-success);
+}
+
+.booking-feedback[hidden] {
+  display: none;
+}

@@ -34,6 +34,26 @@
     badge.hidden = count <= 0;
   }
 
+  // No add-to-wishlist UI exists anywhere yet, so 'voyaraWishlist' is always
+  // empty today — this just makes sure the badge is correct (hidden) rather
+  // than stale or erroring once that UI does exist.
+  function updateWishlistBadge() {
+    var badge = document.getElementById('wishlist-badge');
+    if (!badge) return;
+
+    var count = 0;
+    try {
+      var raw = window.localStorage.getItem('voyaraWishlist');
+      var items = raw ? JSON.parse(raw) : [];
+      count = Array.isArray(items) ? items.length : 0;
+    } catch (err) {
+      count = 0;
+    }
+
+    badge.textContent = String(count);
+    badge.hidden = count <= 0;
+  }
+
   function initHeaderScroll() {
     var header = document.getElementById('site-header');
     if (!header) return;
@@ -82,11 +102,48 @@
     });
   }
 
+  // Footer newsletter form — present on every page. No backend, so a valid
+  // submit just confirms inline and resets the field (never a silent no-op).
+  function initNewsletterForm() {
+    var form = document.getElementById('newsletter-form');
+    if (!form) return;
+
+    var input = document.getElementById('newsletter-email');
+    var errorEl = document.getElementById('newsletter-email-error');
+    var successEl = document.getElementById('newsletter-success');
+
+    function setError(message) {
+      input.classList.toggle('has-error', !!message);
+      errorEl.textContent = message || '';
+    }
+
+    input.addEventListener('input', function () {
+      successEl.hidden = true;
+      if (errorEl.textContent) setError('');
+    });
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      var value = input.value.trim();
+
+      if (!value || !(window.VoyaraAuth && window.VoyaraAuth.isValidEmail(value))) {
+        setError('Enter a valid email address.');
+        return;
+      }
+
+      setError('');
+      form.reset();
+      successEl.hidden = false;
+    });
+  }
+
   function initHeader() {
     highlightActiveNav();
     updateCartBadge();
+    updateWishlistBadge();
     initHeaderScroll();
     initMobileNav();
+    initNewsletterForm();
   }
 
   document.addEventListener('DOMContentLoaded', initHeader);
@@ -125,8 +182,10 @@
   window.VoyaraUtils = {
     highlightActiveNav: highlightActiveNav,
     updateCartBadge: updateCartBadge,
+    updateWishlistBadge: updateWishlistBadge,
     initHeaderScroll: initHeaderScroll,
     initMobileNav: initMobileNav,
+    initNewsletterForm: initNewsletterForm,
     initHeader: initHeader,
     renderStars: renderStars,
     initTabs: initTabs

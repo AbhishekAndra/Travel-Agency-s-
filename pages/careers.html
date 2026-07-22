@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tours | Voyara</title>
+  <title>Careers | Voyara</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="../css/variables.css">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/components.css">
-  <link rel="stylesheet" href="../css/tours.css">
+  <link rel="stylesheet" href="../css/careers.css">
 </head>
 <body>
   <header class="site-header" id="site-header">
@@ -80,56 +80,11 @@
 
   <main>
     <div class="container">
-      <div class="page-intro">
-        <h1>Tours</h1>
-        <p>Small-group, expert-led experiences built around a theme, not just a destination.</p>
-      </div>
-
-      <button type="button" class="filters-toggle" id="filters-toggle" aria-expanded="false" aria-controls="filters-panel">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
-        Filters
-      </button>
-
-      <div class="listing-layout">
-        <aside class="filters-panel" id="filters-panel">
-          <div class="filters-panel-header">
-            <h2>Filters</h2>
-            <button type="button" class="filters-clear" id="filters-clear">Clear All</button>
-            <button type="button" class="filters-panel-close" id="filters-close" aria-label="Close filters">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-            </button>
-          </div>
-
-          <div class="filter-group">
-            <p class="filter-group-title">Theme</p>
-            <div class="filter-options is-scrollable" id="theme-filter"></div>
-          </div>
-
-          <div class="filter-group">
-            <p class="filter-group-title">Destination</p>
-            <div class="filter-options is-scrollable" id="destination-filter"></div>
-          </div>
-        </aside>
-
-        <section class="listing-results">
-          <div class="results-toolbar">
-            <p class="result-count" id="result-count"></p>
-          </div>
-
-          <div class="listing-grid listing-grid--tours" id="tours-grid"></div>
-
-          <div class="empty-state" id="empty-state" hidden>
-            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="32" cy="32" r="26" stroke-dasharray="4 5"/>
-              <path d="M22 28h20a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H22a2 2 0 0 1-2-2V30a2 2 0 0 1 2-2z"/>
-              <path d="M27 28v-4a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v4"/>
-              <line x1="20" y1="36" x2="44" y2="36"/>
-            </svg>
-            <h3>No tours match your filters</h3>
-            <p>Try clearing a few filters to see more experiences.</p>
-            <button type="button" class="btn btn-outline" id="empty-state-clear">Clear All Filters</button>
-          </div>
-        </section>
+      <div class="static-page">
+        <h1>Careers at Voyara</h1>
+        <p>We are not actively hiring at the moment, but we are always glad to hear from people who care about thoughtful, well-run travel.</p>
+        <p>If that sounds like you, send a note and a little about yourself to <a href="mailto:careers@voyara.example">careers@voyara.example</a> and we will keep it on file for when a role opens up.</p>
+        <a href="contact.html" class="btn btn-outline">Contact Us</a>
       </div>
     </div>
   </main>
@@ -198,6 +153,6 @@
   <script src="../js/data.js" defer></script>
   <script src="../js/auth.js" defer></script>
   <script src="../js/cart.js" defer></script>
-  <script src="../js/tours.js" defer></script>
+  <script src="../js/careers.js" defer></script>
 </body>
 </html>

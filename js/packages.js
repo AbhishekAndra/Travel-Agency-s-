@@ -123,10 +123,26 @@
     });
   }
 
+  // Honors ?destination= from the homepage search widget by pre-checking
+  // the matching destination filter, if that destination has any packages.
+  // Only updates state — init()'s own render() call paints the result.
+  function applyDestinationFromQuery() {
+    var params = new URLSearchParams(window.location.search);
+    var destination = params.get('destination');
+    if (!destination) return;
+
+    var checkbox = document.querySelector('input[name="destination"][value="' + CSS.escape(destination) + '"]');
+    if (!checkbox) return;
+
+    checkbox.checked = true;
+    state.destinations = getCheckedValues('destination');
+  }
+
   function init() {
     if (!document.getElementById('packages-grid')) return;
     populateDestinationFilter();
     bindEvents();
+    applyDestinationFromQuery();
     render();
   }
 

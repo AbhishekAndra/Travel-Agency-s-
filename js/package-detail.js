@@ -42,13 +42,19 @@
     setMain(images[0]);
 
     thumbsContainer.innerHTML = images.map(function (src, i) {
-      return '<div class="gallery-thumb' + (i === 0 ? ' is-active' : '') + '" data-src="' + src + '" style="background-image:url(\'' + src + '\')"></div>';
+      return '<button type="button" class="gallery-thumb' + (i === 0 ? ' is-active' : '') +
+        '" data-src="' + src + '" style="background-image:url(\'' + src + '\')" aria-label="Show photo ' + (i + 1) + '"' +
+        (i === 0 ? ' aria-current="true"' : '') + '></button>';
     }).join('');
 
     thumbsContainer.querySelectorAll('.gallery-thumb').forEach(function (thumb) {
       thumb.addEventListener('click', function () {
-        thumbsContainer.querySelectorAll('.gallery-thumb').forEach(function (t) { t.classList.remove('is-active'); });
+        thumbsContainer.querySelectorAll('.gallery-thumb').forEach(function (t) {
+          t.classList.remove('is-active');
+          t.removeAttribute('aria-current');
+        });
         thumb.classList.add('is-active');
+        thumb.setAttribute('aria-current', 'true');
         setMain(thumb.dataset.src);
       });
     });

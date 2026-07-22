@@ -112,10 +112,20 @@
   .flight-card {
     grid-template-columns: 1fr;
     gap: var(--space-md);
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  .flight-card-airline {
+    min-width: 0;
   }
 
   .flight-card-route {
     grid-template-columns: 1fr auto 1fr;
+    gap: var(--space-sm);
+  }
+
+  .flight-card-path {
+    min-width: 0;
   }
 
   .flight-card-action {
@@ -123,5 +133,16 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 374px) {
+  .flight-card-time .time {
+    font-size: var(--fs-md);
+  }
+
+  .flight-card-route {
+    gap: var(--space-2xs);
   }
 }

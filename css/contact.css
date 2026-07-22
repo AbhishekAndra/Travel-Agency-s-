@@ -1,3 +1,51 @@
 /* ==========================================================================
    Voyara — Contact page styles
    ========================================================================== */
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-xl);
+  padding-bottom: var(--space-2xl);
+}
+
+@media (max-width: 899px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-info {
+  background-color: var(--color-surface);
+  border: var(--border-hairline);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  height: fit-content;
+}
+
+.contact-info h2 {
+  font-size: var(--fs-md);
+  margin-bottom: var(--space-md);
+}
+
+.contact-info p {
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-md);
+}
+
+.contact-info p:last-child {
+  margin-bottom: 0;
+}
+
+.contact-info a {
+  color: var(--color-gold-dark);
+}
+
+.contact-info a:hover {
+  color: var(--color-navy);
+}

@@ -12,7 +12,6 @@
   'use strict';
 
   var formatCurrency = window.VoyaraData.formatCurrency;
-  var PHONE_RE = /^[0-9+\-\s()]{7,15}$/;
   var CARD_EXPIRY_RE = /^(0[1-9]|1[0-2])\/\d{2}$/;
   var UPI_RE = /^[\w.-]+@[\w.-]+$/;
   var MAX_TRAVELERS = 9;
@@ -39,19 +38,9 @@
     return { source: 'cart', type: 'package', items: cartItems };
   }
 
-  function getItemTitle(item) {
-    return item.type === 'flight' ? (item.airline + ' — ' + item.from + ' to ' + item.to) : item.title;
-  }
-
-  function getItemDestination(item) {
-    return item.type === 'flight' ? item.to : item.destination;
-  }
-
-  function getItemDateLabel(item) {
-    if (item.type === 'flight') return item.departTime + ' – ' + item.arriveTime;
-    if (!item.travelDate) return '';
-    return new Date(item.travelDate).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
-  }
+  var getItemTitle = window.VoyaraUtils.getItemTitle;
+  var getItemDestination = window.VoyaraUtils.getItemDestination;
+  var getItemDateLabel = window.VoyaraUtils.getItemDateLabel;
 
   function getItemLineTotal(item) {
     if (order.type === 'flight') {
@@ -142,8 +131,8 @@
       html +=
         '<div class="form-field" id="traveler-name-' + i + '-field">' +
           '<label for="traveler-name-' + i + '">Traveler ' + (i + 2) + ' Name</label>' +
-          '<input type="text" id="traveler-name-' + i + '" data-index="' + i + '" value="' + value.replace(/"/g, '&quot;') + '">' +
-          '<span class="field-error" id="traveler-name-' + i + '-error"></span>' +
+          '<input type="text" id="traveler-name-' + i + '" data-index="' + i + '" aria-required="true" value="' + value.replace(/"/g, '&quot;') + '">' +
+          '<span class="field-error" aria-live="polite" id="traveler-name-' + i + '-error"></span>' +
         '</div>';
     }
     container.innerHTML = html;
@@ -151,53 +140,49 @@
     container.querySelectorAll('input').forEach(function (input) {
       input.addEventListener('input', function () {
         state.travelerNames[Number(input.dataset.index)] = input.value;
+        if (input.closest('.form-field').classList.contains('has-error')) {
+          validateTravelerName(input);
+        }
       });
+      input.addEventListener('blur', function () { validateTravelerName(input); });
     });
   }
 
-  function setFieldError(fieldId, errorId, message) {
-    var field = document.getElementById(fieldId);
-    var errorEl = document.getElementById(errorId);
-    field.classList.toggle('has-error', !!message);
-    errorEl.textContent = message || '';
+  var setFieldError = window.VoyaraUtils.setFieldError;
+
+  function validateTravelerName(input) {
+    var error = window.VoyaraUtils.validateNameValue(input.value);
+    setFieldError(input.closest('.form-field').id, input.id + '-error', error);
+    return !error;
+  }
+
+  function validateTravelerEmail(input) {
+    var error = window.VoyaraUtils.validateEmailValue(input.value);
+    setFieldError('traveler-email-field', 'traveler-email-error', error);
+    return !error;
+  }
+
+  function validateTravelerPhone(input) {
+    var error = window.VoyaraUtils.validatePhoneValue(input.value);
+    setFieldError('traveler-phone-field', 'traveler-phone-error', error);
+    return !error;
   }
 
   function validateStep1() {
     var nameInput = document.getElementById('traveler-name');
     var emailInput = document.getElementById('traveler-email');
     var phoneInput = document.getElementById('traveler-phone');
-    var isValid = true;
 
-    if (nameInput.value.trim().length < 2) {
-      setFieldError('traveler-name-field', 'traveler-name-error', 'Please enter the traveler’s full name.');
-      isValid = false;
-    } else {
-      setFieldError('traveler-name-field', 'traveler-name-error', '');
-    }
-
-    if (!window.VoyaraAuth.isValidEmail(emailInput.value.trim())) {
-      setFieldError('traveler-email-field', 'traveler-email-error', 'Enter a valid email address.');
-      isValid = false;
-    } else {
-      setFieldError('traveler-email-field', 'traveler-email-error', '');
-    }
-
-    if (!PHONE_RE.test(phoneInput.value.trim())) {
-      setFieldError('traveler-phone-field', 'traveler-phone-error', 'Enter a valid phone number.');
-      isValid = false;
-    } else {
-      setFieldError('traveler-phone-field', 'traveler-phone-error', '');
-    }
-
+    var fields = [
+      { input: nameInput, validate: validateTravelerName },
+      { input: emailInput, validate: validateTravelerEmail },
+      { input: phoneInput, validate: validateTravelerPhone }
+    ];
     for (var i = 0; i < state.travelerCount - 1; i++) {
-      var value = (state.travelerNames[i] || '').trim();
-      if (value.length < 2) {
-        setFieldError('traveler-name-' + i + '-field', 'traveler-name-' + i + '-error', 'Please enter this traveler’s name.');
-        isValid = false;
-      } else {
-        setFieldError('traveler-name-' + i + '-field', 'traveler-name-' + i + '-error', '');
-      }
+      fields.push({ input: document.getElementById('traveler-name-' + i), validate: validateTravelerName });
     }
+
+    var isValid = window.VoyaraUtils.validateFieldsAndFocus(fields);
 
     if (isValid) {
       state.primary.name = nameInput.value.trim();
@@ -355,15 +340,7 @@
 
   /* ---- Confirm booking ---- */
 
-  function readLocalArray(key) {
-    try {
-      var raw = window.localStorage.getItem(key);
-      var value = raw ? JSON.parse(raw) : [];
-      return Array.isArray(value) ? value : [];
-    } catch (err) {
-      return [];
-    }
-  }
+  var readLocalArray = window.VoyaraUtils.readLocalArray;
 
   function handleConfirmBooking() {
     var user = window.VoyaraAuth.getCurrentUser();
@@ -418,6 +395,25 @@
     state.primary.phone = user.phone || '';
   }
 
+  function bindStep1BlurValidation() {
+    var nameInput = document.getElementById('traveler-name');
+    var emailInput = document.getElementById('traveler-email');
+    var phoneInput = document.getElementById('traveler-phone');
+
+    [
+      { input: nameInput, validate: validateTravelerName },
+      { input: emailInput, validate: validateTravelerEmail },
+      { input: phoneInput, validate: validateTravelerPhone }
+    ].forEach(function (f) {
+      f.input.addEventListener('blur', function () { f.validate(f.input); });
+      f.input.addEventListener('input', function () {
+        if (f.input.closest('.form-field').classList.contains('has-error')) {
+          f.validate(f.input);
+        }
+      });
+    });
+  }
+
   function bindNav() {
     document.getElementById('step1-next').addEventListener('click', function () {
       if (validateStep1()) goToStep(2);
@@ -456,6 +452,7 @@
     togglePaymentFields();
     bindPaymentMethodToggle();
     bindCardNumberFormatting();
+    bindStep1BlurValidation();
     bindNav();
     renderStepIndicator();
   }

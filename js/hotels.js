@@ -33,6 +33,7 @@
     default: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>'
   };
 
+  // ---- Amenity icon lookup ----
   function getAmenityIcon(amenity) {
     var key = amenity.toLowerCase();
     if (key.indexOf('wifi') !== -1) return AMENITY_ICONS.wifi;
@@ -46,11 +47,6 @@
     if (key.indexOf('golf') !== -1) return AMENITY_ICONS.golf;
     if (key.indexOf('fireplace') !== -1) return AMENITY_ICONS.fireplace;
     return AMENITY_ICONS.default;
-  }
-
-  function getCheckedValues(name) {
-    var boxes = document.querySelectorAll('input[name="' + name + '"]:checked');
-    return Array.prototype.map.call(boxes, function (box) { return box.value; });
   }
 
   function computePriceBounds() {
@@ -80,52 +76,22 @@
     }).join('');
   }
 
+  // initPriceRange/updatePriceRangeUI's DOM wiring is shared with
+  // flights.js via window.VoyaraUtils (identical
+  // #price-min/#price-max/#price-range-fill markup on both pages) — these
+  // stay as same-named local wrappers so every existing zero-arg call site
+  // below keeps working unchanged.
   function initPriceRange() {
     bounds = computePriceBounds();
-    state.priceMin = bounds.min;
-    state.priceMax = bounds.max;
-
-    var minInput = document.getElementById('price-min');
-    var maxInput = document.getElementById('price-max');
-    [minInput, maxInput].forEach(function (input) {
-      input.min = bounds.min;
-      input.max = bounds.max;
-      input.step = 1000;
-    });
-    minInput.value = bounds.min;
-    maxInput.value = bounds.max;
-
+    window.VoyaraUtils.initPriceRangeInputs(state, bounds);
     updatePriceRangeUI();
   }
 
   function updatePriceRangeUI() {
-    var minInput = document.getElementById('price-min');
-    var maxInput = document.getElementById('price-max');
-    var fill = document.getElementById('price-range-fill');
-    var minLabel = document.getElementById('price-min-label');
-    var maxLabel = document.getElementById('price-max-label');
-
-    var min = Number(minInput.value);
-    var max = Number(maxInput.value);
-    if (min > max) {
-      var temp = min;
-      min = max;
-      max = temp;
-    }
-
-    state.priceMin = min;
-    state.priceMax = max;
-
-    minLabel.textContent = formatCurrency(min);
-    maxLabel.textContent = formatCurrency(max);
-
-    var range = bounds.max - bounds.min || 1;
-    var leftPct = ((min - bounds.min) / range) * 100;
-    var rightPct = ((max - bounds.min) / range) * 100;
-    fill.style.left = leftPct + '%';
-    fill.style.width = (rightPct - leftPct) + '%';
+    window.VoyaraUtils.updatePriceRangeUI(state, bounds, formatCurrency);
   }
 
+  // ---- Filtering & sorting ----
   function filterHotels() {
     return hotels.filter(function (h) {
       if (h.pricePerNight < state.priceMin || h.pricePerNight > state.priceMax) return false;
@@ -151,6 +117,7 @@
     return sorted;
   }
 
+  // ---- Rendering ----
   function renderHotelCard(hotel) {
     var visibleAmenities = hotel.amenities.slice(0, 4);
     var remaining = hotel.amenities.length - visibleAmenities.length;
@@ -163,9 +130,23 @@
       amenitiesHtml += '<span class="amenity-more">+' + remaining + ' more</span>';
     }
 
+    var destId = window.VoyaraData.findDestinationId(hotel.destination);
+    var hotelImg = window.VoyaraUtils.renderImg({
+      className: 'listing-card-image-bg',
+      src: hotel.image,
+      srcset: window.VoyaraUtils.buildSrcset(hotel.image, [480, 800]),
+      sizes: window.VoyaraUtils.CARD_IMAGE_SIZES,
+      width: 800,
+      height: 600,
+      alt: hotel.name + ', ' + hotel.destination
+    });
+
     return (
-      '<article class="hotel-card listing-card">' +
-        '<div class="listing-card-image" style="background-image:url(\'' + hotel.image + '\')"></div>' +
+      '<article class="hotel-card listing-card" data-reveal="fade-up">' +
+        '<div class="listing-card-image">' +
+          hotelImg +
+          window.VoyaraUtils.renderWishlistHeart('hotel', hotel.id, hotel.name, hotel.destination, hotel.image, hotel.pricePerNight) +
+        '</div>' +
         '<div class="listing-card-body">' +
           '<div class="hotel-card-header">' +
             '<h3>' + hotel.name + '</h3>' +
@@ -174,6 +155,7 @@
           '<p class="hotel-card-destination">' + hotel.destination + '</p>' +
           '<div class="hotel-card-amenities">' + amenitiesHtml + '</div>' +
           '<p class="listing-card-price">' + formatCurrency(hotel.pricePerNight) + '<span>/night</span></p>' +
+          (destId ? '<a href="destination-detail.html?id=' + destId + '" class="btn btn-outline">View Details</a>' : '') +
         '</div>' +
       '</article>'
     );
@@ -193,9 +175,12 @@
     } else {
       emptyState.hidden = true;
       grid.innerHTML = results.map(renderHotelCard).join('');
+      if (window.VoyaraAnimations) window.VoyaraAnimations.refreshReveal();
+      window.VoyaraUtils.syncWishlistHearts();
     }
   }
 
+  // ---- Events & init ----
   function resetFilters() {
     document.querySelectorAll('.filters-panel input[type="checkbox"]').forEach(function (box) {
       box.checked = false;
@@ -209,23 +194,13 @@
   }
 
   function handleFilterChange() {
-    state.ratings = getCheckedValues('rating');
-    state.amenities = getCheckedValues('amenity');
+    state.ratings = window.VoyaraUtils.getCheckedValues('rating');
+    state.amenities = window.VoyaraUtils.getCheckedValues('amenity');
     render();
   }
 
-  function toggleMobileFilters(open) {
-    var panel = document.getElementById('filters-panel');
-    var toggle = document.getElementById('filters-toggle');
-    panel.classList.toggle('is-open', open);
-    document.body.classList.toggle('filters-open', open);
-    toggle.setAttribute('aria-expanded', String(open));
-  }
-
   function bindEvents() {
-    document.getElementById('filters-panel').addEventListener('change', function (event) {
-      if (event.target.matches('input[type="checkbox"]')) handleFilterChange();
-    });
+    window.VoyaraUtils.bindFilterPanelEvents(handleFilterChange, resetFilters);
 
     ['price-min', 'price-max'].forEach(function (id) {
       document.getElementById(id).addEventListener('input', function () {
@@ -237,16 +212,6 @@
     document.getElementById('sort-select').addEventListener('change', function (event) {
       state.sort = event.target.value;
       render();
-    });
-
-    document.getElementById('filters-clear').addEventListener('click', resetFilters);
-    document.getElementById('empty-state-clear').addEventListener('click', resetFilters);
-
-    document.getElementById('filters-toggle').addEventListener('click', function () {
-      toggleMobileFilters(true);
-    });
-    document.getElementById('filters-close').addEventListener('click', function () {
-      toggleMobileFilters(false);
     });
   }
 

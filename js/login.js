@@ -9,12 +9,7 @@
   var emailInput = document.getElementById('login-email');
   var passwordInput = document.getElementById('login-password');
 
-  function setFieldError(fieldId, errorId, message) {
-    var field = document.getElementById(fieldId);
-    var errorEl = document.getElementById(errorId);
-    field.classList.toggle('has-error', !!message);
-    errorEl.textContent = message || '';
-  }
+  var setFieldError = window.VoyaraUtils.setFieldError;
 
   function setFormError(message) {
     var el = document.getElementById('login-form-error');
@@ -23,17 +18,9 @@
   }
 
   function validateEmail() {
-    var value = emailInput.value.trim();
-    if (!value) {
-      setFieldError('email-field', 'email-error', 'Email is required.');
-      return false;
-    }
-    if (!window.VoyaraAuth.isValidEmail(value)) {
-      setFieldError('email-field', 'email-error', 'Enter a valid email address.');
-      return false;
-    }
-    setFieldError('email-field', 'email-error', '');
-    return true;
+    var error = window.VoyaraUtils.validateEmailValue(emailInput.value);
+    setFieldError('email-field', 'email-error', error);
+    return !error;
   }
 
   function validatePassword() {
@@ -63,9 +50,11 @@
     event.preventDefault();
     setFormError('');
 
-    var isEmailValid = validateEmail();
-    var isPasswordValid = validatePassword();
-    if (!isEmailValid || !isPasswordValid) return;
+    var isValid = window.VoyaraUtils.validateFieldsAndFocus([
+      { input: emailInput, validate: validateEmail },
+      { input: passwordInput, validate: validatePassword }
+    ]);
+    if (!isValid) return;
 
     var result = window.VoyaraAuth.login(emailInput.value.trim(), passwordInput.value);
 

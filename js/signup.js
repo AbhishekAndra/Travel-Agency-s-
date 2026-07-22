@@ -13,35 +13,18 @@
   var passwordInput = document.getElementById('signup-password');
   var confirmInput = document.getElementById('signup-confirm-password');
 
-  function setFieldError(fieldId, errorId, message) {
-    var field = document.getElementById(fieldId);
-    var errorEl = document.getElementById(errorId);
-    field.classList.toggle('has-error', !!message);
-    errorEl.textContent = message || '';
-  }
+  var setFieldError = window.VoyaraUtils.setFieldError;
 
   function validateName() {
-    var value = nameInput.value.trim();
-    if (value.length < 2) {
-      setFieldError('name-field', 'name-error', 'Please enter your full name.');
-      return false;
-    }
-    setFieldError('name-field', 'name-error', '');
-    return true;
+    var error = window.VoyaraUtils.validateNameValue(nameInput.value);
+    setFieldError('name-field', 'name-error', error);
+    return !error;
   }
 
   function validateEmail() {
-    var value = emailInput.value.trim();
-    if (!value) {
-      setFieldError('email-field', 'email-error', 'Email is required.');
-      return false;
-    }
-    if (!window.VoyaraAuth.isValidEmail(value)) {
-      setFieldError('email-field', 'email-error', 'Enter a valid email address.');
-      return false;
-    }
-    setFieldError('email-field', 'email-error', '');
-    return true;
+    var error = window.VoyaraUtils.validateEmailValue(emailInput.value);
+    setFieldError('email-field', 'email-error', error);
+    return !error;
   }
 
   function validatePassword() {
@@ -80,14 +63,13 @@
   function handleSubmit(event) {
     event.preventDefault();
 
-    var isNameValid = validateName();
-    var isEmailValid = validateEmail();
-    var isPasswordValid = validatePassword();
-    var isConfirmValid = validateConfirmPassword();
-
-    if (!isNameValid || !isEmailValid || !isPasswordValid || !isConfirmValid) {
-      return;
-    }
+    var isValid = window.VoyaraUtils.validateFieldsAndFocus([
+      { input: nameInput, validate: validateName },
+      { input: emailInput, validate: validateEmail },
+      { input: passwordInput, validate: validatePassword },
+      { input: confirmInput, validate: validateConfirmPassword }
+    ]);
+    if (!isValid) return;
 
     var result = window.VoyaraAuth.signup({
       name: nameInput.value.trim(),

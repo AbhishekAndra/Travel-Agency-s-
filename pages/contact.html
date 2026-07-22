@@ -4,8 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact | Voyara</title>
+  <meta name="description" content="Get in touch with the Voyara team for booking support, itinerary questions, or general inquiries.">
+  <meta name="keywords" content="contact Voyara, luxury travel support, travel agency contact, travel booking help">
+  <link rel="canonical" href="https://abhishekandra.github.io/Travel-Agency-s-/pages/contact.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Contact | Voyara">
+  <meta property="og:description" content="Get in touch with the Voyara team for booking support, itinerary questions, or general inquiries.">
+  <meta property="og:image" content="https://abhishekandra.github.io/Travel-Agency-s-/assets/images/og-image.jpg">
+  <meta property="og:url" content="https://abhishekandra.github.io/Travel-Agency-s-/pages/contact.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Contact | Voyara">
+  <meta name="twitter:description" content="Get in touch with the Voyara team for booking support, itinerary questions, or general inquiries.">
+  <meta name="twitter:image" content="https://abhishekandra.github.io/Travel-Agency-s-/assets/images/og-image.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../css/variables.css">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/components.css">
@@ -80,43 +96,44 @@
 
   <main>
     <div class="container">
-      <div class="page-intro">
+      <div class="page-intro" data-reveal="fade-up">
         <h1>Contact Us</h1>
         <p>Questions about a trip, a booking, or anything else — we would love to hear from you.</p>
       </div>
 
       <div class="contact-layout">
-        <form class="contact-form" id="contact-form" novalidate>
-          <p class="form-success" id="contact-success" hidden>Thanks — we'll be in touch.</p>
+        <form class="contact-form" id="contact-form" novalidate data-reveal="fade-left">
+          <p class="form-success" aria-live="polite" id="contact-success" hidden>Thanks — we'll be in touch.</p>
 
           <div class="form-field" id="contact-name-field">
             <label for="contact-name">Full Name</label>
-            <input type="text" id="contact-name" autocomplete="name">
-            <span class="field-error" id="contact-name-error"></span>
+            <input type="text" id="contact-name" autocomplete="name" aria-required="true">
+            <span class="field-error" aria-live="polite" id="contact-name-error"></span>
           </div>
 
           <div class="form-field" id="contact-email-field">
             <label for="contact-email">Email</label>
-            <input type="email" id="contact-email" autocomplete="email">
-            <span class="field-error" id="contact-email-error"></span>
+            <input type="email" id="contact-email" autocomplete="email" aria-required="true">
+            <span class="field-error" aria-live="polite" id="contact-email-error"></span>
           </div>
 
           <div class="form-field" id="contact-subject-field">
             <label for="contact-subject">Subject</label>
-            <input type="text" id="contact-subject">
-            <span class="field-error" id="contact-subject-error"></span>
+            <input type="text" id="contact-subject" aria-required="true">
+            <span class="field-error" aria-live="polite" id="contact-subject-error"></span>
           </div>
 
           <div class="form-field" id="contact-message-field">
             <label for="contact-message">Message</label>
-            <textarea id="contact-message" rows="5"></textarea>
-            <span class="field-error" id="contact-message-error"></span>
+            <textarea id="contact-message" rows="5" maxlength="500" aria-required="true"></textarea>
+            <span class="char-counter" id="contact-message-counter">0/500</span>
+            <span class="field-error" aria-live="polite" id="contact-message-error"></span>
           </div>
 
           <button type="submit" class="btn btn-accent">Send Message</button>
         </form>
 
-        <aside class="contact-info">
+        <aside class="contact-info" data-reveal="fade-right">
           <h2>Get in Touch</h2>
           <p><strong>Email</strong><br><a href="mailto:hello@voyara.example">hello@voyara.example</a></p>
           <p><strong>Phone</strong><br>+91 22 4000 1234</p>
@@ -134,7 +151,7 @@
       </div>
 
       <div class="footer-col">
-        <h4 class="footer-heading">Explore</h4>
+        <h2 class="footer-heading">Explore</h2>
         <ul>
           <li><a href="packages.html">Packages</a></li>
           <li><a href="tours.html">Tours</a></li>
@@ -145,7 +162,7 @@
       </div>
 
       <div class="footer-col">
-        <h4 class="footer-heading">Company</h4>
+        <h2 class="footer-heading">Company</h2>
         <ul>
           <li><a href="about.html">About Us</a></li>
           <li><a href="contact.html">Contact</a></li>
@@ -154,16 +171,16 @@
       </div>
 
       <div class="footer-col footer-newsletter">
-        <h4 class="footer-heading">Stay Inspired</h4>
+        <h2 class="footer-heading">Stay Inspired</h2>
         <p>Join our list for private offers and new destinations.</p>
         <form class="newsletter-form" id="newsletter-form" novalidate>
           <label for="newsletter-email" class="visually-hidden">Email address</label>
           <div class="newsletter-input-row">
-            <input type="email" id="newsletter-email" placeholder="Email address" autocomplete="email">
+            <input type="email" id="newsletter-email" placeholder="Email address" autocomplete="email" aria-required="true">
             <button type="submit" class="btn btn-accent">Subscribe</button>
           </div>
-          <span class="field-error" id="newsletter-email-error"></span>
-          <p class="newsletter-success" id="newsletter-success" hidden>You're subscribed — watch your inbox for private offers.</p>
+          <span class="field-error" aria-live="polite" id="newsletter-email-error"></span>
+          <p class="newsletter-success" aria-live="polite" id="newsletter-success" hidden>You're subscribed — watch your inbox for private offers.</p>
         </form>
       </div>
     </div>
@@ -186,10 +203,15 @@
     </div>
   </footer>
 
+  <button type="button" class="icon-btn scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
   <script src="../js/utils.js" defer></script>
   <script src="../js/data.js" defer></script>
   <script src="../js/auth.js" defer></script>
   <script src="../js/cart.js" defer></script>
+  <script src="../js/animations.js" defer></script>
   <script src="../js/contact.js" defer></script>
 </body>
 </html>

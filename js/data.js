@@ -7,12 +7,13 @@
 (function () {
   'use strict';
 
+  // ---- Destinations ----
   var destinations = [
     {
       id: 'dest-01',
       name: 'Santorini',
       country: 'Greece',
-      image: '/assets/images/destinations/santorini.jpg',
+      image: '/assets/images/destinations/santorini.webp',
       shortDescription: 'Whitewashed cliffs over the Aegean and legendary sunsets over Oia.',
       startingPrice: 68000,
       tags: ['beach'],
@@ -22,7 +23,7 @@
       id: 'dest-02',
       name: 'Kyoto',
       country: 'Japan',
-      image: '/assets/images/destinations/kyoto.jpg',
+      image: '/assets/images/destinations/kyoto.webp',
       shortDescription: 'Ancient temples, bamboo groves, and quiet geisha-district lanes.',
       startingPrice: 72000,
       tags: ['city'],
@@ -32,7 +33,7 @@
       id: 'dest-03',
       name: 'Zermatt',
       country: 'Switzerland',
-      image: '/assets/images/destinations/zermatt.jpg',
+      image: '/assets/images/destinations/zermatt.webp',
       shortDescription: 'A car-free alpine village beneath the shadow of the Matterhorn.',
       startingPrice: 95000,
       tags: ['mountain', 'adventure'],
@@ -42,7 +43,7 @@
       id: 'dest-04',
       name: 'Bali',
       country: 'Indonesia',
-      image: '/assets/images/destinations/bali.jpg',
+      image: '/assets/images/destinations/bali.webp',
       shortDescription: 'Emerald rice terraces, clifftop temples, and quiet surf breaks.',
       startingPrice: 54000,
       tags: ['beach', 'adventure'],
@@ -52,7 +53,7 @@
       id: 'dest-05',
       name: 'Cusco',
       country: 'Peru',
-      image: '/assets/images/destinations/cusco.jpg',
+      image: '/assets/images/destinations/cusco.webp',
       shortDescription: 'Gateway to Machu Picchu and the Inca citadels of the Andes.',
       startingPrice: 110000,
       tags: ['adventure', 'mountain'],
@@ -62,7 +63,7 @@
       id: 'dest-06',
       name: 'Paris',
       country: 'France',
-      image: '/assets/images/destinations/paris.jpg',
+      image: '/assets/images/destinations/paris.webp',
       shortDescription: 'Timeless elegance along the Seine, from the Louvre to Montmartre.',
       startingPrice: 78000,
       tags: ['city'],
@@ -72,7 +73,7 @@
       id: 'dest-07',
       name: 'Maldives',
       country: 'Maldives',
-      image: '/assets/images/destinations/maldives.jpg',
+      image: '/assets/images/destinations/maldives.webp',
       shortDescription: 'Overwater villas suspended above impossibly clear coral lagoons.',
       startingPrice: 145000,
       tags: ['beach'],
@@ -82,7 +83,7 @@
       id: 'dest-08',
       name: 'Queenstown',
       country: 'New Zealand',
-      image: '/assets/images/destinations/queenstown.jpg',
+      image: '/assets/images/destinations/queenstown.webp',
       shortDescription: 'The adrenaline capital of the world, ringed by the Southern Alps.',
       startingPrice: 98000,
       tags: ['adventure', 'mountain'],
@@ -92,7 +93,7 @@
       id: 'dest-09',
       name: 'Banff',
       country: 'Canada',
-      image: '/assets/images/destinations/banff.jpg',
+      image: '/assets/images/destinations/banff.webp',
       shortDescription: 'Turquoise glacial lakes framed by the peaks of the Canadian Rockies.',
       startingPrice: 89000,
       tags: ['mountain'],
@@ -102,7 +103,7 @@
       id: 'dest-10',
       name: 'Dubai',
       country: 'United Arab Emirates',
-      image: '/assets/images/destinations/dubai.jpg',
+      image: '/assets/images/destinations/dubai.webp',
       shortDescription: 'A futuristic skyline meets golden desert dunes on the Arabian Gulf.',
       startingPrice: 62000,
       tags: ['city', 'adventure'],
@@ -112,7 +113,7 @@
       id: 'dest-11',
       name: 'Amalfi Coast',
       country: 'Italy',
-      image: '/assets/images/destinations/amalfi-coast.jpg',
+      image: '/assets/images/destinations/amalfi-coast.webp',
       shortDescription: 'Pastel villages clinging to cliffs above the Tyrrhenian Sea.',
       startingPrice: 84000,
       tags: ['beach', 'city'],
@@ -122,7 +123,7 @@
       id: 'dest-12',
       name: 'Reykjavik',
       country: 'Iceland',
-      image: '/assets/images/destinations/reykjavik.jpg',
+      image: '/assets/images/destinations/reykjavik.webp',
       shortDescription: 'Glaciers, geysers, and the aurora borealis at the edge of the Arctic.',
       startingPrice: 102000,
       tags: ['adventure', 'mountain'],
@@ -130,6 +131,7 @@
     }
   ];
 
+  // ---- Flights ----
   var flights = [
     {
       id: 'flt-01',
@@ -277,12 +279,13 @@
     }
   ];
 
+  // ---- Hotels ----
   var hotels = [
     {
       id: 'htl-01',
       name: 'Aegean Cliffside Suites',
       destination: 'Santorini, Greece',
-      image: '/assets/images/destinations/santorini.jpg',
+      image: '/assets/images/hotels/aegean-cliffside-suites.webp',
       rating: 4.9,
       pricePerNight: 42000,
       amenities: ['Infinity Pool', 'Free WiFi', 'Breakfast Included', 'Spa', 'Sea View'],
@@ -295,7 +298,7 @@
       id: 'htl-02',
       name: 'Kyoto Riverstone Ryokan',
       destination: 'Kyoto, Japan',
-      image: '/assets/images/destinations/kyoto.jpg',
+      image: '/assets/images/hotels/kyoto-riverstone-ryokan.webp',
       rating: 4.8,
       pricePerNight: 38000,
       amenities: ['Free WiFi', 'Spa', 'River View', 'Breakfast Included', 'Concierge'],
@@ -308,7 +311,7 @@
       id: 'htl-03',
       name: 'Matterhorn Alpine Lodge',
       destination: 'Zermatt, Switzerland',
-      image: '/assets/images/destinations/zermatt.jpg',
+      image: '/assets/images/hotels/matterhorn-alpine-lodge.webp',
       rating: 4.7,
       pricePerNight: 45000,
       amenities: ['Spa', 'Ski-in / Ski-out', 'Free WiFi', 'Breakfast Included', 'Fireplace Lounge'],
@@ -321,7 +324,7 @@
       id: 'htl-04',
       name: 'Jimbaran Bay Villas',
       destination: 'Bali, Indonesia',
-      image: '/assets/images/destinations/bali.jpg',
+      image: '/assets/images/hotels/jimbaran-bay-villas.webp',
       rating: 4.9,
       pricePerNight: 32000,
       amenities: ['Private Pool Villas', 'Free WiFi', 'Spa', 'Beach Access', 'Breakfast Included'],
@@ -334,7 +337,7 @@
       id: 'htl-05',
       name: 'Sacred Valley Monastery Hotel',
       destination: 'Cusco, Peru',
-      image: '/assets/images/destinations/cusco.jpg',
+      image: '/assets/images/hotels/sacred-valley-monastery-hotel.webp',
       rating: 4.6,
       pricePerNight: 36000,
       amenities: ['Free WiFi', 'Oxygen-Enriched Rooms', 'Spa', 'Breakfast Included'],
@@ -347,7 +350,7 @@
       id: 'htl-06',
       name: 'Maison Seine Paris',
       destination: 'Paris, France',
-      image: '/assets/images/destinations/paris.jpg',
+      image: '/assets/images/hotels/maison-seine-paris.webp',
       rating: 4.8,
       pricePerNight: 55000,
       amenities: ['Free WiFi', 'Fine Dining', 'Spa', 'Concierge', 'Breakfast Included'],
@@ -360,7 +363,7 @@
       id: 'htl-07',
       name: 'Azure Lagoon Water Villas',
       destination: 'Maldives',
-      image: '/assets/images/destinations/maldives.jpg',
+      image: '/assets/images/hotels/azure-lagoon-water-villas.webp',
       rating: 5.0,
       pricePerNight: 98000,
       amenities: ['Overwater Villa', 'Private Pool', 'Free WiFi', 'Spa', 'All-Inclusive'],
@@ -373,7 +376,7 @@
       id: 'htl-08',
       name: 'Remarkables View Hotel',
       destination: 'Queenstown, New Zealand',
-      image: '/assets/images/destinations/queenstown.jpg',
+      image: '/assets/images/hotels/remarkables-view-hotel.webp',
       rating: 4.7,
       pricePerNight: 41000,
       amenities: ['Lake View', 'Free WiFi', 'Breakfast Included', 'Spa'],
@@ -386,7 +389,7 @@
       id: 'htl-09',
       name: 'Rockies Springs Grand Hotel',
       destination: 'Banff, Canada',
-      image: '/assets/images/destinations/banff.jpg',
+      image: '/assets/images/hotels/rockies-springs-grand-hotel.webp',
       rating: 4.7,
       pricePerNight: 34000,
       amenities: ['Free WiFi', 'Spa', 'Golf Course', 'Mountain View', 'Breakfast Included'],
@@ -399,7 +402,7 @@
       id: 'htl-10',
       name: 'Dune Pearl Palace',
       destination: 'Dubai, UAE',
-      image: '/assets/images/destinations/dubai.jpg',
+      image: '/assets/images/hotels/dune-pearl-palace.webp',
       rating: 4.9,
       pricePerNight: 120000,
       amenities: ['Butler Service', 'Free WiFi', 'Private Beach', 'Spa', 'All-Inclusive'],
@@ -412,7 +415,7 @@
       id: 'htl-11',
       name: 'Cliffside Amalfi Retreat',
       destination: 'Amalfi Coast, Italy',
-      image: '/assets/images/destinations/amalfi-coast.jpg',
+      image: '/assets/images/hotels/cliffside-amalfi-retreat.webp',
       rating: 4.8,
       pricePerNight: 62000,
       amenities: ['Infinity Pool', 'Sea View', 'Free WiFi', 'Spa', 'Breakfast Included'],
@@ -425,7 +428,7 @@
       id: 'htl-12',
       name: 'Northern Lights Geothermal Retreat',
       destination: 'Reykjavik, Iceland',
-      image: '/assets/images/destinations/reykjavik.jpg',
+      image: '/assets/images/hotels/northern-lights-geothermal-retreat.webp',
       rating: 4.9,
       pricePerNight: 88000,
       amenities: ['Geothermal Lagoon Access', 'Spa', 'Free WiFi', 'Breakfast Included'],
@@ -436,17 +439,18 @@
     }
   ];
 
+  // ---- Packages ----
   var packages = [
     {
       id: 'pkg-01',
       title: 'Santorini Sunset Escape',
       destination: 'Santorini, Greece',
-      image: '/assets/images/destinations/santorini.jpg',
+      image: '/assets/images/destinations/santorini.webp',
       gallery: [
-        '/assets/images/destinations/santorini-01.jpg',
-        '/assets/images/destinations/santorini-02.jpg',
-        '/assets/images/destinations/santorini-03.jpg',
-        '/assets/images/destinations/santorini-04.jpg'
+        '/assets/images/gallery/santorini-01.webp',
+        '/assets/images/gallery/santorini-02.webp',
+        '/assets/images/gallery/santorini-03.webp',
+        '/assets/images/gallery/santorini-04.webp'
       ],
       duration: { days: 5, nights: 4 },
       price: 89000,
@@ -466,12 +470,12 @@
       id: 'pkg-02',
       title: 'Kyoto Heritage Trail',
       destination: 'Kyoto, Japan',
-      image: '/assets/images/destinations/kyoto.jpg',
+      image: '/assets/images/destinations/kyoto.webp',
       gallery: [
-        '/assets/images/destinations/kyoto-01.jpg',
-        '/assets/images/destinations/kyoto-02.jpg',
-        '/assets/images/destinations/kyoto-03.jpg',
-        '/assets/images/destinations/kyoto-04.jpg'
+        '/assets/images/gallery/kyoto-01.webp',
+        '/assets/images/gallery/kyoto-02.webp',
+        '/assets/images/gallery/kyoto-03.webp',
+        '/assets/images/gallery/kyoto-04.webp'
       ],
       duration: { days: 6, nights: 5 },
       price: 112000,
@@ -492,12 +496,12 @@
       id: 'pkg-03',
       title: 'Matterhorn Alpine Adventure',
       destination: 'Zermatt, Switzerland',
-      image: '/assets/images/destinations/zermatt.jpg',
+      image: '/assets/images/destinations/zermatt.webp',
       gallery: [
-        '/assets/images/destinations/zermatt-01.jpg',
-        '/assets/images/destinations/zermatt-02.jpg',
-        '/assets/images/destinations/zermatt-03.jpg',
-        '/assets/images/destinations/zermatt-04.jpg'
+        '/assets/images/gallery/zermatt-01.webp',
+        '/assets/images/gallery/zermatt-02.webp',
+        '/assets/images/gallery/zermatt-03.webp',
+        '/assets/images/gallery/zermatt-04.webp'
       ],
       duration: { days: 6, nights: 5 },
       price: 168000,
@@ -518,12 +522,12 @@
       id: 'pkg-04',
       title: 'Bali Bliss Retreat',
       destination: 'Bali, Indonesia',
-      image: '/assets/images/destinations/bali.jpg',
+      image: '/assets/images/destinations/bali.webp',
       gallery: [
-        '/assets/images/destinations/bali-01.jpg',
-        '/assets/images/destinations/bali-02.jpg',
-        '/assets/images/destinations/bali-03.jpg',
-        '/assets/images/destinations/bali-04.jpg'
+        '/assets/images/gallery/bali-01.webp',
+        '/assets/images/gallery/bali-02.webp',
+        '/assets/images/gallery/bali-03.webp',
+        '/assets/images/gallery/bali-04.webp'
       ],
       duration: { days: 7, nights: 6 },
       price: 94000,
@@ -545,12 +549,12 @@
       id: 'pkg-05',
       title: 'Inca Trail to Machu Picchu',
       destination: 'Cusco, Peru',
-      image: '/assets/images/destinations/cusco.jpg',
+      image: '/assets/images/destinations/cusco.webp',
       gallery: [
-        '/assets/images/destinations/cusco-01.jpg',
-        '/assets/images/destinations/cusco-02.jpg',
-        '/assets/images/destinations/cusco-03.jpg',
-        '/assets/images/destinations/cusco-04.jpg'
+        '/assets/images/gallery/cusco-01.webp',
+        '/assets/images/gallery/cusco-02.webp',
+        '/assets/images/gallery/cusco-03.webp',
+        '/assets/images/gallery/cusco-04.webp'
       ],
       duration: { days: 8, nights: 7 },
       price: 215000,
@@ -573,12 +577,12 @@
       id: 'pkg-06',
       title: 'Paris Romance Getaway',
       destination: 'Paris, France',
-      image: '/assets/images/destinations/paris.jpg',
+      image: '/assets/images/destinations/paris.webp',
       gallery: [
-        '/assets/images/destinations/paris-01.jpg',
-        '/assets/images/destinations/paris-02.jpg',
-        '/assets/images/destinations/paris-03.jpg',
-        '/assets/images/destinations/paris-04.jpg'
+        '/assets/images/gallery/paris-01.webp',
+        '/assets/images/gallery/paris-02.webp',
+        '/assets/images/gallery/paris-03.webp',
+        '/assets/images/gallery/paris-04.webp'
       ],
       duration: { days: 5, nights: 4 },
       price: 128000,
@@ -598,12 +602,12 @@
       id: 'pkg-07',
       title: 'Maldives Overwater Escape',
       destination: 'Maldives',
-      image: '/assets/images/destinations/maldives.jpg',
+      image: '/assets/images/destinations/maldives.webp',
       gallery: [
-        '/assets/images/destinations/maldives-01.jpg',
-        '/assets/images/destinations/maldives-02.jpg',
-        '/assets/images/destinations/maldives-03.jpg',
-        '/assets/images/destinations/maldives-04.jpg'
+        '/assets/images/gallery/maldives-01.webp',
+        '/assets/images/gallery/maldives-02.webp',
+        '/assets/images/gallery/maldives-03.webp',
+        '/assets/images/gallery/maldives-04.webp'
       ],
       duration: { days: 6, nights: 5 },
       price: 245000,
@@ -624,12 +628,12 @@
       id: 'pkg-08',
       title: 'Queenstown Thrill Seeker',
       destination: 'Queenstown, New Zealand',
-      image: '/assets/images/destinations/queenstown.jpg',
+      image: '/assets/images/destinations/queenstown.webp',
       gallery: [
-        '/assets/images/destinations/queenstown-01.jpg',
-        '/assets/images/destinations/queenstown-02.jpg',
-        '/assets/images/destinations/queenstown-03.jpg',
-        '/assets/images/destinations/queenstown-04.jpg'
+        '/assets/images/gallery/queenstown-01.webp',
+        '/assets/images/gallery/queenstown-02.webp',
+        '/assets/images/gallery/queenstown-03.webp',
+        '/assets/images/gallery/queenstown-04.webp'
       ],
       duration: { days: 7, nights: 6 },
       price: 198000,
@@ -651,12 +655,12 @@
       id: 'pkg-09',
       title: 'Banff Rockies Explorer',
       destination: 'Banff, Canada',
-      image: '/assets/images/destinations/banff.jpg',
+      image: '/assets/images/destinations/banff.webp',
       gallery: [
-        '/assets/images/destinations/banff-01.jpg',
-        '/assets/images/destinations/banff-02.jpg',
-        '/assets/images/destinations/banff-03.jpg',
-        '/assets/images/destinations/banff-04.jpg'
+        '/assets/images/gallery/banff-01.webp',
+        '/assets/images/gallery/banff-02.webp',
+        '/assets/images/gallery/banff-03.webp',
+        '/assets/images/gallery/banff-04.webp'
       ],
       duration: { days: 6, nights: 5 },
       price: 172000,
@@ -677,12 +681,12 @@
       id: 'pkg-10',
       title: 'Dubai Desert & Skyline',
       destination: 'Dubai, UAE',
-      image: '/assets/images/destinations/dubai.jpg',
+      image: '/assets/images/destinations/dubai.webp',
       gallery: [
-        '/assets/images/destinations/dubai-01.jpg',
-        '/assets/images/destinations/dubai-02.jpg',
-        '/assets/images/destinations/dubai-03.jpg',
-        '/assets/images/destinations/dubai-04.jpg'
+        '/assets/images/gallery/dubai-01.webp',
+        '/assets/images/gallery/dubai-02.webp',
+        '/assets/images/gallery/dubai-03.webp',
+        '/assets/images/gallery/dubai-04.webp'
       ],
       duration: { days: 5, nights: 4 },
       price: 96000,
@@ -702,12 +706,12 @@
       id: 'pkg-11',
       title: 'Amalfi Coast Indulgence',
       destination: 'Amalfi Coast, Italy',
-      image: '/assets/images/destinations/amalfi-coast.jpg',
+      image: '/assets/images/destinations/amalfi-coast.webp',
       gallery: [
-        '/assets/images/destinations/amalfi-coast-01.jpg',
-        '/assets/images/destinations/amalfi-coast-02.jpg',
-        '/assets/images/destinations/amalfi-coast-03.jpg',
-        '/assets/images/destinations/amalfi-coast-04.jpg'
+        '/assets/images/gallery/amalfi-coast-01.webp',
+        '/assets/images/gallery/amalfi-coast-02.webp',
+        '/assets/images/gallery/amalfi-coast-03.webp',
+        '/assets/images/gallery/amalfi-coast-04.webp'
       ],
       duration: { days: 6, nights: 5 },
       price: 156000,
@@ -728,12 +732,12 @@
       id: 'pkg-12',
       title: 'Iceland Northern Lights Chase',
       destination: 'Reykjavik, Iceland',
-      image: '/assets/images/destinations/reykjavik.jpg',
+      image: '/assets/images/destinations/reykjavik.webp',
       gallery: [
-        '/assets/images/destinations/reykjavik-01.jpg',
-        '/assets/images/destinations/reykjavik-02.jpg',
-        '/assets/images/destinations/reykjavik-03.jpg',
-        '/assets/images/destinations/reykjavik-04.jpg'
+        '/assets/images/gallery/reykjavik-01.webp',
+        '/assets/images/gallery/reykjavik-02.webp',
+        '/assets/images/gallery/reykjavik-03.webp',
+        '/assets/images/gallery/reykjavik-04.webp'
       ],
       duration: { days: 6, nights: 5 },
       price: 182000,
@@ -752,16 +756,18 @@
     }
   ];
 
+  // ---- Tours ----
   var tours = [
     {
       id: 'tur-01',
       title: 'Santorini Sunset Photography Tour',
       theme: 'Photography',
       destination: 'Santorini, Greece',
-      image: '/assets/images/destinations/santorini.jpg',
+      image: '/assets/images/tours/santorini-sunset-photography-tour.webp',
       duration: '4 Days',
       groupSize: 'Max 8',
       price: 62000,
+      rating: 4.9,
       highlights: ['Golden-hour shoots in Oia', 'Blue-domed church compositions', 'Professional photography guide', 'Small group of 8']
     },
     {
@@ -769,10 +775,11 @@
       title: 'Kyoto Zen & Culture Immersion',
       theme: 'Cultural Heritage',
       destination: 'Kyoto, Japan',
-      image: '/assets/images/destinations/kyoto.jpg',
+      image: '/assets/images/tours/kyoto-zen-culture-immersion.webp',
       duration: '5 Days',
       groupSize: 'Max 10',
       price: 78000,
+      rating: 4.8,
       highlights: ['Meditation with Zen monks', 'Traditional tea ceremony', 'Kimono walking tour', 'Local artisan workshops']
     },
     {
@@ -780,10 +787,11 @@
       title: 'Swiss Alps Trekking Expedition',
       theme: 'Trekking',
       destination: 'Zermatt, Switzerland',
-      image: '/assets/images/destinations/zermatt.jpg',
+      image: '/assets/images/tours/swiss-alps-trekking-expedition.webp',
       duration: '6 Days',
       groupSize: 'Max 12',
       price: 132000,
+      rating: 4.7,
       highlights: ['Five Lakes hiking trail', 'Glacier Paradise viewpoint', 'Mountain hut overnight', 'Expert alpine guide']
     },
     {
@@ -791,10 +799,11 @@
       title: 'Bali Wellness & Yoga Journey',
       theme: 'Wellness',
       destination: 'Bali, Indonesia',
-      image: '/assets/images/destinations/bali.jpg',
+      image: '/assets/images/tours/bali-wellness-yoga-journey.webp',
       duration: '5 Days',
       groupSize: 'Max 10',
       price: 58000,
+      rating: 4.8,
       highlights: ['Sunrise yoga in Ubud', 'Traditional Balinese healing ritual', 'Rice terrace trek', 'Farm-to-table organic meals']
     },
     {
@@ -802,10 +811,11 @@
       title: 'Machu Picchu Trekking Trail',
       theme: 'Adventure',
       destination: 'Cusco, Peru',
-      image: '/assets/images/destinations/cusco.jpg',
+      image: '/assets/images/tours/machu-picchu-trekking-trail.webp',
       duration: '7 Days',
       groupSize: 'Max 14',
       price: 168000,
+      rating: 4.9,
       highlights: ['Classic Inca Trail trek', 'Sacred Valley exploration', 'Sunrise at Machu Picchu', 'Altitude acclimatization in Cusco']
     },
     {
@@ -813,10 +823,11 @@
       title: 'Paris Culinary Discovery',
       theme: 'Culinary',
       destination: 'Paris, France',
-      image: '/assets/images/destinations/paris.jpg',
+      image: '/assets/images/tours/paris-culinary-discovery.webp',
       duration: '4 Days',
       groupSize: 'Max 8',
       price: 96000,
+      rating: 4.7,
       highlights: ['Fine-dining tasting menu', 'Pastry-making class', 'Wine tasting in Montmartre', 'Market-to-table cooking session']
     },
     {
@@ -824,10 +835,11 @@
       title: 'Maldives Marine Safari',
       theme: 'Nature',
       destination: 'Maldives',
-      image: '/assets/images/destinations/maldives.jpg',
+      image: '/assets/images/tours/maldives-marine-safari.webp',
       duration: '5 Days',
       groupSize: 'Max 10',
       price: 148000,
+      rating: 4.9,
       highlights: ['Manta ray snorkeling', 'Bioluminescent plankton night swim', 'Private sandbank picnic', 'Dolphin watching cruise']
     },
     {
@@ -835,10 +847,11 @@
       title: 'Queenstown Adventure Rush',
       theme: 'Adventure',
       destination: 'Queenstown, New Zealand',
-      image: '/assets/images/destinations/queenstown.jpg',
+      image: '/assets/images/tours/queenstown-adventure-rush.webp',
       duration: '6 Days',
       groupSize: 'Max 12',
       price: 142000,
+      rating: 4.6,
       highlights: ['Bungee jump at Kawarau Bridge', 'Shotover Jet boat ride', 'Skydive over Lake Wakatipu', 'Milford Sound day trip']
     },
     {
@@ -846,10 +859,11 @@
       title: 'Banff Wildlife & Nature Tour',
       theme: 'Wildlife',
       destination: 'Banff, Canada',
-      image: '/assets/images/destinations/banff.jpg',
+      image: '/assets/images/tours/banff-wildlife-nature-tour.webp',
       duration: '5 Days',
       groupSize: 'Max 10',
       price: 118000,
+      rating: 4.7,
       highlights: ['Grizzly bear viewing gondola', 'Moraine Lake canoe paddle', 'Icefields Parkway drive', 'Wildlife photography walk']
     },
     {
@@ -857,10 +871,11 @@
       title: 'Dubai Luxury Desert Escape',
       theme: 'Luxury',
       destination: 'Dubai, UAE',
-      image: '/assets/images/destinations/dubai.jpg',
+      image: '/assets/images/tours/dubai-luxury-desert-escape.webp',
       duration: '4 Days',
       groupSize: 'Max 8',
       price: 88000,
+      rating: 4.8,
       highlights: ['Private dune dinner under the stars', 'Falconry experience', 'Luxury yacht cruise', 'VIP Burj Khalifa access']
     },
     {
@@ -868,10 +883,11 @@
       title: 'Amalfi Coast Sailing Tour',
       theme: 'Cruise',
       destination: 'Amalfi Coast, Italy',
-      image: '/assets/images/destinations/amalfi-coast.jpg',
+      image: '/assets/images/tours/amalfi-coast-sailing-tour.webp',
       duration: '5 Days',
       groupSize: 'Max 10',
       price: 122000,
+      rating: 4.9,
       highlights: ['Private sailboat to Capri', 'Limoncello tasting in Sorrento', 'Coastal village hopping', 'Cliffside dinner in Positano']
     },
     {
@@ -879,14 +895,16 @@
       title: 'Iceland Ring Road Explorer',
       theme: 'Nature',
       destination: 'Reykjavik, Iceland',
-      image: '/assets/images/destinations/reykjavik.jpg',
+      image: '/assets/images/tours/iceland-ring-road-explorer.webp',
       duration: '7 Days',
       groupSize: 'Max 12',
       price: 158000,
+      rating: 4.8,
       highlights: ['Northern Lights hunting', 'Glacier lagoon boat tour', 'Black sand beach at Vík', 'Golden Circle geysers']
     }
   ];
 
+  // ---- Helpers ----
   function formatCurrency(amount) {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -904,6 +922,18 @@
     return 'VYR-' + id;
   }
 
+  // hotels/tours store destination as a free-text string ("Dubai, UAE",
+  // "Maldives") that doesn't always match `name + ', ' + country` exactly
+  // (abbreviations, country-as-destination cases) — matching on the
+  // destination name as a prefix, same convention as destination-detail.js's
+  // belongsToDestination(). Returns undefined if no destination matches.
+  function findDestinationId(destinationText) {
+    var match = destinations.filter(function (d) {
+      return destinationText.indexOf(d.name) === 0;
+    })[0];
+    return match ? match.id : undefined;
+  }
+
   window.VoyaraData = {
     destinations: destinations,
     flights: flights,
@@ -911,6 +941,7 @@
     packages: packages,
     tours: tours,
     formatCurrency: formatCurrency,
-    generateBookingId: generateBookingId
+    generateBookingId: generateBookingId,
+    findDestinationId: findDestinationId
   };
 })();

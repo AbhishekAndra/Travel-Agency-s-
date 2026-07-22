@@ -4,8 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checkout | Voyara</title>
+  <meta name="description" content="Complete your booking securely with Voyara — enter traveler and payment details to confirm your trip.">
+  <meta name="keywords" content="book luxury trip, travel checkout, secure travel booking">
+  <link rel="canonical" href="https://abhishekandra.github.io/Travel-Agency-s-/pages/checkout.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Checkout | Voyara">
+  <meta property="og:description" content="Complete your booking securely with Voyara — enter traveler and payment details to confirm your trip.">
+  <meta property="og:image" content="https://abhishekandra.github.io/Travel-Agency-s-/assets/images/og-image.jpg">
+  <meta property="og:url" content="https://abhishekandra.github.io/Travel-Agency-s-/pages/checkout.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Checkout | Voyara">
+  <meta name="twitter:description" content="Complete your booking securely with Voyara — enter traveler and payment details to confirm your trip.">
+  <meta name="twitter:image" content="https://abhishekandra.github.io/Travel-Agency-s-/assets/images/og-image.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../css/variables.css">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/components.css">
@@ -80,12 +96,12 @@
 
   <main>
     <div class="container">
-      <div class="page-intro">
+      <div class="page-intro" data-reveal="fade-up">
         <h1>Checkout</h1>
       </div>
 
       <div class="not-found-state" id="not-found-state" hidden>
-        <h1>Nothing to Check Out</h1>
+        <h2>Nothing to Check Out</h2>
         <p>Your cart is empty and there's no booking in progress. Browse our packages to start planning your trip.</p>
         <a href="packages.html" class="btn btn-primary">Browse Packages</a>
       </div>
@@ -117,20 +133,20 @@
 
               <div class="form-field" id="traveler-name-field">
                 <label for="traveler-name">Full Name</label>
-                <input type="text" id="traveler-name" autocomplete="name">
-                <span class="field-error" id="traveler-name-error"></span>
+                <input type="text" id="traveler-name" autocomplete="name" aria-required="true">
+                <span class="field-error" aria-live="polite" id="traveler-name-error"></span>
               </div>
 
               <div class="form-field" id="traveler-email-field">
                 <label for="traveler-email">Email</label>
-                <input type="email" id="traveler-email" autocomplete="email">
-                <span class="field-error" id="traveler-email-error"></span>
+                <input type="email" id="traveler-email" autocomplete="email" aria-required="true">
+                <span class="field-error" aria-live="polite" id="traveler-email-error"></span>
               </div>
 
               <div class="form-field" id="traveler-phone-field">
                 <label for="traveler-phone">Phone</label>
-                <input type="tel" id="traveler-phone" autocomplete="tel">
-                <span class="field-error" id="traveler-phone-error"></span>
+                <input type="tel" id="traveler-phone" autocomplete="tel" aria-required="true">
+                <span class="field-error" aria-live="polite" id="traveler-phone-error"></span>
               </div>
 
               <div class="form-field">
@@ -167,26 +183,26 @@
               <div id="payment-card-fields">
                 <div class="form-field" id="card-name-field">
                   <label for="card-name">Name on Card</label>
-                  <input type="text" id="card-name" autocomplete="cc-name">
-                  <span class="field-error" id="card-name-error"></span>
+                  <input type="text" id="card-name" autocomplete="cc-name" aria-required="true">
+                  <span class="field-error" aria-live="polite" id="card-name-error"></span>
                 </div>
 
                 <div class="form-field" id="card-number-field">
                   <label for="card-number">Card Number</label>
-                  <input type="text" id="card-number" inputmode="numeric" maxlength="19" placeholder="1234 5678 9012 3456" autocomplete="cc-number">
-                  <span class="field-error" id="card-number-error"></span>
+                  <input type="text" id="card-number" inputmode="numeric" maxlength="19" placeholder="1234 5678 9012 3456" autocomplete="cc-number" aria-required="true">
+                  <span class="field-error" aria-live="polite" id="card-number-error"></span>
                 </div>
 
                 <div class="checkout-field-row">
                   <div class="form-field" id="card-expiry-field">
                     <label for="card-expiry">Expiry (MM/YY)</label>
-                    <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" autocomplete="cc-exp">
-                    <span class="field-error" id="card-expiry-error"></span>
+                    <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" autocomplete="cc-exp" aria-required="true">
+                    <span class="field-error" aria-live="polite" id="card-expiry-error"></span>
                   </div>
                   <div class="form-field" id="card-cvv-field">
                     <label for="card-cvv">CVV</label>
-                    <input type="text" id="card-cvv" inputmode="numeric" maxlength="4" placeholder="123" autocomplete="cc-csc">
-                    <span class="field-error" id="card-cvv-error"></span>
+                    <input type="text" id="card-cvv" inputmode="numeric" maxlength="4" placeholder="123" autocomplete="cc-csc" aria-required="true">
+                    <span class="field-error" aria-live="polite" id="card-cvv-error"></span>
                   </div>
                 </div>
               </div>
@@ -194,15 +210,15 @@
               <div id="payment-upi-fields" hidden>
                 <div class="form-field" id="upi-id-field">
                   <label for="upi-id">UPI ID</label>
-                  <input type="text" id="upi-id" placeholder="yourname@bank">
-                  <span class="field-error" id="upi-id-error"></span>
+                  <input type="text" id="upi-id" placeholder="yourname@bank" aria-required="true">
+                  <span class="field-error" aria-live="polite" id="upi-id-error"></span>
                 </div>
               </div>
 
               <div id="payment-netbanking-fields" hidden>
                 <div class="form-field" id="netbanking-bank-field">
                   <label for="netbanking-bank">Select Bank</label>
-                  <select id="netbanking-bank">
+                  <select id="netbanking-bank" aria-required="true">
                     <option value="">Choose your bank</option>
                     <option>State Bank of India</option>
                     <option>HDFC Bank</option>
@@ -210,7 +226,7 @@
                     <option>Axis Bank</option>
                     <option>Kotak Mahindra Bank</option>
                   </select>
-                  <span class="field-error" id="netbanking-bank-error"></span>
+                  <span class="field-error" aria-live="polite" id="netbanking-bank-error"></span>
                 </div>
               </div>
 
@@ -227,17 +243,17 @@
               <h2>Review Your Booking</h2>
 
               <div class="review-block">
-                <h4>Trip Details</h4>
+                <h3>Trip Details</h3>
                 <div id="review-items"></div>
               </div>
 
               <div class="review-block">
-                <h4>Traveler Details</h4>
+                <h3>Traveler Details</h3>
                 <div id="review-traveler"></div>
               </div>
 
               <div class="review-block">
-                <h4>Payment Method</h4>
+                <h3>Payment Method</h3>
                 <div id="review-payment"></div>
               </div>
 
@@ -270,7 +286,7 @@
       </div>
 
       <div class="footer-col">
-        <h4 class="footer-heading">Explore</h4>
+        <h2 class="footer-heading">Explore</h2>
         <ul>
           <li><a href="packages.html">Packages</a></li>
           <li><a href="tours.html">Tours</a></li>
@@ -281,7 +297,7 @@
       </div>
 
       <div class="footer-col">
-        <h4 class="footer-heading">Company</h4>
+        <h2 class="footer-heading">Company</h2>
         <ul>
           <li><a href="about.html">About Us</a></li>
           <li><a href="contact.html">Contact</a></li>
@@ -290,16 +306,16 @@
       </div>
 
       <div class="footer-col footer-newsletter">
-        <h4 class="footer-heading">Stay Inspired</h4>
+        <h2 class="footer-heading">Stay Inspired</h2>
         <p>Join our list for private offers and new destinations.</p>
         <form class="newsletter-form" id="newsletter-form" novalidate>
           <label for="newsletter-email" class="visually-hidden">Email address</label>
           <div class="newsletter-input-row">
-            <input type="email" id="newsletter-email" placeholder="Email address" autocomplete="email">
+            <input type="email" id="newsletter-email" placeholder="Email address" autocomplete="email" aria-required="true">
             <button type="submit" class="btn btn-accent">Subscribe</button>
           </div>
-          <span class="field-error" id="newsletter-email-error"></span>
-          <p class="newsletter-success" id="newsletter-success" hidden>You're subscribed — watch your inbox for private offers.</p>
+          <span class="field-error" aria-live="polite" id="newsletter-email-error"></span>
+          <p class="newsletter-success" aria-live="polite" id="newsletter-success" hidden>You're subscribed — watch your inbox for private offers.</p>
         </form>
       </div>
     </div>
@@ -322,10 +338,15 @@
     </div>
   </footer>
 
+  <button type="button" class="icon-btn scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
   <script src="../js/utils.js" defer></script>
   <script src="../js/data.js" defer></script>
   <script src="../js/auth.js" defer></script>
   <script src="../js/cart.js" defer></script>
+  <script src="../js/animations.js" defer></script>
   <script src="../js/checkout.js" defer></script>
 </body>
 </html>

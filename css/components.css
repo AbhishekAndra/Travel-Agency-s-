@@ -96,6 +96,40 @@
   display: none;
 }
 
+/* ---- Scroll to top ---- */
+
+.scroll-to-top {
+  position: fixed;
+  right: var(--space-md);
+  bottom: var(--space-md);
+  z-index: var(--z-header);
+  background-color: var(--color-navy);
+  color: var(--color-cream);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity var(--transition-base), transform var(--transition-base), background-color var(--transition-fast), visibility var(--transition-base);
+}
+
+.scroll-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+  background-color: var(--color-navy-light);
+  color: var(--color-cream);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-to-top {
+    transition: opacity 150ms linear, visibility 150ms linear;
+    transform: none;
+  }
+}
+
 /* ---- Site header ---- */
 
 .site-header {
@@ -196,7 +230,7 @@
 
 .main-nav a:hover,
 .main-nav a.is-active {
-  color: var(--color-gold-dark);
+  color: var(--color-gold-text);
 }
 
 .main-nav a:hover::after,
@@ -232,7 +266,7 @@
 
 .account-trigger:hover {
   background-color: var(--color-grey-100);
-  color: var(--color-gold-dark);
+  color: var(--color-gold-text);
 }
 
 .account-trigger svg {
@@ -281,7 +315,7 @@
 .account-dropdown a:hover,
 .account-dropdown button:hover {
   background-color: var(--color-grey-100);
-  color: var(--color-gold-dark);
+  color: var(--color-gold-text);
 }
 
 /* ---- Mobile menu toggle (refined animated icon, not default bars) ---- */
@@ -512,8 +546,7 @@ body.mobile-nav-open {
   color: var(--color-grey-400);
 }
 
-.newsletter-form input:focus {
-  outline: none;
+.newsletter-form input:focus-visible {
   border-color: var(--color-gold);
 }
 
@@ -625,6 +658,38 @@ body.mobile-nav-open {
   margin-bottom: 0;
 }
 
+/* ---- Static content pages (careers, privacy policy, terms) ---- */
+
+.static-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--space-2xl) 0;
+}
+
+.static-page h1 {
+  margin-bottom: var(--space-sm);
+}
+
+.static-page .page-updated {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xl);
+}
+
+.static-page section {
+  margin-bottom: var(--space-xl);
+}
+
+.static-page h2 {
+  font-size: var(--fs-xl);
+  margin-bottom: var(--space-sm);
+}
+
+.static-page p {
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
+}
+
 /* ---- Listing layout (sidebar filters + results) ---- */
 
 .listing-layout {
@@ -690,7 +755,7 @@ body.mobile-nav-open {
   font-weight: var(--fw-medium);
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
-  color: var(--color-gold-dark);
+  color: var(--color-gold-text);
 }
 
 .filters-clear:hover {
@@ -855,7 +920,7 @@ body.mobile-nav-open {
   pointer-events: auto;
   width: 16px;
   height: 16px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background-color: var(--color-gold);
   border: 2px solid var(--color-white);
   box-shadow: var(--shadow-sm);
@@ -866,7 +931,7 @@ body.mobile-nav-open {
   pointer-events: auto;
   width: 16px;
   height: 16px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background-color: var(--color-gold);
   border: 2px solid var(--color-white);
   box-shadow: var(--shadow-sm);
@@ -910,8 +975,7 @@ body.mobile-nav-open {
   color: var(--color-text);
 }
 
-.sort-select:focus {
-  outline: none;
+.sort-select:focus-visible {
   border-color: var(--color-gold);
 }
 
@@ -931,6 +995,13 @@ body.mobile-nav-open {
   display: none;
 }
 
+/* cart.html's empty state uses <h2> (correct heading level — no h2 exists
+   elsewhere on that page) but keeps the same visual size as the <h3> used
+   by every other empty state on the site. */
+.empty-state h2 {
+  font-size: var(--fs-2xl);
+}
+
 @media (max-width: 425px) {
   .empty-state {
     padding: var(--space-xl) var(--space-md);
@@ -944,7 +1015,10 @@ body.mobile-nav-open {
   margin-bottom: var(--space-md);
 }
 
-.empty-state h3 {
+.empty-state h2 {
+  /* Kept at the original h3 size — this is a secondary, in-page message,
+     not promoted visually, just corrected semantically (see below). */
+  font-size: var(--fs-2xl);
   margin-bottom: var(--space-2xs);
 }
 
@@ -970,8 +1044,8 @@ body.mobile-nav-open {
 }
 
 .listing-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-7px);
+  box-shadow: 0 20px 40px rgba(11, 31, 58, 0.16);
   border-color: var(--color-grey-300);
 }
 
@@ -981,6 +1055,70 @@ body.mobile-nav-open {
   background-size: cover;
   background-position: center;
   position: relative;
+  overflow: hidden;
+}
+
+.listing-card-image-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 500ms ease;
+}
+
+.listing-card:hover .listing-card-image-bg {
+  transform: scale(1.05);
+}
+
+.wishlist-heart {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-full);
+  border: none;
+  background-color: rgba(250, 248, 244, 0.85);
+  color: var(--color-navy);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform var(--transition-fast), color var(--transition-fast);
+}
+
+.wishlist-heart svg {
+  width: 18px;
+  height: 18px;
+}
+
+.wishlist-heart:hover {
+  background-color: var(--color-white);
+  transform: scale(1.1);
+}
+
+.wishlist-heart.is-active {
+  color: var(--color-gold-dark);
+}
+
+.wishlist-heart.is-active svg {
+  fill: var(--color-gold);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .listing-card-image-bg {
+    transition: none;
+  }
+
+  .listing-card:hover .listing-card-image-bg {
+    transform: none;
+  }
+
+  .wishlist-heart:hover {
+    transform: none;
+  }
 }
 
 .listing-card-body {
@@ -996,7 +1134,7 @@ body.mobile-nav-open {
   font-family: var(--font-display);
   font-size: var(--fs-lg);
   font-weight: var(--fw-semibold);
-  color: var(--color-gold-dark);
+  color: var(--color-gold-text);
   margin: var(--space-2xs) 0;
 }
 
@@ -1059,7 +1197,7 @@ body.mobile-nav-open {
   justify-content: center;
   width: 36px;
   height: 36px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background-color: var(--color-navy);
   color: var(--color-cream);
   font-size: var(--fs-xs);
@@ -1080,7 +1218,7 @@ body.mobile-nav-open {
 }
 
 .breadcrumb a:hover {
-  color: var(--color-gold-dark);
+  color: var(--color-gold-text);
 }
 
 .not-found-state {
@@ -1154,6 +1292,18 @@ body.mobile-nav-open {
   min-height: 1.2em;
   margin-top: var(--space-3xs);
   font-size: var(--fs-xs);
+  color: var(--color-error);
+}
+
+.char-counter {
+  display: block;
+  margin-top: var(--space-3xs);
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  text-align: right;
+}
+
+.char-counter.is-limit {
   color: var(--color-error);
 }
 
@@ -1234,7 +1384,7 @@ body.mobile-nav-open {
 }
 
 .auth-switch a {
-  color: var(--color-gold-dark);
+  color: var(--color-gold-text);
   font-weight: var(--fw-medium);
 }
 
@@ -1321,7 +1471,7 @@ body.mobile-nav-open {
   justify-content: center;
   width: 28px;
   height: 28px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   border: var(--border-width) solid var(--color-navy);
   color: var(--color-navy);
   font-size: var(--fs-md);
@@ -1358,6 +1508,115 @@ body.mobile-nav-open {
   box-shadow: var(--shadow-sm);
 }
 
+/* ==========================================================================
+   Animations (see js/animations.js)
+   ========================================================================== */
+
+/* ---- Reveal on scroll ---- */
+
+.reveal-fade-up,
+.reveal-fade-left,
+.reveal-fade-right,
+.reveal-zoom-in {
+  opacity: 0;
+  transition: opacity 500ms ease-out, transform 500ms ease-out;
+  will-change: opacity, transform;
+}
+
+.reveal-fade-up { transform: translateY(28px); }
+.reveal-fade-left { transform: translateX(-28px); }
+.reveal-fade-right { transform: translateX(28px); }
+.reveal-zoom-in { transform: scale(0.94); }
+
+.reveal-fade-up.is-revealed,
+.reveal-fade-left.is-revealed,
+.reveal-fade-right.is-revealed,
+.reveal-zoom-in.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-fade-up,
+  .reveal-fade-left,
+  .reveal-fade-right,
+  .reveal-zoom-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---- Floating / bobbing decorative accents ---- */
+
+.float-bob {
+  animation: floatBob 5s ease-in-out infinite;
+}
+
+@keyframes floatBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+/* ---- Button ripple (primary CTAs only) ---- */
+
+.btn-primary,
+.btn-accent {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after,
+.btn-accent::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: var(--radius-full);
+  background-color: rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: width 450ms ease-out, height 450ms ease-out, opacity 450ms ease-out;
+  pointer-events: none;
+}
+
+.btn-primary:active::after,
+.btn-accent:active::after {
+  width: 220%;
+  height: 220%;
+  opacity: 1;
+  transition: width 0ms, height 0ms, opacity 0ms;
+}
+
+/* ---- Stats counter ---- */
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-semibold);
+  color: var(--color-navy);
+}
+
+.stat-label {
+  font-size: var(--fs-sm);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-bob {
+    animation: none;
+  }
+
+  .btn-primary::after,
+  .btn-accent::after {
+    display: none;
+  }
+}
+
 /* ---- Forms ---- */
 
 .form-field {
@@ -1382,9 +1641,8 @@ body.mobile-nav-open {
   background-color: var(--color-white);
 }
 
-.form-field input:focus,
-.form-field select:focus,
-.form-field textarea:focus {
-  outline: none;
+.form-field input:focus-visible,
+.form-field select:focus-visible,
+.form-field textarea:focus-visible {
   border-color: var(--color-gold);
 }

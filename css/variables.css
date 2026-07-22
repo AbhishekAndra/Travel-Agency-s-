@@ -12,6 +12,11 @@
   --color-gold: #C9A24B;
   --color-gold-light: #E4C98A;
   --color-gold-dark: #A9822E;
+  /* Darker than --color-gold-dark specifically for text on cream/white —
+     --color-gold-dark only clears 3:1 (large text / UI graphics); this
+     clears 4.5:1 (WCAG AA normal text). Decorative gold (icons, fills,
+     borders, gold-on-navy) stays on the tokens above. */
+  --color-gold-text: #8A6A28;
 
   --color-cream: #FAF8F4;
   --color-white: #FFFFFF;

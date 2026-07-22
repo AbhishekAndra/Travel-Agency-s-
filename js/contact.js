@@ -7,30 +7,18 @@
 (function () {
   'use strict';
 
-  function setFieldError(fieldId, errorId, message) {
-    var field = document.getElementById(fieldId);
-    var errorEl = document.getElementById(errorId);
-    field.classList.toggle('has-error', !!message);
-    errorEl.textContent = message || '';
-  }
+  var setFieldError = window.VoyaraUtils.setFieldError;
 
   function validateName(input) {
-    if (input.value.trim().length < 2) {
-      setFieldError('contact-name-field', 'contact-name-error', 'Please enter your name.');
-      return false;
-    }
-    setFieldError('contact-name-field', 'contact-name-error', '');
-    return true;
+    var error = window.VoyaraUtils.validateNameValue(input.value);
+    setFieldError('contact-name-field', 'contact-name-error', error);
+    return !error;
   }
 
   function validateEmail(input) {
-    var value = input.value.trim();
-    if (!value || !window.VoyaraAuth.isValidEmail(value)) {
-      setFieldError('contact-email-field', 'contact-email-error', 'Enter a valid email address.');
-      return false;
-    }
-    setFieldError('contact-email-field', 'contact-email-error', '');
-    return true;
+    var error = window.VoyaraUtils.validateEmailValue(input.value);
+    setFieldError('contact-email-field', 'contact-email-error', error);
+    return !error;
   }
 
   function validateSubject(input) {
@@ -43,8 +31,8 @@
   }
 
   function validateMessage(input) {
-    if (input.value.trim().length < 10) {
-      setFieldError('contact-message-field', 'contact-message-error', 'Please enter at least 10 characters.');
+    if (!input.value.trim()) {
+      setFieldError('contact-message-field', 'contact-message-error', 'This field is required.');
       return false;
     }
     setFieldError('contact-message-field', 'contact-message-error', '');
@@ -68,6 +56,8 @@
       { input: messageInput, validate: validateMessage }
     ];
 
+    window.VoyaraUtils.initCharCounter('contact-message', 'contact-message-counter', 500);
+
     fields.forEach(function (f) {
       f.input.addEventListener('blur', function () { f.validate(f.input); });
       f.input.addEventListener('input', function () {
@@ -81,13 +71,11 @@
     form.addEventListener('submit', function (event) {
       event.preventDefault();
 
-      var isValid = fields.reduce(function (allValid, f) {
-        return f.validate(f.input) && allValid;
-      }, true);
-
+      var isValid = window.VoyaraUtils.validateFieldsAndFocus(fields);
       if (!isValid) return;
 
       form.reset();
+      messageInput.dispatchEvent(new Event('input'));
       successEl.hidden = false;
     });
   }

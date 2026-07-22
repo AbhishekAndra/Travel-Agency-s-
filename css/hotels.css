@@ -2,6 +2,8 @@
    Voyara — Hotels page styles
    ========================================================================== */
 
+/* ---- Grid breakpoints ---- */
+
 .listing-grid--hotels {
   grid-template-columns: repeat(3, 1fr);
 }
@@ -17,6 +19,8 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ---- Hotel card content ---- */
 
 .hotel-card-header {
   display: flex;
@@ -49,7 +53,7 @@
   justify-content: center;
   width: 28px;
   height: 28px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background-color: var(--color-grey-100);
   color: var(--color-navy);
 }
@@ -62,4 +66,9 @@
 .amenity-more {
   font-size: var(--fs-xs);
   color: var(--color-text-muted);
+}
+
+.hotel-card .listing-card-body .btn {
+  margin-top: var(--space-sm);
+  width: 100%;
 }

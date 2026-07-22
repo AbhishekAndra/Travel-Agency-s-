@@ -19,7 +19,7 @@
   justify-content: center;
   width: 80px;
   height: 80px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   color: var(--color-success);
   background-color: rgba(63, 107, 79, 0.08);
   margin-bottom: var(--space-lg);
@@ -59,7 +59,7 @@
 .confirmation-reference strong {
   font-family: var(--font-display);
   letter-spacing: var(--ls-wide);
-  color: var(--color-gold-dark);
+  color: var(--color-gold-text);
 }
 
 /* ---- Layout ---- */

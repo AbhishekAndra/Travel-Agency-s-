@@ -4,18 +4,49 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Voyara | Luxury Travel</title>
+  <meta name="description" content="Voyara is a luxury travel agency curating handpicked flights, hotels, packages, and tours to the world's most quietly extraordinary destinations.">
+  <meta name="keywords" content="luxury travel agency, luxury vacations, curated travel packages, bespoke travel, honeymoon packages, luxury hotels, private tours, Voyara">
+  <link rel="canonical" href="https://abhishekandra.github.io/Travel-Agency-s-/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Voyara | Luxury Travel">
+  <meta property="og:description" content="Voyara is a luxury travel agency curating handpicked flights, hotels, packages, and tours to the world's most quietly extraordinary destinations.">
+  <meta property="og:image" content="https://abhishekandra.github.io/Travel-Agency-s-/assets/images/og-image.jpg">
+  <meta property="og:url" content="https://abhishekandra.github.io/Travel-Agency-s-/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Voyara | Luxury Travel">
+  <meta name="twitter:description" content="Voyara is a luxury travel agency curating handpicked flights, hotels, packages, and tours to the world's most quietly extraordinary destinations.">
+  <meta name="twitter:image" content="https://abhishekandra.github.io/Travel-Agency-s-/assets/images/og-image.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/home.css">
+  <link rel="preload" as="image" href="/assets/images/hero/home.webp"
+    imagesrcset="/assets/images/hero/home-800w.webp 800w, /assets/images/hero/home-1200w.webp 1200w, /assets/images/hero/home.webp 1920w"
+    imagesizes="100vw" fetchpriority="high">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": "Voyara",
+    "description": "Voyara is a luxury travel agency curating handpicked flights, hotels, packages, and tours to the world's most quietly extraordinary destinations.",
+    "url": "https://abhishekandra.github.io/Travel-Agency-s-/",
+    "logo": "https://abhishekandra.github.io/Travel-Agency-s-/favicon.svg",
+    "sameAs": [
+      "https://instagram.com/voyaratravel",
+      "https://facebook.com/voyaratravel",
+      "https://x.com/voyaratravel"
+    ]
+  }
+  </script>
 </head>
-<body>
-  <!-- When a hero section is added below, add class="has-hero" to <body> and
-       class="site-header--transparent" to <header> so it starts transparent
-       and fades to solid cream on scroll (see js/utils.js initHeaderScroll). -->
-  <header class="site-header" id="site-header">
+<body class="has-hero">
+  <header class="site-header site-header--transparent" id="site-header">
     <div class="container header-inner">
       <a href="index.html" class="logo">Voyara</a>
 
@@ -82,35 +113,69 @@
   </header>
 
   <main>
-    <section class="search-widget-section">
-      <div class="container">
-        <div class="page-intro">
-          <h1>Find Your Next Journey</h1>
-          <p>Search our curated packages by destination and start planning.</p>
+    <section class="hero">
+      <img class="hero-bg" data-parallax data-parallax-max="50"
+        src="/assets/images/hero/home.webp"
+        srcset="/assets/images/hero/home-800w.webp 800w, /assets/images/hero/home-1200w.webp 1200w, /assets/images/hero/home.webp 1920w"
+        sizes="100vw" width="1920" height="1080"
+        alt="Golden hour light over a whitewashed cliffside coastal town, evoking Voyara's curated luxury destinations"
+        loading="eager" fetchpriority="high"
+        onerror="this.onerror=null;this.removeAttribute('srcset');this.src='/assets/images/placeholder.svg';">
+      <div class="hero-overlay"></div>
+      <svg class="hero-decor float-bob" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M15 9l-2 5-5 2 2-5z"/>
+      </svg>
+
+      <div class="container hero-content">
+        <h1 data-reveal="fade-up">Journeys Worth Remembering</h1>
+        <p class="hero-subheading" data-typing-text="Curated escapes to the world's most quietly extraordinary places." aria-label="Curated escapes to the world's most quietly extraordinary places."></p>
+      </div>
+    </section>
+
+    <div class="container search-widget-wrap">
+      <form class="search-widget" id="search-widget" novalidate data-reveal="fade-up">
+        <div class="form-field" id="search-destination-field">
+          <label for="search-destination">Where to</label>
+          <select id="search-destination">
+            <option value="">Select a destination</option>
+          </select>
+          <span class="field-error" aria-live="polite" id="search-destination-error"></span>
         </div>
 
-        <form class="search-widget" id="search-widget" novalidate>
-          <div class="form-field" id="search-destination-field">
-            <label for="search-destination">Where to</label>
-            <select id="search-destination">
-              <option value="">Select a destination</option>
-            </select>
-            <span class="field-error" id="search-destination-error"></span>
-          </div>
+        <div class="form-field" id="search-travelers-field">
+          <label for="search-travelers">Travelers</label>
+          <select id="search-travelers">
+            <option value="1">1 Traveler</option>
+            <option value="2">2 Travelers</option>
+            <option value="3">3 Travelers</option>
+            <option value="4">4 Travelers</option>
+            <option value="5">5+ Travelers</option>
+          </select>
+        </div>
 
-          <div class="form-field" id="search-travelers-field">
-            <label for="search-travelers">Travelers</label>
-            <select id="search-travelers">
-              <option value="1">1 Traveler</option>
-              <option value="2">2 Travelers</option>
-              <option value="3">3 Travelers</option>
-              <option value="4">4 Travelers</option>
-              <option value="5">5+ Travelers</option>
-            </select>
-          </div>
+        <button type="submit" class="btn btn-accent search-widget-submit">Search Packages</button>
+      </form>
+    </div>
 
-          <button type="submit" class="btn btn-accent search-widget-submit">Search Packages</button>
-        </form>
+    <section class="stats-bar">
+      <div class="container stats-grid">
+        <div class="stat-item" data-reveal="fade-up">
+          <p class="stat-number" data-count-to="500" data-count-suffix="+">0+</p>
+          <p class="stat-label">Destinations</p>
+        </div>
+        <div class="stat-item" data-reveal="fade-up">
+          <p class="stat-number" data-count-to="15" data-count-suffix="K+">0K+</p>
+          <p class="stat-label">Happy Travelers</p>
+        </div>
+        <div class="stat-item" data-reveal="fade-up">
+          <p class="stat-number" data-count-to="12" data-count-suffix="+">0+</p>
+          <p class="stat-label">Years of Experience</p>
+        </div>
+        <div class="stat-item" data-reveal="fade-up">
+          <p class="stat-number" data-count-to="40" data-count-suffix="+">0+</p>
+          <p class="stat-label">Countries</p>
+        </div>
       </div>
     </section>
   </main>
@@ -123,7 +188,7 @@
       </div>
 
       <div class="footer-col">
-        <h4 class="footer-heading">Explore</h4>
+        <h2 class="footer-heading">Explore</h2>
         <ul>
           <li><a href="pages/packages.html">Packages</a></li>
           <li><a href="pages/tours.html">Tours</a></li>
@@ -134,7 +199,7 @@
       </div>
 
       <div class="footer-col">
-        <h4 class="footer-heading">Company</h4>
+        <h2 class="footer-heading">Company</h2>
         <ul>
           <li><a href="pages/about.html">About Us</a></li>
           <li><a href="pages/contact.html">Contact</a></li>
@@ -143,16 +208,16 @@
       </div>
 
       <div class="footer-col footer-newsletter">
-        <h4 class="footer-heading">Stay Inspired</h4>
+        <h2 class="footer-heading">Stay Inspired</h2>
         <p>Join our list for private offers and new destinations.</p>
         <form class="newsletter-form" id="newsletter-form" novalidate>
           <label for="newsletter-email" class="visually-hidden">Email address</label>
           <div class="newsletter-input-row">
-            <input type="email" id="newsletter-email" placeholder="Email address" autocomplete="email">
+            <input type="email" id="newsletter-email" placeholder="Email address" autocomplete="email" aria-required="true">
             <button type="submit" class="btn btn-accent">Subscribe</button>
           </div>
-          <span class="field-error" id="newsletter-email-error"></span>
-          <p class="newsletter-success" id="newsletter-success" hidden>You're subscribed — watch your inbox for private offers.</p>
+          <span class="field-error" aria-live="polite" id="newsletter-email-error"></span>
+          <p class="newsletter-success" aria-live="polite" id="newsletter-success" hidden>You're subscribed — watch your inbox for private offers.</p>
         </form>
       </div>
     </div>
@@ -175,10 +240,15 @@
     </div>
   </footer>
 
+  <button type="button" class="icon-btn scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
   <script src="js/utils.js" defer></script>
   <script src="js/data.js" defer></script>
   <script src="js/auth.js" defer></script>
   <script src="js/cart.js" defer></script>
+  <script src="js/animations.js" defer></script>
   <script src="js/home.js" defer></script>
 </body>
 </html>

@@ -18,14 +18,30 @@
     return itemDestination.indexOf(destination.name) === 0;
   }
 
+  // ---- Related package/hotel/tour card rendering ----
+  function renderCardImg(src, alt) {
+    return window.VoyaraUtils.renderImg({
+      className: 'listing-card-image-bg',
+      src: src,
+      srcset: window.VoyaraUtils.buildSrcset(src, [480, 800]),
+      sizes: window.VoyaraUtils.CARD_IMAGE_SIZES,
+      width: 800,
+      height: 600,
+      alt: alt
+    });
+  }
+
   function renderPackageCard(pkg) {
     return (
-      '<article class="package-card listing-card related-card">' +
-        '<div class="listing-card-image" style="background-image:url(\'' + pkg.image + '\')">' +
+      '<article class="package-card listing-card related-card" data-reveal="fade-up">' +
+        '<div class="listing-card-image">' +
+          renderCardImg(pkg.image, pkg.title + ' — ' + pkg.destination) +
           '<span class="listing-card-tag">' + pkg.duration.days + 'D/' + pkg.duration.nights + 'N</span>' +
+          window.VoyaraUtils.renderWishlistHeart('package', pkg.id, pkg.title, pkg.destination, pkg.image, pkg.price) +
         '</div>' +
         '<div class="listing-card-body">' +
           '<h3>' + pkg.title + '</h3>' +
+          window.VoyaraUtils.renderStars(pkg.rating) +
           '<p class="listing-card-price">' + formatCurrency(pkg.price) + '<span>/person</span></p>' +
           '<a href="package-detail.html?id=' + pkg.id + '" class="btn btn-outline">View Details</a>' +
         '</div>' +
@@ -33,10 +49,16 @@
     );
   }
 
+  // No dedicated hotel-detail page exists site-wide yet, so unlike packages
+  // and tours this card has no "View Details" target — heart + rating +
+  // price only.
   function renderHotelCard(hotel) {
     return (
-      '<article class="hotel-card listing-card related-card">' +
-        '<div class="listing-card-image" style="background-image:url(\'' + hotel.image + '\')"></div>' +
+      '<article class="hotel-card listing-card related-card" data-reveal="fade-up">' +
+        '<div class="listing-card-image">' +
+          renderCardImg(hotel.image, hotel.name + ', ' + hotel.destination) +
+          window.VoyaraUtils.renderWishlistHeart('hotel', hotel.id, hotel.name, hotel.destination, hotel.image, hotel.pricePerNight) +
+        '</div>' +
         '<div class="listing-card-body">' +
           '<h3>' + hotel.name + '</h3>' +
           window.VoyaraUtils.renderStars(hotel.rating) +
@@ -48,14 +70,18 @@
 
   function renderTourCard(tour) {
     return (
-      '<article class="tour-card listing-card related-card">' +
-        '<div class="listing-card-image" style="background-image:url(\'' + tour.image + '\')">' +
+      '<article class="tour-card listing-card related-card" data-reveal="fade-up">' +
+        '<div class="listing-card-image">' +
+          renderCardImg(tour.image, tour.title + ' — ' + tour.destination) +
           '<span class="listing-card-tag listing-card-tag--gold">' + tour.theme + '</span>' +
+          window.VoyaraUtils.renderWishlistHeart('tour', tour.id, tour.title, tour.destination, tour.image, tour.price) +
         '</div>' +
         '<div class="listing-card-body">' +
           '<h3>' + tour.title + '</h3>' +
+          window.VoyaraUtils.renderStars(tour.rating) +
           '<p class="related-card-meta">' + tour.duration + ' · ' + tour.groupSize + '</p>' +
           '<p class="listing-card-price">' + formatCurrency(tour.price) + '<span>/person</span></p>' +
+          '<a href="tours.html?destination=' + encodeURIComponent(tour.destination) + '" class="btn btn-outline">View Details</a>' +
         '</div>' +
       '</article>'
     );
@@ -74,6 +100,7 @@
     grid.innerHTML = items.map(renderCard).join('');
   }
 
+  // ---- Destination page rendering & init ----
   function renderDestination(destination) {
     document.title = destination.name + ' | Voyara';
 
@@ -83,7 +110,11 @@
     document.getElementById('about-name').textContent = destination.name;
     document.getElementById('destination-description').textContent = destination.shortDescription;
 
-    document.getElementById('hero-banner').style.backgroundImage = "url('" + destination.image + "')";
+    var heroBg = document.getElementById('hero-banner-bg');
+    heroBg.src = destination.image;
+    heroBg.srcset = window.VoyaraUtils.buildSrcset(destination.image, [480, 800]);
+    heroBg.sizes = '100vw';
+    heroBg.alt = 'Panoramic view of ' + destination.name + ', ' + destination.country;
 
     var label = destination.name + ', ' + destination.country;
     document.getElementById('packages-destination-label').textContent = label;
@@ -97,6 +128,8 @@
     renderRelatedSection('related-packages-section', 'related-packages', relatedPackages, renderPackageCard);
     renderRelatedSection('related-hotels-section', 'related-hotels', relatedHotels, renderHotelCard);
     renderRelatedSection('related-tours-section', 'related-tours', relatedTours, renderTourCard);
+    if (window.VoyaraAnimations) window.VoyaraAnimations.refreshReveal();
+    window.VoyaraUtils.syncWishlistHearts();
 
     if (destination.bestTime) {
       document.getElementById('best-time-period').textContent = destination.bestTime.period;

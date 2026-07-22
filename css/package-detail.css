@@ -2,10 +2,6 @@
    Voyara — Package Detail page styles
    ========================================================================== */
 
-.detail-content[hidden] {
-  display: none;
-}
-
 .detail-layout {
   display: grid;
   grid-template-columns: 1fr 360px;
@@ -23,10 +19,11 @@
 /* ---- Gallery ---- */
 
 .gallery-main {
+  display: block;
+  width: 100%;
   aspect-ratio: 16 / 9;
   background-color: var(--color-grey-100);
-  background-size: cover;
-  background-position: center;
+  object-fit: cover;
   border-radius: var(--radius-lg);
   margin-bottom: var(--space-sm);
 }
@@ -50,12 +47,18 @@
   padding: 0;
   aspect-ratio: 4 / 3;
   background-color: var(--color-grey-100);
-  background-size: cover;
-  background-position: center;
   border-radius: var(--radius-md);
   border: 2px solid transparent;
+  overflow: hidden;
   cursor: pointer;
   transition: border-color var(--transition-fast);
+}
+
+.gallery-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .gallery-thumb:hover {
@@ -106,7 +109,7 @@
   justify-content: center;
   width: 44px;
   height: 44px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background-color: var(--color-navy);
   color: var(--color-cream);
   font-family: var(--font-display);
@@ -115,7 +118,8 @@
   flex-shrink: 0;
 }
 
-.itinerary-day h4 {
+.itinerary-day h2 {
+  font-size: var(--fs-xl);
   margin-bottom: var(--space-3xs);
 }
 
@@ -130,6 +134,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-xl);
+}
+
+.inclusions-grid h2 {
+  font-size: var(--fs-xl);
 }
 
 @media (max-width: 599px) {

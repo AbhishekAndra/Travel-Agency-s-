@@ -8,30 +8,13 @@
 
   var formatCurrency = window.VoyaraData.formatCurrency;
 
-  function readLocalArray(key) {
-    try {
-      var raw = window.localStorage.getItem(key);
-      var value = raw ? JSON.parse(raw) : [];
-      return Array.isArray(value) ? value : [];
-    } catch (err) {
-      return [];
-    }
-  }
+  var readLocalArray = window.VoyaraUtils.readLocalArray;
 
-  function getItemTitle(item) {
-    return item.type === 'flight' ? (item.airline + ' — ' + item.from + ' to ' + item.to) : item.title;
-  }
+  var getItemTitle = window.VoyaraUtils.getItemTitle;
+  var getItemDestination = window.VoyaraUtils.getItemDestination;
+  var getItemDateLabel = window.VoyaraUtils.getItemDateLabel;
 
-  function getItemDestination(item) {
-    return item.type === 'flight' ? item.to : item.destination;
-  }
-
-  function getItemDateLabel(item) {
-    if (item.type === 'flight') return item.departTime + ' – ' + item.arriveTime;
-    if (!item.travelDate) return '';
-    return new Date(item.travelDate).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
-  }
-
+  // ---- Rendering & init ----
   function renderBooking(booking) {
     document.getElementById('booking-id').textContent = booking.bookingId;
 

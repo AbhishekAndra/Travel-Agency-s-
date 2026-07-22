@@ -30,21 +30,30 @@
     return d.getFullYear() + '-' + month + '-' + day;
   }
 
+  // ---- Gallery ----
   function renderGallery(pkg) {
     var images = (pkg.gallery && pkg.gallery.length) ? pkg.gallery : [pkg.image];
     var main = document.getElementById('gallery-main');
     var thumbsContainer = document.getElementById('gallery-thumbs');
 
-    function setMain(src) {
-      main.style.backgroundImage = "url('" + src + "')";
+    function setMain(src, index) {
+      main.src = src;
+      main.alt = pkg.title + ' — photo ' + (index + 1) + ' of ' + images.length;
     }
 
-    setMain(images[0]);
+    setMain(images[0], 0);
 
     thumbsContainer.innerHTML = images.map(function (src, i) {
       return '<button type="button" class="gallery-thumb' + (i === 0 ? ' is-active' : '') +
-        '" data-src="' + src + '" style="background-image:url(\'' + src + '\')" aria-label="Show photo ' + (i + 1) + '"' +
-        (i === 0 ? ' aria-current="true"' : '') + '></button>';
+        '" data-src="' + src + '" data-index="' + i + '" aria-label="Show photo ' + (i + 1) + '"' +
+        (i === 0 ? ' aria-current="true"' : '') + '>' +
+        window.VoyaraUtils.renderImg({
+          src: src,
+          width: 400,
+          height: 300,
+          alt: pkg.title + ' thumbnail ' + (i + 1)
+        }) +
+        '</button>';
     }).join('');
 
     thumbsContainer.querySelectorAll('.gallery-thumb').forEach(function (thumb) {
@@ -55,11 +64,12 @@
         });
         thumb.classList.add('is-active');
         thumb.setAttribute('aria-current', 'true');
-        setMain(thumb.dataset.src);
+        setMain(thumb.dataset.src, Number(thumb.dataset.index));
       });
     });
   }
 
+  // ---- Tab content rendering (overview/itinerary/inclusions/reviews) ----
   function renderOverview(pkg) {
     document.getElementById('tab-overview').innerHTML = '<p>' + pkg.description + '</p>';
   }
@@ -69,7 +79,7 @@
       return (
         '<div class="itinerary-day">' +
           '<div class="itinerary-day-badge">' + day.day + '</div>' +
-          '<div><h4>Day ' + day.day + ': ' + day.title + '</h4><p>' + day.description + '</p></div>' +
+          '<div><h2>Day ' + day.day + ': ' + day.title + '</h2><p>' + day.description + '</p></div>' +
         '</div>'
       );
     }).join('');
@@ -86,8 +96,8 @@
 
     document.getElementById('tab-inclusions').innerHTML = (
       '<div class="inclusions-grid">' +
-        '<div><h4>Included</h4><ul class="inclusions-list">' + inclusionsHtml + '</ul></div>' +
-        '<div><h4>Not Included</h4><ul class="exclusions-list">' + exclusionsHtml + '</ul></div>' +
+        '<div><h2>Included</h2><ul class="inclusions-list">' + inclusionsHtml + '</ul></div>' +
+        '<div><h2>Not Included</h2><ul class="exclusions-list">' + exclusionsHtml + '</ul></div>' +
       '</div>'
     );
   }
@@ -95,18 +105,19 @@
   function renderReviews() {
     document.getElementById('tab-reviews').innerHTML = REVIEWS.map(function (r) {
       return (
-        '<div class="review-card">' +
+        '<article class="review-card">' +
           '<div class="review-card-header">' +
             '<span class="review-card-name">' + r.name + '</span>' +
             '<span class="review-card-date">' + r.date + '</span>' +
           '</div>' +
           window.VoyaraUtils.renderStars(r.rating) +
           '<p>' + r.comment + '</p>' +
-        '</div>'
+        '</article>'
       );
     }).join('');
   }
 
+  // ---- Traveler stepper & price summary ----
   function updateStepperUI() {
     document.getElementById('adults-count').textContent = counts.adults;
     document.getElementById('children-count').textContent = counts.children;
@@ -167,6 +178,7 @@
     feedbackTimer = window.setTimeout(function () { el.hidden = true; }, 2500);
   }
 
+  // ---- Booking actions (add to cart / book now) ----
   function buildBookingItem(pkg) {
     var dateInput = document.getElementById('travel-date');
     return {
@@ -208,6 +220,7 @@
     });
   }
 
+  // ---- Page render & init ----
   function renderPackage(pkg) {
     document.title = pkg.title + ' | Voyara';
     document.getElementById('breadcrumb-title').textContent = pkg.title;

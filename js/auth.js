@@ -12,6 +12,7 @@
   var CURRENT_USER_KEY = 'voyaraCurrentUser';
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+  // ---- Storage access ----
   function getUsers() {
     try {
       var raw = window.localStorage.getItem(USERS_KEY);
@@ -31,6 +32,7 @@
     return getUsers().filter(function (u) { return u.email.toLowerCase() === normalized; })[0] || null;
   }
 
+  // ---- Session ----
   function getCurrentUser() {
     try {
       var raw = window.localStorage.getItem(CURRENT_USER_KEY);
@@ -49,6 +51,8 @@
     window.location.reload();
   }
 
+  // ---- Public API (used by signup.js, login.js, dashboard.js, and any
+  // form doing inline email validation) ----
   function isValidEmail(email) {
     return EMAIL_RE.test(String(email).trim());
   }
@@ -105,6 +109,7 @@
     return { ok: true, user: merged };
   }
 
+  // ---- Header account menu UI (runs on every page) ----
   function renderAccountMenu() {
     var menu = document.getElementById('account-menu');
     var trigger = document.getElementById('account-trigger');
@@ -131,6 +136,12 @@
 
     trigger.setAttribute('aria-expanded', 'false');
 
+    function closeDropdown() {
+      trigger.setAttribute('aria-expanded', 'false');
+      if (dropdown) dropdown.hidden = true;
+      menu.classList.remove('is-open');
+    }
+
     trigger.addEventListener('click', function (event) {
       event.preventDefault();
       var expanded = trigger.getAttribute('aria-expanded') === 'true';
@@ -141,9 +152,14 @@
 
     document.addEventListener('click', function (event) {
       if (menu && !menu.contains(event.target) && trigger.getAttribute('aria-expanded') === 'true') {
-        trigger.setAttribute('aria-expanded', 'false');
-        if (dropdown) dropdown.hidden = true;
-        menu.classList.remove('is-open');
+        closeDropdown();
+      }
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && trigger.getAttribute('aria-expanded') === 'true') {
+        closeDropdown();
+        trigger.focus();
       }
     });
 

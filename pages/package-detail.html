@@ -4,8 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Package Detail | Voyara</title>
+  <meta name="description" content="Explore a Voyara travel package in detail — itinerary, inclusions, pricing, and guest reviews.">
+  <meta name="keywords" content="luxury travel package, all-inclusive vacation package, curated itinerary, guided tour package">
+  <link rel="canonical" href="https://abhishekandra.github.io/Travel-Agency-s-/pages/package-detail.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Package Detail | Voyara">
+  <meta property="og:description" content="Explore a Voyara travel package in detail — itinerary, inclusions, pricing, and guest reviews.">
+  <meta property="og:image" content="https://abhishekandra.github.io/Travel-Agency-s-/assets/images/og-image.jpg">
+  <meta property="og:url" content="https://abhishekandra.github.io/Travel-Agency-s-/pages/package-detail.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Package Detail | Voyara">
+  <meta name="twitter:description" content="Explore a Voyara travel package in detail — itinerary, inclusions, pricing, and guest reviews.">
+  <meta name="twitter:image" content="https://abhishekandra.github.io/Travel-Agency-s-/assets/images/og-image.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../css/variables.css">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/components.css">
@@ -93,8 +109,10 @@
 
         <div class="detail-layout">
           <div class="detail-main">
-            <div class="gallery">
-              <div class="gallery-main" id="gallery-main"></div>
+            <div class="gallery" data-reveal="fade-up">
+              <img class="gallery-main" id="gallery-main" src="/assets/images/placeholder.svg" alt=""
+                width="1280" height="720" loading="eager" fetchpriority="high"
+                onerror="this.onerror=null;this.src='/assets/images/placeholder.svg';">
               <div class="gallery-thumbs" id="gallery-thumbs"></div>
             </div>
 
@@ -107,7 +125,7 @@
               </div>
             </div>
 
-            <div class="tabs">
+            <div class="tabs" data-reveal="fade-up">
               <div class="tabs-nav" role="tablist">
                 <button type="button" class="tab-btn is-active" role="tab" id="tab-btn-overview" aria-selected="true" aria-controls="tab-overview" data-tab="overview">Overview</button>
                 <button type="button" class="tab-btn" role="tab" id="tab-btn-itinerary" aria-selected="false" aria-controls="tab-itinerary" data-tab="itinerary">Day-by-Day Itinerary</button>
@@ -172,7 +190,7 @@
 
             <button type="button" class="btn btn-outline" id="add-to-cart-btn">Add to Cart</button>
             <button type="button" class="btn btn-accent" id="book-now-btn">Book Now</button>
-            <p class="booking-feedback" id="booking-feedback" hidden></p>
+            <p class="booking-feedback" aria-live="polite" id="booking-feedback" hidden></p>
           </aside>
         </div>
       </div>
@@ -187,7 +205,7 @@
       </div>
 
       <div class="footer-col">
-        <h4 class="footer-heading">Explore</h4>
+        <h2 class="footer-heading">Explore</h2>
         <ul>
           <li><a href="packages.html">Packages</a></li>
           <li><a href="tours.html">Tours</a></li>
@@ -198,7 +216,7 @@
       </div>
 
       <div class="footer-col">
-        <h4 class="footer-heading">Company</h4>
+        <h2 class="footer-heading">Company</h2>
         <ul>
           <li><a href="about.html">About Us</a></li>
           <li><a href="contact.html">Contact</a></li>
@@ -207,16 +225,16 @@
       </div>
 
       <div class="footer-col footer-newsletter">
-        <h4 class="footer-heading">Stay Inspired</h4>
+        <h2 class="footer-heading">Stay Inspired</h2>
         <p>Join our list for private offers and new destinations.</p>
         <form class="newsletter-form" id="newsletter-form" novalidate>
           <label for="newsletter-email" class="visually-hidden">Email address</label>
           <div class="newsletter-input-row">
-            <input type="email" id="newsletter-email" placeholder="Email address" autocomplete="email">
+            <input type="email" id="newsletter-email" placeholder="Email address" autocomplete="email" aria-required="true">
             <button type="submit" class="btn btn-accent">Subscribe</button>
           </div>
-          <span class="field-error" id="newsletter-email-error"></span>
-          <p class="newsletter-success" id="newsletter-success" hidden>You're subscribed — watch your inbox for private offers.</p>
+          <span class="field-error" aria-live="polite" id="newsletter-email-error"></span>
+          <p class="newsletter-success" aria-live="polite" id="newsletter-success" hidden>You're subscribed — watch your inbox for private offers.</p>
         </form>
       </div>
     </div>
@@ -239,10 +257,15 @@
     </div>
   </footer>
 
+  <button type="button" class="icon-btn scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
   <script src="../js/utils.js" defer></script>
   <script src="../js/data.js" defer></script>
   <script src="../js/auth.js" defer></script>
   <script src="../js/cart.js" defer></script>
+  <script src="../js/animations.js" defer></script>
   <script src="../js/package-detail.js" defer></script>
 </body>
 </html>

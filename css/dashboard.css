@@ -46,12 +46,12 @@
 }
 
 .booking-item-image {
+  display: block;
   width: 100%;
   height: 72px;
   border-radius: var(--radius-md);
   background-color: var(--color-grey-100);
-  background-size: cover;
-  background-position: center;
+  object-fit: cover;
 }
 
 .booking-item-title {
@@ -68,7 +68,7 @@
 .booking-item-price {
   font-family: var(--font-display);
   font-weight: var(--fw-semibold);
-  color: var(--color-gold-dark);
+  color: var(--color-gold-text);
   text-align: right;
 }
 

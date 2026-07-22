@@ -2,8 +2,82 @@
    Voyara — Home page styles
    ========================================================================== */
 
-.search-widget-section {
-  padding-bottom: var(--space-2xl);
+/* ---- Hero ---- */
+
+.hero {
+  position: relative;
+  height: 64vh;
+  min-height: 420px;
+  max-height: 640px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  color: var(--color-cream);
+}
+
+.hero-bg {
+  position: absolute;
+  top: -60px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: calc(100% + 120px);
+  background-color: var(--color-navy);
+  object-fit: cover;
+  will-change: transform;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 31, 58, 0.45) 0%, rgba(11, 31, 58, 0.55) 45%, rgba(11, 31, 58, 0.72) 100%);
+}
+
+.hero-decor {
+  position: absolute;
+  top: 18%;
+  right: 8%;
+  width: 56px;
+  height: 56px;
+  color: rgba(250, 248, 244, 0.35);
+  z-index: 1;
+}
+
+@media (max-width: 599px) {
+  .hero-decor {
+    display: none;
+  }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-content h1 {
+  color: var(--color-cream);
+  max-width: 16ch;
+  margin-bottom: var(--space-sm);
+  overflow-wrap: break-word;
+  text-shadow: 0 2px 16px rgba(7, 20, 41, 0.45);
+}
+
+.hero-subheading {
+  color: var(--color-grey-200);
+  font-size: var(--fs-md);
+  max-width: 46ch;
+  min-height: 1.6em; /* reserves space so the typing effect doesn't shift layout */
+  margin-bottom: 0;
+  text-shadow: 0 1px 12px rgba(7, 20, 41, 0.4);
+}
+
+/* ---- Floating search card ---- */
+
+.search-widget-wrap {
+  position: relative;
+  z-index: 2;
+  margin-top: -64px;
+  margin-bottom: var(--space-2xl);
 }
 
 .search-widget {
@@ -13,7 +87,7 @@
   background-color: var(--color-surface);
   border: var(--border-hairline);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
   padding: var(--space-lg);
 }
 
@@ -27,12 +101,32 @@
   flex-shrink: 0;
   margin-top: 22px;
   white-space: nowrap;
+  padding: var(--space-sm) var(--space-xl);
+  font-size: var(--fs-sm);
+  box-shadow: var(--shadow-gold);
+  transition: background-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
 }
 
-/* Matches the site-wide tablet breakpoint (899px) used everywhere else —
-   was 767px, which left a narrow row-layout gap right at 768px, one of
-   the required test widths, with far less safety margin than intended. */
+.search-widget-submit:hover {
+  box-shadow: 0 8px 28px rgba(201, 162, 75, 0.32);
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search-widget-submit:hover {
+    transform: none;
+  }
+}
+
 @media (max-width: 899px) {
+  .hero {
+    height: 56vh;
+  }
+
+  .search-widget-wrap {
+    margin-top: -40px;
+  }
+
   .search-widget {
     flex-direction: column;
     align-items: stretch;
@@ -41,5 +135,41 @@
   .search-widget-submit {
     margin-top: 0;
     width: 100%;
+  }
+}
+
+/* ---- Stats bar ---- */
+
+.stats-bar {
+  padding-top: 0;
+  padding-bottom: var(--space-2xl);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+  text-align: center;
+}
+
+.stat-item .stat-number {
+  margin-bottom: var(--space-3xs);
+}
+
+.stat-item .stat-label {
+  margin-bottom: 0;
+}
+
+@media (max-width: 899px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+  }
+}
+
+@media (max-width: 599px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
   }
 }

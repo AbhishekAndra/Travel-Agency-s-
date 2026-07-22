@@ -20,6 +20,7 @@
 
   var bounds = { min: 0, max: 0 };
 
+  // ---- Formatting/bucketing helpers ----
   function getInitials(name) {
     return name
       .split(' ')
@@ -54,11 +55,6 @@
     return stops >= 2 ? 2 : stops;
   }
 
-  function getCheckedValues(name) {
-    var boxes = document.querySelectorAll('input[name="' + name + '"]:checked');
-    return Array.prototype.map.call(boxes, function (box) { return box.value; });
-  }
-
   function computePriceBounds() {
     var prices = flights.map(function (f) { return f.price; });
     var min = Math.floor(Math.min.apply(null, prices) / 1000) * 1000;
@@ -84,52 +80,21 @@
     }).join('');
   }
 
+  // initPriceRange/updatePriceRangeUI's DOM wiring is shared with hotels.js
+  // via window.VoyaraUtils (identical #price-min/#price-max/#price-range-fill
+  // markup on both pages) — these stay as same-named local wrappers so every
+  // existing zero-arg call site below keeps working unchanged.
   function initPriceRange() {
     bounds = computePriceBounds();
-    state.priceMin = bounds.min;
-    state.priceMax = bounds.max;
-
-    var minInput = document.getElementById('price-min');
-    var maxInput = document.getElementById('price-max');
-    [minInput, maxInput].forEach(function (input) {
-      input.min = bounds.min;
-      input.max = bounds.max;
-      input.step = 1000;
-    });
-    minInput.value = bounds.min;
-    maxInput.value = bounds.max;
-
+    window.VoyaraUtils.initPriceRangeInputs(state, bounds);
     updatePriceRangeUI();
   }
 
   function updatePriceRangeUI() {
-    var minInput = document.getElementById('price-min');
-    var maxInput = document.getElementById('price-max');
-    var fill = document.getElementById('price-range-fill');
-    var minLabel = document.getElementById('price-min-label');
-    var maxLabel = document.getElementById('price-max-label');
-
-    var min = Number(minInput.value);
-    var max = Number(maxInput.value);
-    if (min > max) {
-      var temp = min;
-      min = max;
-      max = temp;
-    }
-
-    state.priceMin = min;
-    state.priceMax = max;
-
-    minLabel.textContent = formatCurrency(min);
-    maxLabel.textContent = formatCurrency(max);
-
-    var range = bounds.max - bounds.min || 1;
-    var leftPct = ((min - bounds.min) / range) * 100;
-    var rightPct = ((max - bounds.min) / range) * 100;
-    fill.style.left = leftPct + '%';
-    fill.style.width = (rightPct - leftPct) + '%';
+    window.VoyaraUtils.updatePriceRangeUI(state, bounds, formatCurrency);
   }
 
+  // ---- Filtering & sorting ----
   function filterFlights() {
     return flights.filter(function (f) {
       if (f.price < state.priceMin || f.price > state.priceMax) return false;
@@ -157,9 +122,10 @@
     return stops + (stops === 1 ? ' Stop' : ' Stops');
   }
 
+  // ---- Rendering ----
   function renderFlightCard(flight) {
     return (
-      '<article class="flight-card listing-card">' +
+      '<article class="flight-card listing-card" data-reveal="fade-up">' +
         '<div class="flight-card-airline">' +
           '<span class="avatar-badge">' + getInitials(flight.airline) + '</span>' +
           '<div>' +
@@ -204,9 +170,11 @@
     } else {
       emptyState.hidden = true;
       grid.innerHTML = results.map(renderFlightCard).join('');
+      if (window.VoyaraAnimations) window.VoyaraAnimations.refreshReveal();
     }
   }
 
+  // ---- Events & init ----
   function resetFilters() {
     document.querySelectorAll('.filters-panel input[type="checkbox"]').forEach(function (box) {
       box.checked = false;
@@ -221,24 +189,14 @@
   }
 
   function handleFilterChange() {
-    state.stops = getCheckedValues('stops');
-    state.departure = getCheckedValues('departure');
-    state.airlines = getCheckedValues('airline');
+    state.stops = window.VoyaraUtils.getCheckedValues('stops');
+    state.departure = window.VoyaraUtils.getCheckedValues('departure');
+    state.airlines = window.VoyaraUtils.getCheckedValues('airline');
     render();
   }
 
-  function toggleMobileFilters(open) {
-    var panel = document.getElementById('filters-panel');
-    var toggle = document.getElementById('filters-toggle');
-    panel.classList.toggle('is-open', open);
-    document.body.classList.toggle('filters-open', open);
-    toggle.setAttribute('aria-expanded', String(open));
-  }
-
   function bindEvents() {
-    document.getElementById('filters-panel').addEventListener('change', function (event) {
-      if (event.target.matches('input[type="checkbox"]')) handleFilterChange();
-    });
+    window.VoyaraUtils.bindFilterPanelEvents(handleFilterChange, resetFilters);
 
     ['price-min', 'price-max'].forEach(function (id) {
       document.getElementById(id).addEventListener('input', function () {
@@ -250,16 +208,6 @@
     document.getElementById('sort-select').addEventListener('change', function (event) {
       state.sort = event.target.value;
       render();
-    });
-
-    document.getElementById('filters-clear').addEventListener('click', resetFilters);
-    document.getElementById('empty-state-clear').addEventListener('click', resetFilters);
-
-    document.getElementById('filters-toggle').addEventListener('click', function () {
-      toggleMobileFilters(true);
-    });
-    document.getElementById('filters-close').addEventListener('click', function () {
-      toggleMobileFilters(false);
     });
 
     document.getElementById('flights-grid').addEventListener('click', function (event) {

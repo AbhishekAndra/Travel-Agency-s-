@@ -86,7 +86,7 @@
   top: 50%;
   width: 6px;
   height: 6px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background-color: var(--color-gold);
   transform: translateY(-50%);
 }

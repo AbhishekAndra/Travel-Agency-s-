@@ -2,6 +2,8 @@
    Voyara — Cart page styles
    ========================================================================== */
 
+/* ---- Page layout (items column + sticky order-summary column) ---- */
+
 .cart-layout {
   display: grid;
   grid-template-columns: 1fr 340px;
@@ -15,6 +17,8 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ---- Cart item rows ---- */
 
 .cart-items {
   display: flex;
@@ -33,12 +37,12 @@
 }
 
 .cart-item-image {
+  display: block;
   width: 100%;
   height: 90px;
   border-radius: var(--radius-md);
   background-color: var(--color-grey-100);
-  background-size: cover;
-  background-position: center;
+  object-fit: cover;
 }
 
 .cart-item-body h3 {
@@ -68,7 +72,7 @@
   font-family: var(--font-display);
   font-size: var(--fs-lg);
   font-weight: var(--fw-semibold);
-  color: var(--color-gold-dark);
+  color: var(--color-gold-text);
 }
 
 .cart-item-remove {
@@ -83,6 +87,8 @@
 .cart-item-remove:hover {
   color: var(--color-error);
 }
+
+/* ---- Order summary sidebar ---- */
 
 #order-summary .btn {
   width: 100%;

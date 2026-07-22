@@ -4,8 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Destination Detail | Voyara</title>
+  <meta name="description" content="Discover a Voyara destination in depth, with curated packages, hotels, tours, and the best time to visit.">
+  <meta name="keywords" content="luxury travel destinations, curated destination guide, best time to visit, luxury vacation spots">
+  <link rel="canonical" href="https://abhishekandra.github.io/Travel-Agency-s-/pages/destination-detail.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Destination Detail | Voyara">
+  <meta property="og:description" content="Discover a Voyara destination in depth, with curated packages, hotels, tours, and the best time to visit.">
+  <meta property="og:image" content="https://abhishekandra.github.io/Travel-Agency-s-/assets/images/og-image.jpg">
+  <meta property="og:url" content="https://abhishekandra.github.io/Travel-Agency-s-/pages/destination-detail.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Destination Detail | Voyara">
+  <meta name="twitter:description" content="Discover a Voyara destination in depth, with curated packages, hotels, tours, and the best time to visit.">
+  <meta name="twitter:image" content="https://abhishekandra.github.io/Travel-Agency-s-/assets/images/og-image.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../css/variables.css">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/components.css">
@@ -89,9 +105,13 @@
 
     <div id="detail-content">
       <div class="hero-banner" id="hero-banner">
+        <img class="hero-banner-bg" id="hero-banner-bg" data-parallax data-parallax-max="40"
+          src="/assets/images/placeholder.svg" alt="" width="1920" height="800"
+          loading="eager" fetchpriority="high"
+          onerror="this.onerror=null;this.removeAttribute('srcset');this.src='/assets/images/placeholder.svg';">
         <div class="hero-banner-overlay">
           <div class="container">
-            <h1 id="destination-name"></h1>
+            <h1 id="destination-name" data-reveal="fade-up"></h1>
             <p id="destination-country"></p>
           </div>
         </div>
@@ -123,7 +143,7 @@
             </section>
           </div>
 
-          <aside class="best-time-card" id="best-time-card">
+          <aside class="best-time-card" id="best-time-card" data-reveal="fade-left">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
             <h3>Best Time to Visit</h3>
             <p class="best-time-period" id="best-time-period"></p>
@@ -142,7 +162,7 @@
       </div>
 
       <div class="footer-col">
-        <h4 class="footer-heading">Explore</h4>
+        <h2 class="footer-heading">Explore</h2>
         <ul>
           <li><a href="packages.html">Packages</a></li>
           <li><a href="tours.html">Tours</a></li>
@@ -153,7 +173,7 @@
       </div>
 
       <div class="footer-col">
-        <h4 class="footer-heading">Company</h4>
+        <h2 class="footer-heading">Company</h2>
         <ul>
           <li><a href="about.html">About Us</a></li>
           <li><a href="contact.html">Contact</a></li>
@@ -162,16 +182,16 @@
       </div>
 
       <div class="footer-col footer-newsletter">
-        <h4 class="footer-heading">Stay Inspired</h4>
+        <h2 class="footer-heading">Stay Inspired</h2>
         <p>Join our list for private offers and new destinations.</p>
         <form class="newsletter-form" id="newsletter-form" novalidate>
           <label for="newsletter-email" class="visually-hidden">Email address</label>
           <div class="newsletter-input-row">
-            <input type="email" id="newsletter-email" placeholder="Email address" autocomplete="email">
+            <input type="email" id="newsletter-email" placeholder="Email address" autocomplete="email" aria-required="true">
             <button type="submit" class="btn btn-accent">Subscribe</button>
           </div>
-          <span class="field-error" id="newsletter-email-error"></span>
-          <p class="newsletter-success" id="newsletter-success" hidden>You're subscribed — watch your inbox for private offers.</p>
+          <span class="field-error" aria-live="polite" id="newsletter-email-error"></span>
+          <p class="newsletter-success" aria-live="polite" id="newsletter-success" hidden>You're subscribed — watch your inbox for private offers.</p>
         </form>
       </div>
     </div>
@@ -194,10 +214,15 @@
     </div>
   </footer>
 
+  <button type="button" class="icon-btn scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
   <script src="../js/utils.js" defer></script>
   <script src="../js/data.js" defer></script>
   <script src="../js/auth.js" defer></script>
   <script src="../js/cart.js" defer></script>
+  <script src="../js/animations.js" defer></script>
   <script src="../js/destination-detail.js" defer></script>
 </body>
 </html>

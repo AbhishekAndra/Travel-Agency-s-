@@ -1,8 +1,9 @@
 /* ==========================================================================
    Voyara — Base styles (reset + global typography)
+   Google Fonts are loaded via a <link rel="stylesheet"> in each page's
+   <head> (not @import here) so the browser's preload scanner can discover
+   and fetch them in parallel with this file instead of serially after it.
    ========================================================================== */
-
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
 
 *,
 *::before,
@@ -84,6 +85,22 @@ button {
   cursor: pointer;
   background: none;
   border: none;
+}
+
+/* Global keyboard-focus indicator — gold outline, offset outside the
+   element's own border so it never merges with an adjacent border/fill.
+   :focus-visible (not :focus) so it only appears for keyboard/AT
+   navigation, not on mouse click. Every interactive element relies on
+   this by default; component-specific rules below only ever ADD to it
+   (e.g. a border-color change), never remove it. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
 }
 
 /* ---- Layout helpers ---- */

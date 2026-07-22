@@ -2,6 +2,8 @@
    Voyara — Contact page styles
    ========================================================================== */
 
+/* ---- Page layout (form column + info sidebar) ---- */
+
 .contact-layout {
   display: grid;
   grid-template-columns: 1fr 320px;
@@ -19,6 +21,8 @@
   resize: vertical;
   min-height: 120px;
 }
+
+/* ---- Info sidebar ---- */
 
 .contact-info {
   background-color: var(--color-surface);
@@ -43,7 +47,7 @@
 }
 
 .contact-info a {
-  color: var(--color-gold-dark);
+  color: var(--color-gold-text);
 }
 
 .contact-info a:hover {

@@ -2,10 +2,6 @@
    Voyara — Destination Detail page styles
    ========================================================================== */
 
-.detail-content[hidden] {
-  display: none;
-}
-
 /* ---- Hero banner ---- */
 
 .hero-banner {
@@ -13,9 +9,19 @@
   height: 60vh;
   min-height: 360px;
   max-height: 560px;
+  overflow: hidden;
+}
+
+.hero-banner-bg {
+  position: absolute;
+  top: -50px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: calc(100% + 100px);
   background-color: var(--color-grey-200);
-  background-size: cover;
-  background-position: center;
+  object-fit: cover;
+  will-change: transform;
 }
 
 .hero-banner-overlay {
@@ -76,7 +82,7 @@
 }
 
 .related-section-destination {
-  color: var(--color-gold-dark);
+  color: var(--color-gold-text);
 }
 
 .listing-grid--related {
@@ -121,7 +127,7 @@
 .best-time-card svg {
   width: 28px;
   height: 28px;
-  color: var(--color-gold);
+  color: var(--color-gold-dark);
   margin-bottom: var(--space-sm);
 }
 

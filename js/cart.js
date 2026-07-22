@@ -133,9 +133,17 @@
   }
 
   function renderCartItem(item) {
+    var itemImg = window.VoyaraUtils.renderImg({
+      className: 'cart-item-image',
+      src: item.image || window.VoyaraUtils.PLACEHOLDER_IMAGE,
+      width: 120,
+      height: 90,
+      alt: item.title || 'Cart item'
+    });
+
     return (
       '<article class="cart-item" data-cart-id="' + item.cartItemId + '">' +
-        '<div class="cart-item-image" style="background-image:url(\'' + (item.image || '') + '\')"></div>' +
+        itemImg +
         '<div class="cart-item-body">' +
           '<h3>' + item.title + '</h3>' +
           '<p class="cart-item-meta">' + cartItemMeta(item) + '</p>' +

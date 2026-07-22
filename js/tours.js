@@ -14,11 +14,7 @@
     destinations: []
   };
 
-  function getCheckedValues(name) {
-    var boxes = document.querySelectorAll('input[name="' + name + '"]:checked');
-    return Array.prototype.map.call(boxes, function (box) { return box.value; });
-  }
-
+  // ---- Filtering ----
   function populateFilter(containerId, inputName, values) {
     var container = document.getElementById(containerId);
     if (!container) return;
@@ -45,16 +41,32 @@
     });
   }
 
+  // ---- Rendering ----
   function renderTourCard(tour) {
+    var destId = window.VoyaraData.findDestinationId(tour.destination);
+    var tourImg = window.VoyaraUtils.renderImg({
+      className: 'listing-card-image-bg',
+      src: tour.image,
+      srcset: window.VoyaraUtils.buildSrcset(tour.image, [480, 800]),
+      sizes: window.VoyaraUtils.CARD_IMAGE_SIZES,
+      width: 800,
+      height: 600,
+      alt: tour.title + ' — ' + tour.destination
+    });
+
     return (
-      '<article class="tour-card listing-card">' +
-        '<div class="listing-card-image" style="background-image:url(\'' + tour.image + '\')">' +
+      '<article class="tour-card listing-card" data-reveal="fade-up">' +
+        '<div class="listing-card-image">' +
+          tourImg +
           '<span class="listing-card-tag listing-card-tag--gold">' + tour.theme + '</span>' +
+          window.VoyaraUtils.renderWishlistHeart('tour', tour.id, tour.title, tour.destination, tour.image, tour.price) +
         '</div>' +
         '<div class="listing-card-body">' +
           '<h3>' + tour.title + '</h3>' +
+          window.VoyaraUtils.renderStars(tour.rating) +
           '<p class="tour-card-meta">' + tour.destination + ' · ' + tour.duration + ' · ' + tour.groupSize + '</p>' +
           '<p class="listing-card-price">' + formatCurrency(tour.price) + '<span>/person</span></p>' +
+          (destId ? '<a href="destination-detail.html?id=' + destId + '" class="btn btn-outline">View Details</a>' : '') +
         '</div>' +
       '</article>'
     );
@@ -74,9 +86,12 @@
     } else {
       emptyState.hidden = true;
       grid.innerHTML = results.map(renderTourCard).join('');
+      if (window.VoyaraAnimations) window.VoyaraAnimations.refreshReveal();
+      window.VoyaraUtils.syncWishlistHearts();
     }
   }
 
+  // ---- Events & init ----
   function resetFilters() {
     document.querySelectorAll('.filters-panel input[type="checkbox"]').forEach(function (box) {
       box.checked = false;
@@ -87,33 +102,13 @@
   }
 
   function handleFilterChange() {
-    state.themes = getCheckedValues('theme');
-    state.destinations = getCheckedValues('destination');
+    state.themes = window.VoyaraUtils.getCheckedValues('theme');
+    state.destinations = window.VoyaraUtils.getCheckedValues('destination');
     render();
   }
 
-  function toggleMobileFilters(open) {
-    var panel = document.getElementById('filters-panel');
-    var toggle = document.getElementById('filters-toggle');
-    panel.classList.toggle('is-open', open);
-    document.body.classList.toggle('filters-open', open);
-    toggle.setAttribute('aria-expanded', String(open));
-  }
-
   function bindEvents() {
-    document.getElementById('filters-panel').addEventListener('change', function (event) {
-      if (event.target.matches('input[type="checkbox"]')) handleFilterChange();
-    });
-
-    document.getElementById('filters-clear').addEventListener('click', resetFilters);
-    document.getElementById('empty-state-clear').addEventListener('click', resetFilters);
-
-    document.getElementById('filters-toggle').addEventListener('click', function () {
-      toggleMobileFilters(true);
-    });
-    document.getElementById('filters-close').addEventListener('click', function () {
-      toggleMobileFilters(false);
-    });
+    window.VoyaraUtils.bindFilterPanelEvents(handleFilterChange, resetFilters);
   }
 
   function init() {
@@ -121,6 +116,7 @@
     populateFilter('theme-filter', 'theme', tours.map(function (t) { return t.theme; }));
     populateFilter('destination-filter', 'destination', tours.map(function (t) { return t.destination; }));
     bindEvents();
+    window.VoyaraUtils.applyDestinationFromQuery(state);
     render();
   }
 

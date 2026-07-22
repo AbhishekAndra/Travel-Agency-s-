@@ -14,15 +14,11 @@
     destinations: []
   };
 
+  // ---- Filtering ----
   function durationBucket(days) {
     if (days <= 5) return 'short';
     if (days <= 7) return 'medium';
     return 'long';
-  }
-
-  function getCheckedValues(name) {
-    var boxes = document.querySelectorAll('input[name="' + name + '"]:checked');
-    return Array.prototype.map.call(boxes, function (box) { return box.value; });
   }
 
   function populateDestinationFilter() {
@@ -51,14 +47,30 @@
     });
   }
 
+  // ---- Rendering ----
+  function renderPackageImg(pkg) {
+    return window.VoyaraUtils.renderImg({
+      className: 'listing-card-image-bg',
+      src: pkg.image,
+      srcset: window.VoyaraUtils.buildSrcset(pkg.image, [480, 800]),
+      sizes: window.VoyaraUtils.CARD_IMAGE_SIZES,
+      width: 800,
+      height: 600,
+      alt: pkg.title + ' — ' + pkg.destination
+    });
+  }
+
   function renderPackageCard(pkg) {
     return (
-      '<article class="package-card listing-card">' +
-        '<div class="listing-card-image" style="background-image:url(\'' + pkg.image + '\')">' +
+      '<article class="package-card listing-card" data-reveal="fade-up">' +
+        '<div class="listing-card-image">' +
+          renderPackageImg(pkg) +
           '<span class="listing-card-tag">' + pkg.duration.days + 'D/' + pkg.duration.nights + 'N</span>' +
+          window.VoyaraUtils.renderWishlistHeart('package', pkg.id, pkg.title, pkg.destination, pkg.image, pkg.price) +
         '</div>' +
         '<div class="listing-card-body">' +
           '<h3>' + pkg.title + '</h3>' +
+          window.VoyaraUtils.renderStars(pkg.rating) +
           '<p class="package-card-destination">' + pkg.destination + '</p>' +
           '<p class="listing-card-price">' + formatCurrency(pkg.price) + '<span>/person</span></p>' +
           '<a href="package-detail.html?id=' + pkg.id + '" class="btn btn-outline">View Details</a>' +
@@ -81,9 +93,12 @@
     } else {
       emptyState.hidden = true;
       grid.innerHTML = results.map(renderPackageCard).join('');
+      if (window.VoyaraAnimations) window.VoyaraAnimations.refreshReveal();
+      window.VoyaraUtils.syncWishlistHearts();
     }
   }
 
+  // ---- Events & init ----
   function resetFilters() {
     document.querySelectorAll('.filters-panel input[type="checkbox"]').forEach(function (box) {
       box.checked = false;
@@ -94,55 +109,20 @@
   }
 
   function handleFilterChange() {
-    state.duration = getCheckedValues('duration');
-    state.destinations = getCheckedValues('destination');
+    state.duration = window.VoyaraUtils.getCheckedValues('duration');
+    state.destinations = window.VoyaraUtils.getCheckedValues('destination');
     render();
   }
 
-  function toggleMobileFilters(open) {
-    var panel = document.getElementById('filters-panel');
-    var toggle = document.getElementById('filters-toggle');
-    panel.classList.toggle('is-open', open);
-    document.body.classList.toggle('filters-open', open);
-    toggle.setAttribute('aria-expanded', String(open));
-  }
-
   function bindEvents() {
-    document.getElementById('filters-panel').addEventListener('change', function (event) {
-      if (event.target.matches('input[type="checkbox"]')) handleFilterChange();
-    });
-
-    document.getElementById('filters-clear').addEventListener('click', resetFilters);
-    document.getElementById('empty-state-clear').addEventListener('click', resetFilters);
-
-    document.getElementById('filters-toggle').addEventListener('click', function () {
-      toggleMobileFilters(true);
-    });
-    document.getElementById('filters-close').addEventListener('click', function () {
-      toggleMobileFilters(false);
-    });
-  }
-
-  // Honors ?destination= from the homepage search widget by pre-checking
-  // the matching destination filter, if that destination has any packages.
-  // Only updates state — init()'s own render() call paints the result.
-  function applyDestinationFromQuery() {
-    var params = new URLSearchParams(window.location.search);
-    var destination = params.get('destination');
-    if (!destination) return;
-
-    var checkbox = document.querySelector('input[name="destination"][value="' + CSS.escape(destination) + '"]');
-    if (!checkbox) return;
-
-    checkbox.checked = true;
-    state.destinations = getCheckedValues('destination');
+    window.VoyaraUtils.bindFilterPanelEvents(handleFilterChange, resetFilters);
   }
 
   function init() {
     if (!document.getElementById('packages-grid')) return;
     populateDestinationFilter();
     bindEvents();
-    applyDestinationFromQuery();
+    window.VoyaraUtils.applyDestinationFromQuery(state);
     render();
   }
 

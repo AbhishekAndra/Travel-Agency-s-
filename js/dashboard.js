@@ -1,11 +1,10 @@
 /* ==========================================================================
    Voyara — Dashboard page logic
    Requires a logged-in user (redirects to login.html otherwise). Renders
-   My Bookings from localStorage 'voyaraBookings' and Wishlist from
-   'voyaraWishlist' — both filtered by the current user's email. Neither key
-   is written anywhere yet (checkout/wishlist flows aren't built), so both
-   tabs render their empty state until those exist; expected shape once they
-   do: { userEmail, ...itemFields }.
+   My Bookings from localStorage 'voyaraBookings' (written by
+   checkout.js's handleConfirmBooking) and Wishlist from 'voyaraWishlist'
+   (written by utils.js's toggleWishlist) — both filtered to the current
+   user's email, shape: { userEmail, ...itemFields }.
    ========================================================================== */
 
 (function () {
@@ -15,25 +14,18 @@
 
   var EMPTY_ILLUSTRATION = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="32" cy="32" r="26" stroke-dasharray="4 5"/><path d="M22 28h20a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H22a2 2 0 0 1-2-2V30a2 2 0 0 1 2-2z"/><path d="M27 28v-4a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v4"/><line x1="20" y1="36" x2="44" y2="36"/></svg>';
 
+  // ---- Bookings & wishlist tabs ----
   function renderEmptyState(container, title, message, actionLabel, actionHref) {
     container.innerHTML =
       '<div class="empty-state">' +
         EMPTY_ILLUSTRATION +
-        '<h3>' + title + '</h3>' +
+        '<h2>' + title + '</h2>' +
         '<p>' + message + '</p>' +
         (actionLabel ? '<a href="' + actionHref + '" class="btn btn-outline">' + actionLabel + '</a>' : '') +
       '</div>';
   }
 
-  function readLocalArray(key) {
-    try {
-      var raw = window.localStorage.getItem(key);
-      var value = raw ? JSON.parse(raw) : [];
-      return Array.isArray(value) ? value : [];
-    } catch (err) {
-      return [];
-    }
-  }
+  var readLocalArray = window.VoyaraUtils.readLocalArray;
 
   function renderBookingItem(booking) {
     var dateLabel = booking.date
@@ -41,15 +33,23 @@
       : '';
     var metaParts = [booking.destination, dateLabel].filter(Boolean);
 
+    var bookingImg = window.VoyaraUtils.renderImg({
+      className: 'booking-item-image',
+      src: booking.image || window.VoyaraUtils.PLACEHOLDER_IMAGE,
+      width: 96,
+      height: 72,
+      alt: booking.title || 'Booking'
+    });
+
     return (
-      '<div class="booking-item">' +
-        '<div class="booking-item-image" style="background-image:url(\'' + (booking.image || '') + '\')"></div>' +
+      '<article class="booking-item">' +
+        bookingImg +
         '<div>' +
           '<p class="booking-item-title">' + (booking.title || 'Booking') + '</p>' +
           '<p class="booking-item-meta">' + metaParts.join(' · ') + '</p>' +
         '</div>' +
         '<p class="booking-item-price">' + (booking.total ? formatCurrency(booking.total) : '') + '</p>' +
-      '</div>'
+      '</article>'
     );
   }
 
@@ -89,6 +89,7 @@
     container.innerHTML = '<div class="booking-list">' + mine.map(renderBookingItem).join('') + '</div>';
   }
 
+  // ---- Profile tab form ----
   function initProfileForm(user) {
     var form = document.getElementById('profile-form');
     var nameInput = document.getElementById('profile-name');
@@ -100,12 +101,7 @@
     emailInput.value = user.email || '';
     phoneInput.value = user.phone || '';
 
-    function setFieldError(fieldId, errorId, message) {
-      var field = document.getElementById(fieldId);
-      var errorEl = document.getElementById(errorId);
-      field.classList.toggle('has-error', !!message);
-      errorEl.textContent = message || '';
-    }
+    var setFieldError = window.VoyaraUtils.setFieldError;
 
     function validateName() {
       if (nameInput.value.trim().length < 2) {
@@ -168,6 +164,7 @@
     });
   }
 
+  // ---- Init ----
   function init() {
     if (!document.getElementById('dashboard-username')) return;
 

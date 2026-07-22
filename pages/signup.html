@@ -4,12 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up | Voyara</title>
+  <meta name="description" content="Create a Voyara account for curated trips, saved wishlists, and faster checkout.">
+  <meta name="keywords" content="create Voyara account, sign up travel agency, join Voyara">
+  <link rel="canonical" href="https://abhishekandra.github.io/Travel-Agency-s-/pages/signup.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sign Up | Voyara">
+  <meta property="og:description" content="Create a Voyara account for curated trips, saved wishlists, and faster checkout.">
+  <meta property="og:image" content="https://abhishekandra.github.io/Travel-Agency-s-/assets/images/og-image.jpg">
+  <meta property="og:url" content="https://abhishekandra.github.io/Travel-Agency-s-/pages/signup.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sign Up | Voyara">
+  <meta name="twitter:description" content="Create a Voyara account for curated trips, saved wishlists, and faster checkout.">
+  <meta name="twitter:image" content="https://abhishekandra.github.io/Travel-Agency-s-/assets/images/og-image.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../css/variables.css">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/components.css">
-  <link rel="stylesheet" href="../css/signup.css">
 </head>
 <body>
   <header class="site-header" id="site-header">
@@ -80,33 +95,33 @@
 
   <main>
     <div class="container auth-page">
-      <div class="auth-card">
+      <div class="auth-card" data-reveal="zoom-in">
         <h1>Create Your Account</h1>
         <p class="auth-subtitle">Join Voyara for curated trips, saved wishlists, and faster checkout.</p>
 
         <form id="signup-form" novalidate>
           <div class="form-field" id="name-field">
             <label for="signup-name">Full Name</label>
-            <input type="text" id="signup-name" name="name" autocomplete="name">
-            <span class="field-error" id="name-error"></span>
+            <input type="text" id="signup-name" name="name" autocomplete="name" aria-required="true">
+            <span class="field-error" aria-live="polite" id="name-error"></span>
           </div>
 
           <div class="form-field" id="email-field">
             <label for="signup-email">Email</label>
-            <input type="email" id="signup-email" name="email" autocomplete="email">
-            <span class="field-error" id="email-error"></span>
+            <input type="email" id="signup-email" name="email" autocomplete="email" aria-required="true">
+            <span class="field-error" aria-live="polite" id="email-error"></span>
           </div>
 
           <div class="form-field" id="password-field">
             <label for="signup-password">Password</label>
-            <input type="password" id="signup-password" name="password" autocomplete="new-password">
-            <span class="field-error" id="password-error"></span>
+            <input type="password" id="signup-password" name="password" autocomplete="new-password" aria-required="true">
+            <span class="field-error" aria-live="polite" id="password-error"></span>
           </div>
 
           <div class="form-field" id="confirm-password-field">
             <label for="signup-confirm-password">Confirm Password</label>
-            <input type="password" id="signup-confirm-password" name="confirmPassword" autocomplete="new-password">
-            <span class="field-error" id="confirm-password-error"></span>
+            <input type="password" id="signup-confirm-password" name="confirmPassword" autocomplete="new-password" aria-required="true">
+            <span class="field-error" aria-live="polite" id="confirm-password-error"></span>
           </div>
 
           <button type="submit" class="btn btn-accent">Create Account</button>
@@ -125,7 +140,7 @@
       </div>
 
       <div class="footer-col">
-        <h4 class="footer-heading">Explore</h4>
+        <h2 class="footer-heading">Explore</h2>
         <ul>
           <li><a href="packages.html">Packages</a></li>
           <li><a href="tours.html">Tours</a></li>
@@ -136,7 +151,7 @@
       </div>
 
       <div class="footer-col">
-        <h4 class="footer-heading">Company</h4>
+        <h2 class="footer-heading">Company</h2>
         <ul>
           <li><a href="about.html">About Us</a></li>
           <li><a href="contact.html">Contact</a></li>
@@ -145,16 +160,16 @@
       </div>
 
       <div class="footer-col footer-newsletter">
-        <h4 class="footer-heading">Stay Inspired</h4>
+        <h2 class="footer-heading">Stay Inspired</h2>
         <p>Join our list for private offers and new destinations.</p>
         <form class="newsletter-form" id="newsletter-form" novalidate>
           <label for="newsletter-email" class="visually-hidden">Email address</label>
           <div class="newsletter-input-row">
-            <input type="email" id="newsletter-email" placeholder="Email address" autocomplete="email">
+            <input type="email" id="newsletter-email" placeholder="Email address" autocomplete="email" aria-required="true">
             <button type="submit" class="btn btn-accent">Subscribe</button>
           </div>
-          <span class="field-error" id="newsletter-email-error"></span>
-          <p class="newsletter-success" id="newsletter-success" hidden>You're subscribed — watch your inbox for private offers.</p>
+          <span class="field-error" aria-live="polite" id="newsletter-email-error"></span>
+          <p class="newsletter-success" aria-live="polite" id="newsletter-success" hidden>You're subscribed — watch your inbox for private offers.</p>
         </form>
       </div>
     </div>
@@ -177,10 +192,15 @@
     </div>
   </footer>
 
+  <button type="button" class="icon-btn scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
   <script src="../js/utils.js" defer></script>
   <script src="../js/data.js" defer></script>
   <script src="../js/auth.js" defer></script>
   <script src="../js/cart.js" defer></script>
+  <script src="../js/animations.js" defer></script>
   <script src="../js/signup.js" defer></script>
 </body>
 </html>

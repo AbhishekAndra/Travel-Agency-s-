@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Image coming soon">
+  <rect width="800" height="600" fill="#0B1F3A"/>
+  <rect x="0.5" y="0.5" width="799" height="599" fill="none" stroke="#14335C" stroke-width="1"/>
+  <g stroke="#C9A24B" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="400" cy="270" r="46"/>
+    <path d="M400 234l14 34-14 34-14-34z" fill="#C9A24B" stroke="none"/>
+  </g>
+  <text x="400" y="372" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="22" fill="#E4C98A" letter-spacing="1">Voyara</text>
+  <text x="400" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" letter-spacing="2" fill="#8C8677">IMAGE COMING SOON</text>
+</svg>

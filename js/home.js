@@ -20,12 +20,7 @@
     });
   }
 
-  function setFieldError(fieldId, errorId, message) {
-    var field = document.getElementById(fieldId);
-    var errorEl = document.getElementById(errorId);
-    field.classList.toggle('has-error', !!message);
-    errorEl.textContent = message || '';
-  }
+  var setFieldError = window.VoyaraUtils.setFieldError;
 
   function handleSubmit(event) {
     event.preventDefault();

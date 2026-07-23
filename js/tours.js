@@ -1,13 +1,13 @@
 /* ==========================================================================
-   Voyara — Tours page logic
+   Stackly — Tours page logic
    Filters and renders js/data.js tours[] with no page reloads.
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  var tours = (window.VoyaraData && window.VoyaraData.tours) || [];
-  var formatCurrency = window.VoyaraData.formatCurrency;
+  var tours = (window.StacklyData && window.StacklyData.tours) || [];
+  var formatCurrency = window.StacklyData.formatCurrency;
 
   var state = {
     themes: [],
@@ -43,12 +43,12 @@
 
   // ---- Rendering ----
   function renderTourCard(tour) {
-    var destId = window.VoyaraData.findDestinationId(tour.destination);
-    var tourImg = window.VoyaraUtils.renderImg({
+    var destId = window.StacklyData.findDestinationId(tour.destination);
+    var tourImg = window.StacklyUtils.renderImg({
       className: 'listing-card-image-bg',
       src: tour.image,
-      srcset: window.VoyaraUtils.buildSrcset(tour.image, [480, 800]),
-      sizes: window.VoyaraUtils.CARD_IMAGE_SIZES,
+      srcset: window.StacklyUtils.buildSrcset(tour.image, [480, 800]),
+      sizes: window.StacklyUtils.CARD_IMAGE_SIZES,
       width: 800,
       height: 600,
       alt: tour.title + ' — ' + tour.destination
@@ -59,11 +59,11 @@
         '<div class="listing-card-image">' +
           tourImg +
           '<span class="listing-card-tag listing-card-tag--gold">' + tour.theme + '</span>' +
-          window.VoyaraUtils.renderWishlistHeart('tour', tour.id, tour.title, tour.destination, tour.image, tour.price) +
+          window.StacklyUtils.renderWishlistHeart('tour', tour.id, tour.title, tour.destination, tour.image, tour.price) +
         '</div>' +
         '<div class="listing-card-body">' +
           '<h3>' + tour.title + '</h3>' +
-          window.VoyaraUtils.renderStars(tour.rating) +
+          window.StacklyUtils.renderStars(tour.rating) +
           '<p class="tour-card-meta">' + tour.destination + ' · ' + tour.duration + ' · ' + tour.groupSize + '</p>' +
           '<p class="listing-card-price">' + formatCurrency(tour.price) + '<span>/person</span></p>' +
           (destId ? '<a href="destination-detail.html?id=' + destId + '" class="btn btn-outline">View Details</a>' : '') +
@@ -86,8 +86,8 @@
     } else {
       emptyState.hidden = true;
       grid.innerHTML = results.map(renderTourCard).join('');
-      if (window.VoyaraAnimations) window.VoyaraAnimations.refreshReveal();
-      window.VoyaraUtils.syncWishlistHearts();
+      if (window.StacklyAnimations) window.StacklyAnimations.refreshReveal();
+      window.StacklyUtils.syncWishlistHearts();
     }
   }
 
@@ -102,13 +102,13 @@
   }
 
   function handleFilterChange() {
-    state.themes = window.VoyaraUtils.getCheckedValues('theme');
-    state.destinations = window.VoyaraUtils.getCheckedValues('destination');
+    state.themes = window.StacklyUtils.getCheckedValues('theme');
+    state.destinations = window.StacklyUtils.getCheckedValues('destination');
     render();
   }
 
   function bindEvents() {
-    window.VoyaraUtils.bindFilterPanelEvents(handleFilterChange, resetFilters);
+    window.StacklyUtils.bindFilterPanelEvents(handleFilterChange, resetFilters);
   }
 
   function init() {
@@ -116,7 +116,7 @@
     populateFilter('theme-filter', 'theme', tours.map(function (t) { return t.theme; }));
     populateFilter('destination-filter', 'destination', tours.map(function (t) { return t.destination; }));
     bindEvents();
-    window.VoyaraUtils.applyDestinationFromQuery(state);
+    window.StacklyUtils.applyDestinationFromQuery(state);
     render();
   }
 

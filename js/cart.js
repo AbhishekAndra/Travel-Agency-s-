@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Voyara — Central cart manager (add/remove/update items, persistence)
+   Stackly — Central cart manager (add/remove/update items, persistence)
    Shared across all pages (nav cart badge). cart.html has no separate page
    script, so its render/DOM logic lives at the bottom of this file, guarded
    to only run when the cart page's markup is present.
@@ -8,8 +8,8 @@
 (function () {
   'use strict';
 
-  var STORAGE_KEY = 'voyaraCart';
-  var DIRECT_BOOKING_KEY = 'voyaraDirectBooking';
+  var STORAGE_KEY = 'stacklyCart';
+  var DIRECT_BOOKING_KEY = 'stacklyDirectBooking';
   var TAX_RATE = 0.12;
 
   function getItems() {
@@ -91,7 +91,7 @@
     window.sessionStorage.removeItem(DIRECT_BOOKING_KEY);
   }
 
-  window.VoyaraCart = {
+  window.StacklyCart = {
     STORAGE_KEY: STORAGE_KEY,
     DIRECT_BOOKING_KEY: DIRECT_BOOKING_KEY,
     TAX_RATE: TAX_RATE,
@@ -114,7 +114,7 @@
      when #cart-items isn't found.
      ------------------------------------------------------------------------ */
 
-  var formatCurrency = window.VoyaraData && window.VoyaraData.formatCurrency;
+  var formatCurrency = window.StacklyData && window.StacklyData.formatCurrency;
 
   function formatCartDate(item) {
     if (!item.travelDate) return '';
@@ -133,9 +133,9 @@
   }
 
   function renderCartItem(item) {
-    var itemImg = window.VoyaraUtils.renderImg({
+    var itemImg = window.StacklyUtils.renderImg({
       className: 'cart-item-image',
-      src: item.image || window.VoyaraUtils.PLACEHOLDER_IMAGE,
+      src: item.image || window.StacklyUtils.PLACEHOLDER_IMAGE,
       width: 120,
       height: 90,
       alt: item.title || 'Cart item'
@@ -189,7 +189,7 @@
       if (removeBtn) {
         removeFromCart(removeBtn.dataset.cartId);
         renderCartPage();
-        window.VoyaraUtils.updateCartBadge();
+        window.StacklyUtils.updateCartBadge();
         return;
       }
 
@@ -202,7 +202,7 @@
         if (nextQty < 1) return;
         updateQuantity(stepBtn.dataset.cartId, nextQty);
         renderCartPage();
-        window.VoyaraUtils.updateCartBadge();
+        window.StacklyUtils.updateCartBadge();
       }
     });
   }

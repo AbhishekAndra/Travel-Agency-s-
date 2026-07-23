@@ -1,13 +1,13 @@
 /* ==========================================================================
-   Voyara — Hotels page logic
+   Stackly — Hotels page logic
    Filters, sorts, and renders js/data.js hotels[] with no page reloads.
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  var hotels = (window.VoyaraData && window.VoyaraData.hotels) || [];
-  var formatCurrency = window.VoyaraData.formatCurrency;
+  var hotels = (window.StacklyData && window.StacklyData.hotels) || [];
+  var formatCurrency = window.StacklyData.formatCurrency;
 
   var state = {
     priceMin: 0,
@@ -77,18 +77,18 @@
   }
 
   // initPriceRange/updatePriceRangeUI's DOM wiring is shared with
-  // flights.js via window.VoyaraUtils (identical
+  // flights.js via window.StacklyUtils (identical
   // #price-min/#price-max/#price-range-fill markup on both pages) — these
   // stay as same-named local wrappers so every existing zero-arg call site
   // below keeps working unchanged.
   function initPriceRange() {
     bounds = computePriceBounds();
-    window.VoyaraUtils.initPriceRangeInputs(state, bounds);
+    window.StacklyUtils.initPriceRangeInputs(state, bounds);
     updatePriceRangeUI();
   }
 
   function updatePriceRangeUI() {
-    window.VoyaraUtils.updatePriceRangeUI(state, bounds, formatCurrency);
+    window.StacklyUtils.updatePriceRangeUI(state, bounds, formatCurrency);
   }
 
   // ---- Filtering & sorting ----
@@ -130,12 +130,12 @@
       amenitiesHtml += '<span class="amenity-more">+' + remaining + ' more</span>';
     }
 
-    var destId = window.VoyaraData.findDestinationId(hotel.destination);
-    var hotelImg = window.VoyaraUtils.renderImg({
+    var destId = window.StacklyData.findDestinationId(hotel.destination);
+    var hotelImg = window.StacklyUtils.renderImg({
       className: 'listing-card-image-bg',
       src: hotel.image,
-      srcset: window.VoyaraUtils.buildSrcset(hotel.image, [480, 800]),
-      sizes: window.VoyaraUtils.CARD_IMAGE_SIZES,
+      srcset: window.StacklyUtils.buildSrcset(hotel.image, [480, 800]),
+      sizes: window.StacklyUtils.CARD_IMAGE_SIZES,
       width: 800,
       height: 600,
       alt: hotel.name + ', ' + hotel.destination
@@ -145,13 +145,13 @@
       '<article class="hotel-card listing-card" data-reveal="fade-up">' +
         '<div class="listing-card-image">' +
           hotelImg +
-          window.VoyaraUtils.renderWishlistHeart('hotel', hotel.id, hotel.name, hotel.destination, hotel.image, hotel.pricePerNight) +
+          window.StacklyUtils.renderWishlistHeart('hotel', hotel.id, hotel.name, hotel.destination, hotel.image, hotel.pricePerNight) +
         '</div>' +
         '<div class="listing-card-body">' +
           '<div class="hotel-card-header">' +
             '<h3>' + hotel.name + '</h3>' +
           '</div>' +
-          '' + window.VoyaraUtils.renderStars(hotel.rating) +
+          '' + window.StacklyUtils.renderStars(hotel.rating) +
           '<p class="hotel-card-destination">' + hotel.destination + '</p>' +
           '<div class="hotel-card-amenities">' + amenitiesHtml + '</div>' +
           '<p class="listing-card-price">' + formatCurrency(hotel.pricePerNight) + '<span>/night</span></p>' +
@@ -175,8 +175,8 @@
     } else {
       emptyState.hidden = true;
       grid.innerHTML = results.map(renderHotelCard).join('');
-      if (window.VoyaraAnimations) window.VoyaraAnimations.refreshReveal();
-      window.VoyaraUtils.syncWishlistHearts();
+      if (window.StacklyAnimations) window.StacklyAnimations.refreshReveal();
+      window.StacklyUtils.syncWishlistHearts();
     }
   }
 
@@ -194,13 +194,13 @@
   }
 
   function handleFilterChange() {
-    state.ratings = window.VoyaraUtils.getCheckedValues('rating');
-    state.amenities = window.VoyaraUtils.getCheckedValues('amenity');
+    state.ratings = window.StacklyUtils.getCheckedValues('rating');
+    state.amenities = window.StacklyUtils.getCheckedValues('amenity');
     render();
   }
 
   function bindEvents() {
-    window.VoyaraUtils.bindFilterPanelEvents(handleFilterChange, resetFilters);
+    window.StacklyUtils.bindFilterPanelEvents(handleFilterChange, resetFilters);
 
     ['price-min', 'price-max'].forEach(function (id) {
       document.getElementById(id).addEventListener('input', function () {

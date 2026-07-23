@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Voyara — Login page logic
-   Inline field validation, then hands off to VoyaraAuth.login().
+   Stackly — Login page logic
+   Inline field validation, then hands off to StacklyAuth.login().
    ========================================================================== */
 
 (function () {
@@ -9,7 +9,7 @@
   var emailInput = document.getElementById('login-email');
   var passwordInput = document.getElementById('login-password');
 
-  var setFieldError = window.VoyaraUtils.setFieldError;
+  var setFieldError = window.StacklyUtils.setFieldError;
 
   function setFormError(message) {
     var el = document.getElementById('login-form-error');
@@ -18,7 +18,7 @@
   }
 
   function validateEmail() {
-    var error = window.VoyaraUtils.validateEmailValue(emailInput.value);
+    var error = window.StacklyUtils.validateEmailValue(emailInput.value);
     setFieldError('email-field', 'email-error', error);
     return !error;
   }
@@ -50,13 +50,13 @@
     event.preventDefault();
     setFormError('');
 
-    var isValid = window.VoyaraUtils.validateFieldsAndFocus([
+    var isValid = window.StacklyUtils.validateFieldsAndFocus([
       { input: emailInput, validate: validateEmail },
       { input: passwordInput, validate: validatePassword }
     ]);
     if (!isValid) return;
 
-    var result = window.VoyaraAuth.login(emailInput.value.trim(), passwordInput.value);
+    var result = window.StacklyAuth.login(emailInput.value.trim(), passwordInput.value);
 
     if (!result.ok) {
       setFormError(result.error);
@@ -70,7 +70,7 @@
     var form = document.getElementById('login-form');
     if (!form) return;
 
-    if (window.VoyaraAuth.getCurrentUser()) {
+    if (window.StacklyAuth.getCurrentUser()) {
       window.location.href = 'dashboard.html';
       return;
     }

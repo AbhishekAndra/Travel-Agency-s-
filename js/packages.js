@@ -1,13 +1,13 @@
 /* ==========================================================================
-   Voyara — Packages page logic
+   Stackly — Packages page logic
    Filters and renders js/data.js packages[] with no page reloads.
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  var packages = (window.VoyaraData && window.VoyaraData.packages) || [];
-  var formatCurrency = window.VoyaraData.formatCurrency;
+  var packages = (window.StacklyData && window.StacklyData.packages) || [];
+  var formatCurrency = window.StacklyData.formatCurrency;
 
   var state = {
     duration: [],
@@ -49,11 +49,11 @@
 
   // ---- Rendering ----
   function renderPackageImg(pkg) {
-    return window.VoyaraUtils.renderImg({
+    return window.StacklyUtils.renderImg({
       className: 'listing-card-image-bg',
       src: pkg.image,
-      srcset: window.VoyaraUtils.buildSrcset(pkg.image, [480, 800]),
-      sizes: window.VoyaraUtils.CARD_IMAGE_SIZES,
+      srcset: window.StacklyUtils.buildSrcset(pkg.image, [480, 800]),
+      sizes: window.StacklyUtils.CARD_IMAGE_SIZES,
       width: 800,
       height: 600,
       alt: pkg.title + ' — ' + pkg.destination
@@ -66,11 +66,11 @@
         '<div class="listing-card-image">' +
           renderPackageImg(pkg) +
           '<span class="listing-card-tag">' + pkg.duration.days + 'D/' + pkg.duration.nights + 'N</span>' +
-          window.VoyaraUtils.renderWishlistHeart('package', pkg.id, pkg.title, pkg.destination, pkg.image, pkg.price) +
+          window.StacklyUtils.renderWishlistHeart('package', pkg.id, pkg.title, pkg.destination, pkg.image, pkg.price) +
         '</div>' +
         '<div class="listing-card-body">' +
           '<h3>' + pkg.title + '</h3>' +
-          window.VoyaraUtils.renderStars(pkg.rating) +
+          window.StacklyUtils.renderStars(pkg.rating) +
           '<p class="package-card-destination">' + pkg.destination + '</p>' +
           '<p class="listing-card-price">' + formatCurrency(pkg.price) + '<span>/person</span></p>' +
           '<a href="package-detail.html?id=' + pkg.id + '" class="btn btn-outline">View Details</a>' +
@@ -93,8 +93,8 @@
     } else {
       emptyState.hidden = true;
       grid.innerHTML = results.map(renderPackageCard).join('');
-      if (window.VoyaraAnimations) window.VoyaraAnimations.refreshReveal();
-      window.VoyaraUtils.syncWishlistHearts();
+      if (window.StacklyAnimations) window.StacklyAnimations.refreshReveal();
+      window.StacklyUtils.syncWishlistHearts();
     }
   }
 
@@ -109,20 +109,20 @@
   }
 
   function handleFilterChange() {
-    state.duration = window.VoyaraUtils.getCheckedValues('duration');
-    state.destinations = window.VoyaraUtils.getCheckedValues('destination');
+    state.duration = window.StacklyUtils.getCheckedValues('duration');
+    state.destinations = window.StacklyUtils.getCheckedValues('destination');
     render();
   }
 
   function bindEvents() {
-    window.VoyaraUtils.bindFilterPanelEvents(handleFilterChange, resetFilters);
+    window.StacklyUtils.bindFilterPanelEvents(handleFilterChange, resetFilters);
   }
 
   function init() {
     if (!document.getElementById('packages-grid')) return;
     populateDestinationFilter();
     bindEvents();
-    window.VoyaraUtils.applyDestinationFromQuery(state);
+    window.StacklyUtils.applyDestinationFromQuery(state);
     render();
   }
 

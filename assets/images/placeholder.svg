@@ -5,6 +5,6 @@
     <circle cx="400" cy="270" r="46"/>
     <path d="M400 234l14 34-14 34-14-34z" fill="#C9A24B" stroke="none"/>
   </g>
-  <text x="400" y="372" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="22" fill="#E4C98A" letter-spacing="1">Voyara</text>
+  <text x="400" y="372" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="22" fill="#E4C98A" letter-spacing="1">Stackly</text>
   <text x="400" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" letter-spacing="2" fill="#8C8677">IMAGE COMING SOON</text>
 </svg>

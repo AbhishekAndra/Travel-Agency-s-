@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Voyara — local image optimizer.
+Stackly — local image optimizer.
 
 Run this against a folder of source .jpg/.png images (mirroring the site's
 assets/images/{hero,destinations,hotels,tours,gallery,testimonials,icons}/
@@ -42,6 +42,19 @@ FOLDER_MAX_WIDTH = {
     'gallery': 600,
     'testimonials': 600,
     'icons': 128,
+}
+
+# Extra narrower widths to also emit per folder, alongside the base file at
+# FOLDER_MAX_WIDTH — matches the srcset the site's <img> tags already
+# reference (js/utils.js's buildSrcset()/renderImg(), and the hardcoded
+# srcset on the homepage hero). Each is saved as "{stem}-{width}w.webp"
+# next to the base "{stem}.webp". gallery/testimonials/icons don't use
+# srcset on this site, so they're not listed here.
+FOLDER_SRCSET_WIDTHS = {
+    'hero': [800, 1200],
+    'destinations': [480],
+    'hotels': [480],
+    'tours': [480],
 }
 
 SIZE_CAP_BYTES = 100 * 1024
@@ -116,29 +129,50 @@ def iter_source_images(src_root):
 
 
 def process_image(path, src_root, dst_root):
+    """Produces the base "{stem}.webp" at FOLDER_MAX_WIDTH, plus a
+    "{stem}-{width}w.webp" for every extra width FOLDER_SRCSET_WIDTHS lists
+    for that folder — each resized independently from the original source
+    (not chained from an already-downscaled copy) and compressed under the
+    same 100KB cap. Returns one result dict per output file."""
     rel = path.relative_to(src_root)
     top_folder = rel.parts[0] if len(rel.parts) > 1 else None
     max_width = FOLDER_MAX_WIDTH.get(top_folder)
-
-    out_path = (dst_root / rel).with_suffix('.webp')
-    out_path.parent.mkdir(parents=True, exist_ok=True)
+    extra_widths = FOLDER_SRCSET_WIDTHS.get(top_folder, [])
 
     original_size = path.stat().st_size
+    unrecognized = top_folder is not None and top_folder not in FOLDER_MAX_WIDTH
+    results = []
 
-    with Image.open(path) as img:
-        img = prepare_mode(img)
-        img = resize_if_needed(img, max_width)
-        final_size, used_quality, met_cap = save_webp_under_cap(img, out_path)
+    with Image.open(path) as original:
+        prepared = prepare_mode(original)
 
-    return {
-        'rel': rel,
-        'top_folder': top_folder,
-        'original_size': original_size,
-        'final_size': final_size,
-        'quality': used_quality,
-        'met_cap': met_cap,
-        'unrecognized_folder': top_folder is not None and top_folder not in FOLDER_MAX_WIDTH,
-    }
+        base_out = (dst_root / rel).with_suffix('.webp')
+        base_out.parent.mkdir(parents=True, exist_ok=True)
+        base_img = resize_if_needed(prepared, max_width)
+        final_size, used_quality, met_cap = save_webp_under_cap(base_img, base_out)
+        results.append({
+            'rel': base_out.relative_to(dst_root),
+            'original_size': original_size,
+            'final_size': final_size,
+            'quality': used_quality,
+            'met_cap': met_cap,
+            'unrecognized_folder': unrecognized,
+        })
+
+        for width in extra_widths:
+            variant_out = base_out.with_name(base_out.stem + f'-{width}w.webp')
+            variant_img = resize_if_needed(prepared, width)
+            v_size, v_quality, v_met_cap = save_webp_under_cap(variant_img, variant_out)
+            results.append({
+                'rel': variant_out.relative_to(dst_root),
+                'original_size': original_size,
+                'final_size': v_size,
+                'quality': v_quality,
+                'met_cap': v_met_cap,
+                'unrecognized_folder': False,
+            })
+
+    return results
 
 
 def print_report(results, errors):
@@ -214,7 +248,7 @@ def main():
 
     for path in iter_source_images(src_root):
         try:
-            results.append(process_image(path, src_root, dst_root))
+            results.extend(process_image(path, src_root, dst_root))
         except Exception as exc:  # keep going on a single bad file
             errors.append((path.relative_to(src_root), exc))
 

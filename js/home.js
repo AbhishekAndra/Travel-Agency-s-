@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Voyara — Home page logic
+   Stackly — Home page logic
    Search widget: validates a destination is picked, then navigates to the
    packages listing pre-filtered to it (packages.js reads ?destination=).
    ========================================================================== */
@@ -7,7 +7,7 @@
 (function () {
   'use strict';
 
-  var destinations = (window.VoyaraData && window.VoyaraData.destinations) || [];
+  var destinations = (window.StacklyData && window.StacklyData.destinations) || [];
 
   function populateDestinations() {
     var select = document.getElementById('search-destination');
@@ -20,7 +20,43 @@
     });
   }
 
-  var setFieldError = window.VoyaraUtils.setFieldError;
+  function renderDestinationCard(dest) {
+    var img = window.StacklyUtils.renderImg({
+      className: 'listing-card-image-bg',
+      src: dest.image,
+      srcset: window.StacklyUtils.buildSrcset(dest.image, [480, 800]),
+      sizes: window.StacklyUtils.CARD_IMAGE_SIZES,
+      width: 480,
+      height: 360,
+      alt: dest.name + ', ' + dest.country
+    });
+
+    return (
+      '<article class="destination-card listing-card" data-reveal="fade-up">' +
+        '<div class="listing-card-image">' +
+          img +
+          window.StacklyUtils.renderWishlistHeart('destination', dest.id, dest.name, dest.name + ', ' + dest.country, dest.image, dest.startingPrice) +
+        '</div>' +
+        '<div class="listing-card-body">' +
+          '<h3>' + dest.name + '</h3>' +
+          '<p class="destination-card-country">' + dest.country + '</p>' +
+          '<p class="listing-card-price">' + window.StacklyData.formatCurrency(dest.startingPrice) + '<span>/starting</span></p>' +
+          '<a href="pages/destination-detail.html?id=' + dest.id + '" class="btn btn-outline">Explore</a>' +
+        '</div>' +
+      '</article>'
+    );
+  }
+
+  function renderFeaturedDestinations() {
+    var grid = document.getElementById('featured-destinations-grid');
+    if (!grid) return;
+
+    grid.innerHTML = destinations.slice(0, 6).map(renderDestinationCard).join('');
+    if (window.StacklyAnimations) window.StacklyAnimations.refreshReveal();
+    window.StacklyUtils.syncWishlistHearts();
+  }
+
+  var setFieldError = window.StacklyUtils.setFieldError;
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -42,6 +78,8 @@
   }
 
   function init() {
+    renderFeaturedDestinations();
+
     var form = document.getElementById('search-widget');
     if (!form) return;
 

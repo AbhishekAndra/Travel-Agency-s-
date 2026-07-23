@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Voyara — Dashboard page styles
+   Stackly — Dashboard page styles
    ========================================================================== */
 
 .dashboard-header {
@@ -23,6 +23,13 @@
 }
 
 .dashboard-header h1 {
+  margin-bottom: 0;
+}
+
+.dashboard-email {
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+  margin-top: var(--space-3xs);
   margin-bottom: 0;
 }
 

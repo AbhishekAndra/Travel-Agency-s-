@@ -1,18 +1,18 @@
 /* ==========================================================================
-   Voyara — Confirmation page logic
-   Reads ?bookingId= and renders the matching entry from 'voyaraBookings'.
+   Stackly — Confirmation page logic
+   Reads ?bookingId= and renders the matching entry from 'stacklyBookings'.
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  var formatCurrency = window.VoyaraData.formatCurrency;
+  var formatCurrency = window.StacklyData.formatCurrency;
 
-  var readLocalArray = window.VoyaraUtils.readLocalArray;
+  var readLocalArray = window.StacklyUtils.readLocalArray;
 
-  var getItemTitle = window.VoyaraUtils.getItemTitle;
-  var getItemDestination = window.VoyaraUtils.getItemDestination;
-  var getItemDateLabel = window.VoyaraUtils.getItemDateLabel;
+  var getItemTitle = window.StacklyUtils.getItemTitle;
+  var getItemDestination = window.StacklyUtils.getItemDestination;
+  var getItemDateLabel = window.StacklyUtils.getItemDateLabel;
 
   // ---- Rendering & init ----
   function renderBooking(booking) {
@@ -57,7 +57,7 @@
 
     var params = new URLSearchParams(window.location.search);
     var bookingId = params.get('bookingId');
-    var booking = readLocalArray('voyaraBookings').filter(function (b) { return b.bookingId === bookingId; })[0];
+    var booking = readLocalArray('stacklyBookings').filter(function (b) { return b.bookingId === bookingId; })[0];
 
     if (!booking) {
       document.getElementById('not-found-state').hidden = false;

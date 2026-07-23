@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Voyara — Destination Detail page logic
+   Stackly — Destination Detail page logic
    Reads ?id= from the URL and renders a single js/data.js destination plus
    its related packages/hotels/tours.
    ========================================================================== */
@@ -7,7 +7,7 @@
 (function () {
   'use strict';
 
-  var data = window.VoyaraData || {};
+  var data = window.StacklyData || {};
   var formatCurrency = data.formatCurrency;
 
   // flights/hotels/packages/tours store destination as a free-text string
@@ -20,11 +20,11 @@
 
   // ---- Related package/hotel/tour card rendering ----
   function renderCardImg(src, alt) {
-    return window.VoyaraUtils.renderImg({
+    return window.StacklyUtils.renderImg({
       className: 'listing-card-image-bg',
       src: src,
-      srcset: window.VoyaraUtils.buildSrcset(src, [480, 800]),
-      sizes: window.VoyaraUtils.CARD_IMAGE_SIZES,
+      srcset: window.StacklyUtils.buildSrcset(src, [480, 800]),
+      sizes: window.StacklyUtils.CARD_IMAGE_SIZES,
       width: 800,
       height: 600,
       alt: alt
@@ -37,11 +37,11 @@
         '<div class="listing-card-image">' +
           renderCardImg(pkg.image, pkg.title + ' — ' + pkg.destination) +
           '<span class="listing-card-tag">' + pkg.duration.days + 'D/' + pkg.duration.nights + 'N</span>' +
-          window.VoyaraUtils.renderWishlistHeart('package', pkg.id, pkg.title, pkg.destination, pkg.image, pkg.price) +
+          window.StacklyUtils.renderWishlistHeart('package', pkg.id, pkg.title, pkg.destination, pkg.image, pkg.price) +
         '</div>' +
         '<div class="listing-card-body">' +
           '<h3>' + pkg.title + '</h3>' +
-          window.VoyaraUtils.renderStars(pkg.rating) +
+          window.StacklyUtils.renderStars(pkg.rating) +
           '<p class="listing-card-price">' + formatCurrency(pkg.price) + '<span>/person</span></p>' +
           '<a href="package-detail.html?id=' + pkg.id + '" class="btn btn-outline">View Details</a>' +
         '</div>' +
@@ -57,11 +57,11 @@
       '<article class="hotel-card listing-card related-card" data-reveal="fade-up">' +
         '<div class="listing-card-image">' +
           renderCardImg(hotel.image, hotel.name + ', ' + hotel.destination) +
-          window.VoyaraUtils.renderWishlistHeart('hotel', hotel.id, hotel.name, hotel.destination, hotel.image, hotel.pricePerNight) +
+          window.StacklyUtils.renderWishlistHeart('hotel', hotel.id, hotel.name, hotel.destination, hotel.image, hotel.pricePerNight) +
         '</div>' +
         '<div class="listing-card-body">' +
           '<h3>' + hotel.name + '</h3>' +
-          window.VoyaraUtils.renderStars(hotel.rating) +
+          window.StacklyUtils.renderStars(hotel.rating) +
           '<p class="listing-card-price">' + formatCurrency(hotel.pricePerNight) + '<span>/night</span></p>' +
         '</div>' +
       '</article>'
@@ -74,11 +74,11 @@
         '<div class="listing-card-image">' +
           renderCardImg(tour.image, tour.title + ' — ' + tour.destination) +
           '<span class="listing-card-tag listing-card-tag--gold">' + tour.theme + '</span>' +
-          window.VoyaraUtils.renderWishlistHeart('tour', tour.id, tour.title, tour.destination, tour.image, tour.price) +
+          window.StacklyUtils.renderWishlistHeart('tour', tour.id, tour.title, tour.destination, tour.image, tour.price) +
         '</div>' +
         '<div class="listing-card-body">' +
           '<h3>' + tour.title + '</h3>' +
-          window.VoyaraUtils.renderStars(tour.rating) +
+          window.StacklyUtils.renderStars(tour.rating) +
           '<p class="related-card-meta">' + tour.duration + ' · ' + tour.groupSize + '</p>' +
           '<p class="listing-card-price">' + formatCurrency(tour.price) + '<span>/person</span></p>' +
           '<a href="tours.html?destination=' + encodeURIComponent(tour.destination) + '" class="btn btn-outline">View Details</a>' +
@@ -102,7 +102,7 @@
 
   // ---- Destination page rendering & init ----
   function renderDestination(destination) {
-    document.title = destination.name + ' | Voyara';
+    document.title = destination.name + ' | Stackly';
 
     document.getElementById('destination-name').textContent = destination.name;
     document.getElementById('destination-country').textContent = destination.country;
@@ -112,7 +112,7 @@
 
     var heroBg = document.getElementById('hero-banner-bg');
     heroBg.src = destination.image;
-    heroBg.srcset = window.VoyaraUtils.buildSrcset(destination.image, [480, 800]);
+    heroBg.srcset = window.StacklyUtils.buildSrcset(destination.image, [480, 800]);
     heroBg.sizes = '100vw';
     heroBg.alt = 'Panoramic view of ' + destination.name + ', ' + destination.country;
 
@@ -128,8 +128,8 @@
     renderRelatedSection('related-packages-section', 'related-packages', relatedPackages, renderPackageCard);
     renderRelatedSection('related-hotels-section', 'related-hotels', relatedHotels, renderHotelCard);
     renderRelatedSection('related-tours-section', 'related-tours', relatedTours, renderTourCard);
-    if (window.VoyaraAnimations) window.VoyaraAnimations.refreshReveal();
-    window.VoyaraUtils.syncWishlistHearts();
+    if (window.StacklyAnimations) window.StacklyAnimations.refreshReveal();
+    window.StacklyUtils.syncWishlistHearts();
 
     if (destination.bestTime) {
       document.getElementById('best-time-period').textContent = destination.bestTime.period;

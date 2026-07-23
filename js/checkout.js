@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Voyara — Checkout page logic (3-step wizard)
+   Stackly — Checkout page logic (3-step wizard)
    Order comes from either a direct booking (flights.js "Select" or
    package-detail.js "Book Now" — sessionStorage, skips the cart) or, if
    there's no direct booking, the full persistent cart. Whichever it is, the
@@ -11,7 +11,7 @@
 (function () {
   'use strict';
 
-  var formatCurrency = window.VoyaraData.formatCurrency;
+  var formatCurrency = window.StacklyData.formatCurrency;
   var CARD_EXPIRY_RE = /^(0[1-9]|1[0-2])\/\d{2}$/;
   var UPI_RE = /^[\w.-]+@[\w.-]+$/;
   var MAX_TRAVELERS = 9;
@@ -29,18 +29,18 @@
   /* ---- Order resolution ---- */
 
   function resolveOrder() {
-    var direct = window.VoyaraCart.getDirectBooking();
+    var direct = window.StacklyCart.getDirectBooking();
     if (direct) {
       var item = Object.assign({}, direct.item, { type: direct.type });
       return { source: 'direct', type: direct.type, items: [item] };
     }
-    var cartItems = window.VoyaraCart.getItems();
+    var cartItems = window.StacklyCart.getItems();
     return { source: 'cart', type: 'package', items: cartItems };
   }
 
-  var getItemTitle = window.VoyaraUtils.getItemTitle;
-  var getItemDestination = window.VoyaraUtils.getItemDestination;
-  var getItemDateLabel = window.VoyaraUtils.getItemDateLabel;
+  var getItemTitle = window.StacklyUtils.getItemTitle;
+  var getItemDestination = window.StacklyUtils.getItemDestination;
+  var getItemDateLabel = window.StacklyUtils.getItemDateLabel;
 
   function getItemLineTotal(item) {
     if (order.type === 'flight') {
@@ -51,7 +51,7 @@
 
   function getOrderTotals() {
     var subtotal = order.items.reduce(function (sum, item) { return sum + getItemLineTotal(item); }, 0);
-    var tax = Math.round(subtotal * window.VoyaraCart.TAX_RATE);
+    var tax = Math.round(subtotal * window.StacklyCart.TAX_RATE);
     return { subtotal: subtotal, tax: tax, total: subtotal + tax };
   }
 
@@ -148,22 +148,22 @@
     });
   }
 
-  var setFieldError = window.VoyaraUtils.setFieldError;
+  var setFieldError = window.StacklyUtils.setFieldError;
 
   function validateTravelerName(input) {
-    var error = window.VoyaraUtils.validateNameValue(input.value);
+    var error = window.StacklyUtils.validateNameValue(input.value);
     setFieldError(input.closest('.form-field').id, input.id + '-error', error);
     return !error;
   }
 
   function validateTravelerEmail(input) {
-    var error = window.VoyaraUtils.validateEmailValue(input.value);
+    var error = window.StacklyUtils.validateEmailValue(input.value);
     setFieldError('traveler-email-field', 'traveler-email-error', error);
     return !error;
   }
 
   function validateTravelerPhone(input) {
-    var error = window.VoyaraUtils.validatePhoneValue(input.value);
+    var error = window.StacklyUtils.validatePhoneValue(input.value);
     setFieldError('traveler-phone-field', 'traveler-phone-error', error);
     return !error;
   }
@@ -182,7 +182,7 @@
       fields.push({ input: document.getElementById('traveler-name-' + i), validate: validateTravelerName });
     }
 
-    var isValid = window.VoyaraUtils.validateFieldsAndFocus(fields);
+    var isValid = window.StacklyUtils.validateFieldsAndFocus(fields);
 
     if (isValid) {
       state.primary.name = nameInput.value.trim();
@@ -340,15 +340,15 @@
 
   /* ---- Confirm booking ---- */
 
-  var readLocalArray = window.VoyaraUtils.readLocalArray;
+  var readLocalArray = window.StacklyUtils.readLocalArray;
 
   function handleConfirmBooking() {
-    var user = window.VoyaraAuth.getCurrentUser();
+    var user = window.StacklyAuth.getCurrentUser();
     var totals = getOrderTotals();
     var firstItem = order.items[0];
 
     var booking = {
-      bookingId: window.VoyaraData.generateBookingId(),
+      bookingId: window.StacklyData.generateBookingId(),
       userEmail: user.email,
       createdAt: new Date().toISOString(),
       orderType: order.type,
@@ -370,16 +370,16 @@
       date: firstItem.travelDate || new Date().toISOString()
     };
 
-    var bookings = readLocalArray('voyaraBookings');
+    var bookings = readLocalArray('stacklyBookings');
     bookings.push(booking);
-    window.localStorage.setItem('voyaraBookings', JSON.stringify(bookings));
+    window.localStorage.setItem('stacklyBookings', JSON.stringify(bookings));
 
     if (order.source === 'direct') {
-      window.VoyaraCart.clearDirectBooking();
+      window.StacklyCart.clearDirectBooking();
     } else {
-      window.VoyaraCart.clearCart();
+      window.StacklyCart.clearCart();
     }
-    window.VoyaraUtils.updateCartBadge();
+    window.StacklyUtils.updateCartBadge();
 
     window.location.href = 'confirmation.html?bookingId=' + encodeURIComponent(booking.bookingId);
   }
@@ -429,7 +429,7 @@
   function init() {
     if (!document.getElementById('checkout-content')) return;
 
-    var user = window.VoyaraAuth.getCurrentUser();
+    var user = window.StacklyAuth.getCurrentUser();
     if (!user) {
       window.location.href = 'login.html';
       return;

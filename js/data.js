@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Voyara — Static/mock data (single source of truth)
+   Stackly — Static/mock data (single source of truth)
    Fictional data for destinations, flights, hotels, packages, and tours.
    Image paths are root-absolute so they resolve from both / and /pages/.
    ========================================================================== */
@@ -934,7 +934,7 @@
     return match ? match.id : undefined;
   }
 
-  window.VoyaraData = {
+  window.StacklyData = {
     destinations: destinations,
     flights: flights,
     hotels: hotels,

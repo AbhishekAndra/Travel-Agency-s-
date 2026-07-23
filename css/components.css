@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Voyara — Shared components (header, nav, footer, buttons)
+   Stackly — Shared components (header, nav, footer, buttons)
    Page-specific components live in css/[page-name].css
    ========================================================================== */
 
@@ -599,14 +599,15 @@ body.mobile-nav-open {
 .social-icons {
   display: flex;
   gap: var(--space-xs);
+  order: -1;
 }
 
 .social-icons a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
   border-radius: var(--radius-full);
   border: var(--border-width) solid rgba(250, 248, 244, 0.2);
   color: var(--color-grey-300);
@@ -614,13 +615,22 @@ body.mobile-nav-open {
 }
 
 .social-icons a svg {
-  width: 14px;
-  height: 14px;
+  width: 19px;
+  height: 19px;
 }
 
 .social-icons a:hover {
   border-color: var(--color-gold);
   color: var(--color-gold);
+}
+
+.social-icon-inert {
+  cursor: default;
+}
+
+.social-icon-inert:hover {
+  border-color: rgba(250, 248, 244, 0.2);
+  color: var(--color-grey-300);
 }
 
 @media (max-width: 899px) {
@@ -642,6 +652,25 @@ body.mobile-nav-open {
   .footer-bottom {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+/* ---- Page banner (about, contact, flights, hotels) ---- */
+
+.page-banner {
+  display: block;
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-lg);
+}
+
+@media (max-width: 599px) {
+  .page-banner {
+    aspect-ratio: 16 / 9;
+    max-height: 220px;
   }
 }
 

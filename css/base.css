@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Voyara — Base styles (reset + global typography)
+   Stackly — Base styles (reset + global typography)
    Google Fonts are loaded via a <link rel="stylesheet"> in each page's
    <head> (not @import here) so the browser's preload scanner can discover
    and fetch them in parallel with this file instead of serially after it.

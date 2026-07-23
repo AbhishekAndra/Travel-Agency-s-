@@ -1,9 +1,9 @@
 /* ==========================================================================
-   Voyara — Lightweight animation utility (no external libraries)
+   Stackly — Lightweight animation utility (no external libraries)
    Reveal-on-scroll, counter-up, typing effect, parallax — all gated behind
    prefers-reduced-motion. Self-initializes on every page; page scripts that
    re-render content (filtered listings) should call
-   window.VoyaraAnimations.refreshReveal() after updating the DOM so newly
+   window.StacklyAnimations.refreshReveal() after updating the DOM so newly
    inserted [data-reveal] elements get picked up.
    ========================================================================== */
 
@@ -206,7 +206,7 @@
 
   document.addEventListener('DOMContentLoaded', init);
 
-  window.VoyaraAnimations = {
+  window.StacklyAnimations = {
     refreshReveal: refreshReveal
   };
 })();

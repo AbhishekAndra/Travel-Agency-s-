@@ -1,8 +1,8 @@
 /* ==========================================================================
-   Voyara — Dashboard page logic
+   Stackly — Dashboard page logic
    Requires a logged-in user (redirects to login.html otherwise). Renders
-   My Bookings from localStorage 'voyaraBookings' (written by
-   checkout.js's handleConfirmBooking) and Wishlist from 'voyaraWishlist'
+   My Bookings from localStorage 'stacklyBookings' (written by
+   checkout.js's handleConfirmBooking) and Wishlist from 'stacklyWishlist'
    (written by utils.js's toggleWishlist) — both filtered to the current
    user's email, shape: { userEmail, ...itemFields }.
    ========================================================================== */
@@ -10,7 +10,7 @@
 (function () {
   'use strict';
 
-  var formatCurrency = window.VoyaraData.formatCurrency;
+  var formatCurrency = window.StacklyData.formatCurrency;
 
   var EMPTY_ILLUSTRATION = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="32" cy="32" r="26" stroke-dasharray="4 5"/><path d="M22 28h20a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H22a2 2 0 0 1-2-2V30a2 2 0 0 1 2-2z"/><path d="M27 28v-4a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v4"/><line x1="20" y1="36" x2="44" y2="36"/></svg>';
 
@@ -25,7 +25,7 @@
       '</div>';
   }
 
-  var readLocalArray = window.VoyaraUtils.readLocalArray;
+  var readLocalArray = window.StacklyUtils.readLocalArray;
 
   function renderBookingItem(booking) {
     var dateLabel = booking.date
@@ -33,9 +33,9 @@
       : '';
     var metaParts = [booking.destination, dateLabel].filter(Boolean);
 
-    var bookingImg = window.VoyaraUtils.renderImg({
+    var bookingImg = window.StacklyUtils.renderImg({
       className: 'booking-item-image',
-      src: booking.image || window.VoyaraUtils.PLACEHOLDER_IMAGE,
+      src: booking.image || window.StacklyUtils.PLACEHOLDER_IMAGE,
       width: 96,
       height: 72,
       alt: booking.title || 'Booking'
@@ -55,7 +55,7 @@
 
   function renderBookings(user) {
     var container = document.getElementById('tab-bookings');
-    var mine = readLocalArray('voyaraBookings').filter(function (b) { return b.userEmail === user.email; });
+    var mine = readLocalArray('stacklyBookings').filter(function (b) { return b.userEmail === user.email; });
 
     if (!mine.length) {
       renderEmptyState(
@@ -73,7 +73,7 @@
 
   function renderWishlist(user) {
     var container = document.getElementById('tab-wishlist');
-    var mine = readLocalArray('voyaraWishlist').filter(function (w) { return w.userEmail === user.email; });
+    var mine = readLocalArray('stacklyWishlist').filter(function (w) { return w.userEmail === user.email; });
 
     if (!mine.length) {
       renderEmptyState(
@@ -101,7 +101,7 @@
     emailInput.value = user.email || '';
     phoneInput.value = user.phone || '';
 
-    var setFieldError = window.VoyaraUtils.setFieldError;
+    var setFieldError = window.StacklyUtils.setFieldError;
 
     function validateName() {
       if (nameInput.value.trim().length < 2) {
@@ -114,11 +114,11 @@
 
     function validateEmail() {
       var value = emailInput.value.trim();
-      if (!value || !window.VoyaraAuth.isValidEmail(value)) {
+      if (!value || !window.StacklyAuth.isValidEmail(value)) {
         setFieldError('profile-email-field', 'profile-email-error', 'Enter a valid email address.');
         return false;
       }
-      var existing = window.VoyaraAuth.findUserByEmail(value);
+      var existing = window.StacklyAuth.findUserByEmail(value);
       if (existing && existing.id !== user.id) {
         setFieldError('profile-email-field', 'profile-email-error', 'This email is already in use by another account.');
         return false;
@@ -146,7 +146,7 @@
       var isPhoneValid = validatePhone();
       if (!isNameValid || !isEmailValid || !isPhoneValid) return;
 
-      var result = window.VoyaraAuth.updateProfile({
+      var result = window.StacklyAuth.updateProfile({
         name: nameInput.value.trim(),
         email: emailInput.value.trim(),
         phone: phoneInput.value.trim()
@@ -156,6 +156,7 @@
 
       user = result.user;
       document.getElementById('dashboard-username').textContent = user.name;
+      document.getElementById('dashboard-email').textContent = user.email;
 
       var accountLabel = document.getElementById('account-label');
       if (accountLabel) accountLabel.textContent = user.name;
@@ -168,21 +169,22 @@
   function init() {
     if (!document.getElementById('dashboard-username')) return;
 
-    var user = window.VoyaraAuth.getCurrentUser();
+    var user = window.StacklyAuth.getCurrentUser();
     if (!user) {
       window.location.href = 'login.html';
       return;
     }
 
     document.getElementById('dashboard-username').textContent = user.name;
+    document.getElementById('dashboard-email').textContent = user.email;
 
-    window.VoyaraUtils.initTabs();
+    window.StacklyUtils.initTabs();
     renderBookings(user);
     renderWishlist(user);
     initProfileForm(user);
 
     document.getElementById('dashboard-logout-btn').addEventListener('click', function () {
-      window.VoyaraAuth.logout();
+      window.StacklyAuth.logout();
     });
   }
 

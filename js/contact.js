@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Voyara — Contact page logic
+   Stackly — Contact page logic
    No backend — validates, shows an inline success message, and resets the
    form. Never uses alert().
    ========================================================================== */
@@ -7,16 +7,16 @@
 (function () {
   'use strict';
 
-  var setFieldError = window.VoyaraUtils.setFieldError;
+  var setFieldError = window.StacklyUtils.setFieldError;
 
   function validateName(input) {
-    var error = window.VoyaraUtils.validateNameValue(input.value);
+    var error = window.StacklyUtils.validateNameValue(input.value);
     setFieldError('contact-name-field', 'contact-name-error', error);
     return !error;
   }
 
   function validateEmail(input) {
-    var error = window.VoyaraUtils.validateEmailValue(input.value);
+    var error = window.StacklyUtils.validateEmailValue(input.value);
     setFieldError('contact-email-field', 'contact-email-error', error);
     return !error;
   }
@@ -56,7 +56,7 @@
       { input: messageInput, validate: validateMessage }
     ];
 
-    window.VoyaraUtils.initCharCounter('contact-message', 'contact-message-counter', 500);
+    window.StacklyUtils.initCharCounter('contact-message', 'contact-message-counter', 500);
 
     fields.forEach(function (f) {
       f.input.addEventListener('blur', function () { f.validate(f.input); });
@@ -71,7 +71,7 @@
     form.addEventListener('submit', function (event) {
       event.preventDefault();
 
-      var isValid = window.VoyaraUtils.validateFieldsAndFocus(fields);
+      var isValid = window.StacklyUtils.validateFieldsAndFocus(fields);
       if (!isValid) return;
 
       form.reset();

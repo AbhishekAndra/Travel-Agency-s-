@@ -1,13 +1,13 @@
 /* ==========================================================================
-   Voyara — Package Detail page logic
+   Stackly — Package Detail page logic
    Reads ?id= from the URL and renders a single js/data.js package.
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  var packages = (window.VoyaraData && window.VoyaraData.packages) || [];
-  var formatCurrency = window.VoyaraData.formatCurrency;
+  var packages = (window.StacklyData && window.StacklyData.packages) || [];
+  var formatCurrency = window.StacklyData.formatCurrency;
 
   var CHILD_PRICE_FACTOR = 0.5;
   var MAX_TRAVELERS = 9;
@@ -17,7 +17,7 @@
   var X_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 
   var REVIEWS = [
-    { name: 'Ananya R.', rating: 5, date: 'March 2026', comment: 'Every detail was handled beautifully — the itinerary struck the perfect balance between guided experiences and free time. Would book with Voyara again in a heartbeat.' },
+    { name: 'Ananya R.', rating: 5, date: 'March 2026', comment: 'Every detail was handled beautifully — the itinerary struck the perfect balance between guided experiences and free time. Would book with Stackly again in a heartbeat.' },
     { name: 'Marcus T.', rating: 4, date: 'January 2026', comment: 'Genuinely well organized trip. The included excursions were worth it, and the accommodation was a step above what we expected for the price.' },
     { name: 'Priya K.', rating: 5, date: 'November 2025', comment: 'Our guide made the whole trip. Everything ran on time, communication before departure was excellent, and the pacing felt just right.' },
     { name: 'Daniel O.', rating: 4, date: 'September 2025', comment: 'A couple of the transfer times were tight, but otherwise a smooth, well-priced trip. The included breakfasts were a nice touch each morning.' }
@@ -47,7 +47,7 @@
       return '<button type="button" class="gallery-thumb' + (i === 0 ? ' is-active' : '') +
         '" data-src="' + src + '" data-index="' + i + '" aria-label="Show photo ' + (i + 1) + '"' +
         (i === 0 ? ' aria-current="true"' : '') + '>' +
-        window.VoyaraUtils.renderImg({
+        window.StacklyUtils.renderImg({
           src: src,
           width: 400,
           height: 300,
@@ -110,7 +110,7 @@
             '<span class="review-card-name">' + r.name + '</span>' +
             '<span class="review-card-date">' + r.date + '</span>' +
           '</div>' +
-          window.VoyaraUtils.renderStars(r.rating) +
+          window.StacklyUtils.renderStars(r.rating) +
           '<p>' + r.comment + '</p>' +
         '</article>'
       );
@@ -204,8 +204,8 @@
         showFeedback('Please select a travel date.');
         return;
       }
-      window.VoyaraCart.addToCart(buildBookingItem(pkg));
-      window.VoyaraUtils.updateCartBadge();
+      window.StacklyCart.addToCart(buildBookingItem(pkg));
+      window.StacklyUtils.updateCartBadge();
       showFeedback('Added to your cart.');
     });
 
@@ -215,19 +215,19 @@
         showFeedback('Please select a travel date.');
         return;
       }
-      window.VoyaraCart.setDirectBooking('package', buildBookingItem(pkg));
+      window.StacklyCart.setDirectBooking('package', buildBookingItem(pkg));
       window.location.href = 'checkout.html';
     });
   }
 
   // ---- Page render & init ----
   function renderPackage(pkg) {
-    document.title = pkg.title + ' | Voyara';
+    document.title = pkg.title + ' | Stackly';
     document.getElementById('breadcrumb-title').textContent = pkg.title;
     document.getElementById('package-title').textContent = pkg.title;
     document.getElementById('package-destination').textContent = pkg.destination;
     document.getElementById('package-duration').textContent = pkg.duration.days + ' Days / ' + pkg.duration.nights + ' Nights';
-    document.getElementById('package-rating').innerHTML = window.VoyaraUtils.renderStars(pkg.rating);
+    document.getElementById('package-rating').innerHTML = window.StacklyUtils.renderStars(pkg.rating);
     document.getElementById('booking-price').innerHTML = formatCurrency(pkg.price) + '<span>/adult</span>';
     document.getElementById('travel-date').min = todayISO();
 
@@ -236,7 +236,7 @@
     renderItinerary(pkg);
     renderInclusions(pkg);
     renderReviews();
-    window.VoyaraUtils.initTabs();
+    window.StacklyUtils.initTabs();
     updateStepperUI();
     updatePriceSummary(pkg);
     bindStepper(pkg);

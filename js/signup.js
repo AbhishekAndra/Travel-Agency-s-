@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Voyara — Sign Up page logic
-   Inline field validation, then hands off to VoyaraAuth.signup().
+   Stackly — Sign Up page logic
+   Inline field validation, then hands off to StacklyAuth.signup().
    ========================================================================== */
 
 (function () {
@@ -13,16 +13,16 @@
   var passwordInput = document.getElementById('signup-password');
   var confirmInput = document.getElementById('signup-confirm-password');
 
-  var setFieldError = window.VoyaraUtils.setFieldError;
+  var setFieldError = window.StacklyUtils.setFieldError;
 
   function validateName() {
-    var error = window.VoyaraUtils.validateNameValue(nameInput.value);
+    var error = window.StacklyUtils.validateNameValue(nameInput.value);
     setFieldError('name-field', 'name-error', error);
     return !error;
   }
 
   function validateEmail() {
-    var error = window.VoyaraUtils.validateEmailValue(emailInput.value);
+    var error = window.StacklyUtils.validateEmailValue(emailInput.value);
     setFieldError('email-field', 'email-error', error);
     return !error;
   }
@@ -63,7 +63,7 @@
   function handleSubmit(event) {
     event.preventDefault();
 
-    var isValid = window.VoyaraUtils.validateFieldsAndFocus([
+    var isValid = window.StacklyUtils.validateFieldsAndFocus([
       { input: nameInput, validate: validateName },
       { input: emailInput, validate: validateEmail },
       { input: passwordInput, validate: validatePassword },
@@ -71,7 +71,7 @@
     ]);
     if (!isValid) return;
 
-    var result = window.VoyaraAuth.signup({
+    var result = window.StacklyAuth.signup({
       name: nameInput.value.trim(),
       email: emailInput.value.trim(),
       password: passwordInput.value
@@ -89,7 +89,7 @@
     var form = document.getElementById('signup-form');
     if (!form) return;
 
-    if (window.VoyaraAuth.getCurrentUser()) {
+    if (window.StacklyAuth.getCurrentUser()) {
       window.location.href = 'dashboard.html';
       return;
     }

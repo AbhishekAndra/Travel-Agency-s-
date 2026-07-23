@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Voyara — Shared utility helpers + header behavior
+   Stackly — Shared utility helpers + header behavior
    Runs on every page load (utils.js is loaded site-wide).
    ========================================================================== */
 
@@ -24,7 +24,7 @@
 
   function validateEmailValue(value) {
     var trimmed = (value || '').trim();
-    if (!trimmed || !(window.VoyaraAuth && window.VoyaraAuth.isValidEmail(trimmed))) {
+    if (!trimmed || !(window.StacklyAuth && window.StacklyAuth.isValidEmail(trimmed))) {
       return 'Enter a valid email address.';
     }
     return '';
@@ -87,7 +87,7 @@
 
   // ---- Shared localStorage helpers ----
   // Safe array read for any JSON-array-shaped localStorage key
-  // (voyaraBookings, voyaraWishlist, ...). Used by checkout, confirmation,
+  // (stacklyBookings, stacklyWishlist, ...). Used by checkout, confirmation,
   // and dashboard.
   function readLocalArray(key) {
     try {
@@ -234,15 +234,15 @@
     var badge = document.getElementById('cart-badge');
     if (!badge) return;
 
-    var count = (window.VoyaraCart && typeof window.VoyaraCart.getItemCount === 'function')
-      ? window.VoyaraCart.getItemCount()
+    var count = (window.StacklyCart && typeof window.StacklyCart.getItemCount === 'function')
+      ? window.StacklyCart.getItemCount()
       : 0;
 
     badge.textContent = String(count);
     badge.hidden = count <= 0;
   }
 
-  var WISHLIST_KEY = 'voyaraWishlist';
+  var WISHLIST_KEY = 'stacklyWishlist';
 
   function readWishlist() {
     try {
@@ -274,13 +274,13 @@
     return window.location.pathname.indexOf('/pages/') !== -1 ? 'login.html' : 'pages/login.html';
   }
 
-  // Toggles a { userEmail, type, id, ...data } entry in 'voyaraWishlist',
+  // Toggles a { userEmail, type, id, ...data } entry in 'stacklyWishlist',
   // matching the shape dashboard.js's renderWishlist()/renderBookingItem()
   // already expect (title, destination, image, total). Returns true if the
   // item is now saved, false if it was just removed, or null if the visitor
   // isn't logged in (in which case they're redirected to log in first).
   function toggleWishlist(type, id, data) {
-    var user = window.VoyaraAuth && window.VoyaraAuth.getCurrentUser();
+    var user = window.StacklyAuth && window.StacklyAuth.getCurrentUser();
     if (!user) {
       window.location.href = getLoginUrl();
       return null;
@@ -310,9 +310,9 @@
 
   // Reflects saved state onto every [data-wishlist-type] heart currently in
   // the DOM. Page scripts call this after (re-)rendering a card grid, the
-  // same way they call VoyaraAnimations.refreshReveal().
+  // same way they call StacklyAnimations.refreshReveal().
   function syncWishlistHearts() {
-    var user = window.VoyaraAuth && window.VoyaraAuth.getCurrentUser();
+    var user = window.StacklyAuth && window.StacklyAuth.getCurrentUser();
     var mine = user ? readWishlist().filter(function (w) { return w.userEmail === user.email; }) : [];
 
     document.querySelectorAll('.wishlist-heart').forEach(function (btn) {
@@ -583,7 +583,7 @@
     });
   }
 
-  window.VoyaraUtils = {
+  window.StacklyUtils = {
     highlightActiveNav: highlightActiveNav,
     updateCartBadge: updateCartBadge,
     updateWishlistBadge: updateWishlistBadge,

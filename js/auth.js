@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Voyara — Auth logic (signup, login, session, profile)
+   Stackly — Auth logic (signup, login, session, profile)
    Plain localStorage — no hashing. Fine for this training project, not for
    a real app. Also renders the header account menu (Login link vs. name +
    dropdown) on every page, since the header markup is shared site-wide.
@@ -8,8 +8,8 @@
 (function () {
   'use strict';
 
-  var USERS_KEY = 'voyaraUsers';
-  var CURRENT_USER_KEY = 'voyaraCurrentUser';
+  var USERS_KEY = 'stacklyUsers';
+  var CURRENT_USER_KEY = 'stacklyCurrentUser';
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   // ---- Storage access ----
@@ -84,12 +84,39 @@
     return { ok: true, user: user };
   }
 
-  // Returns { ok: true, user } or { ok: false, error }
+  // Derives a display name from the local part of an email address
+  // ("jane.doe@x.com" -> "Jane Doe"), used when logging in with an email
+  // that has no account yet.
+  function nameFromEmail(email) {
+    var local = String(email).split('@')[0].replace(/[._-]+/g, ' ').trim();
+    if (!local) return 'Traveler';
+    return local.replace(/\w\S*/g, function (word) {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    });
+  }
+
+  // Returns { ok: true, user }. Any email logs in: an existing account is
+  // signed into as-is (password isn't checked — no real auth backend here),
+  // and an unrecognized email is auto-registered on the spot so first-time
+  // visitors never hit a login wall.
   function login(email, password) {
-    var user = findUserByEmail(email);
-    if (!user || user.password !== password) {
-      return { ok: false, error: 'Incorrect email or password.' };
+    var normalizedEmail = String(email).trim();
+    var user = findUserByEmail(normalizedEmail);
+
+    if (!user) {
+      user = {
+        id: 'usr-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+        name: nameFromEmail(normalizedEmail),
+        email: normalizedEmail,
+        phone: '',
+        password: password,
+        createdAt: new Date().toISOString()
+      };
+      var users = getUsers();
+      users.push(user);
+      saveUsers(users);
     }
+
     setCurrentUser(user);
     return { ok: true, user: user };
   }
@@ -174,7 +201,7 @@
 
   document.addEventListener('DOMContentLoaded', renderAccountMenu);
 
-  window.VoyaraAuth = {
+  window.StacklyAuth = {
     USERS_KEY: USERS_KEY,
     CURRENT_USER_KEY: CURRENT_USER_KEY,
     getUsers: getUsers,

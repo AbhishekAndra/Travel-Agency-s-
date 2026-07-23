@@ -1,13 +1,13 @@
 /* ==========================================================================
-   Voyara — Flights page logic
+   Stackly — Flights page logic
    Filters, sorts, and renders js/data.js flights[] with no page reloads.
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  var flights = (window.VoyaraData && window.VoyaraData.flights) || [];
-  var formatCurrency = window.VoyaraData.formatCurrency;
+  var flights = (window.StacklyData && window.StacklyData.flights) || [];
+  var formatCurrency = window.StacklyData.formatCurrency;
 
   var state = {
     priceMin: 0,
@@ -81,17 +81,17 @@
   }
 
   // initPriceRange/updatePriceRangeUI's DOM wiring is shared with hotels.js
-  // via window.VoyaraUtils (identical #price-min/#price-max/#price-range-fill
+  // via window.StacklyUtils (identical #price-min/#price-max/#price-range-fill
   // markup on both pages) — these stay as same-named local wrappers so every
   // existing zero-arg call site below keeps working unchanged.
   function initPriceRange() {
     bounds = computePriceBounds();
-    window.VoyaraUtils.initPriceRangeInputs(state, bounds);
+    window.StacklyUtils.initPriceRangeInputs(state, bounds);
     updatePriceRangeUI();
   }
 
   function updatePriceRangeUI() {
-    window.VoyaraUtils.updatePriceRangeUI(state, bounds, formatCurrency);
+    window.StacklyUtils.updatePriceRangeUI(state, bounds, formatCurrency);
   }
 
   // ---- Filtering & sorting ----
@@ -170,7 +170,7 @@
     } else {
       emptyState.hidden = true;
       grid.innerHTML = results.map(renderFlightCard).join('');
-      if (window.VoyaraAnimations) window.VoyaraAnimations.refreshReveal();
+      if (window.StacklyAnimations) window.StacklyAnimations.refreshReveal();
     }
   }
 
@@ -189,14 +189,14 @@
   }
 
   function handleFilterChange() {
-    state.stops = window.VoyaraUtils.getCheckedValues('stops');
-    state.departure = window.VoyaraUtils.getCheckedValues('departure');
-    state.airlines = window.VoyaraUtils.getCheckedValues('airline');
+    state.stops = window.StacklyUtils.getCheckedValues('stops');
+    state.departure = window.StacklyUtils.getCheckedValues('departure');
+    state.airlines = window.StacklyUtils.getCheckedValues('airline');
     render();
   }
 
   function bindEvents() {
-    window.VoyaraUtils.bindFilterPanelEvents(handleFilterChange, resetFilters);
+    window.StacklyUtils.bindFilterPanelEvents(handleFilterChange, resetFilters);
 
     ['price-min', 'price-max'].forEach(function (id) {
       document.getElementById(id).addEventListener('input', function () {
@@ -215,7 +215,7 @@
       if (!button) return;
       var flight = flights.filter(function (f) { return f.id === button.dataset.flightId; })[0];
       if (!flight) return;
-      window.VoyaraCart.setDirectBooking('flight', flight);
+      window.StacklyCart.setDirectBooking('flight', flight);
       window.location.href = 'checkout.html';
     });
   }

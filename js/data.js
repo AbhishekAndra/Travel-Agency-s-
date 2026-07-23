@@ -1,7 +1,9 @@
 /* ==========================================================================
    Stackly — Static/mock data (single source of truth)
    Fictional data for destinations, flights, hotels, packages, and tours.
-   Image paths are root-absolute so they resolve from both / and /pages/.
+   Image/gallery paths below are written root-absolute for readability; see
+   the fixPath() pass near the bottom of this file for why they're rewritten
+   to be relative before use.
    ========================================================================== */
 
 (function () {
@@ -933,6 +935,26 @@
     })[0];
     return match ? match.id : undefined;
   }
+
+  // Every image/gallery path above is written root-absolute ("/assets/...")
+  // for readability, but this file is loaded from both the site root
+  // (index.html) and one level down (pages/*.html) — a single hardcoded
+  // relative prefix can't serve both, and root-absolute paths break on
+  // GitHub Pages project sites (served at /repo-name/, not the domain
+  // root). Rewriting the leading "/" with utils.js's runtime-detected
+  // ROOT_PATH here fixes every image on every page in one place.
+  var ROOT_PATH = (window.StacklyUtils && window.StacklyUtils.ROOT_PATH) || '';
+
+  function fixPath(path) {
+    return path && path.charAt(0) === '/' ? ROOT_PATH + path.slice(1) : path;
+  }
+
+  [destinations, hotels, tours, packages].forEach(function (list) {
+    list.forEach(function (item) {
+      if (item.image) item.image = fixPath(item.image);
+      if (item.gallery) item.gallery = item.gallery.map(fixPath);
+    });
+  });
 
   window.StacklyData = {
     destinations: destinations,

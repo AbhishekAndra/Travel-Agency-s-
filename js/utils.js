@@ -6,6 +6,15 @@
 (function () {
   'use strict';
 
+  // Root-absolute paths ("/assets/...") break on GitHub Pages project sites
+  // (served at username.github.io/repo-name/, not the domain root), since
+  // the browser resolves them against the domain root instead. This file
+  // and data.js are both loaded from the site root (index.html) AND one
+  // level down (pages/*.html), so a single hardcoded relative prefix can't
+  // serve both — this detects the actual depth from the page's own URL and
+  // computes the right one at runtime, regardless of deployment subpath.
+  var ROOT_PATH = /\/pages\//.test(window.location.pathname) ? '../' : '';
+
   // ---- Shared field validators ----
   // Every form site-wide (contact, login, signup, checkout traveler
   // details, newsletter) uses these so the rules and messages stay
@@ -170,7 +179,7 @@
   // convention as data.js's asset paths. A neutral branded graphic (not a
   // broken-image icon) shown until the real .webp files referenced in src/
   // srcset below are supplied.
-  var PLACEHOLDER_IMAGE = '/assets/images/placeholder.svg';
+  var PLACEHOLDER_IMAGE = ROOT_PATH + 'assets/images/placeholder.svg';
 
   // Shared `sizes` value for listing-card images: matches the 1/2/3-column
   // breakpoints already used by packages.css/hotels.css/tours.css.
@@ -601,6 +610,7 @@
     renderImg: renderImg,
     buildSrcset: buildSrcset,
     PLACEHOLDER_IMAGE: PLACEHOLDER_IMAGE,
+    ROOT_PATH: ROOT_PATH,
     CARD_IMAGE_SIZES: CARD_IMAGE_SIZES,
     validateNameValue: validateNameValue,
     validateEmailValue: validateEmailValue,

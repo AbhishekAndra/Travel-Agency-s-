@@ -90,7 +90,15 @@
       "Bash(node \"C:\\\\Users\\\\91939\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-91939-Documents-Travel-Agency-Booking-Site\\\\997f6b79-b735-419f-abb1-96d52e394195\\\\scratchpad\\\\strip_inert_class.js\")",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8090/404.html)",
       "Bash(node social_404_check.js)",
-      "Bash(node check_404_video.js)"
+      "Bash(node check_404_video.js)",
+      "Bash(node audit_images.js)",
+      "Bash(node -e \"require\\('sharp'\\); require\\('playwright'\\); require\\('to-ico'\\); console.log\\('all ok'\\)\")",
+      "Bash(cp \"C:/Users/91939/AppData/Local/Temp/claude/c--Users-91939-Documents-Travel-Agency-Booking-Site/997f6b79-b735-419f-abb1-96d52e394195/scratchpad/favicon.ico\" \"/c/Users/91939/Documents/Travel Agency Booking Site/favicon.ico\")",
+      "Bash(cp \"C:/Users/91939/AppData/Local/Temp/claude/c--Users-91939-Documents-Travel-Agency-Booking-Site/997f6b79-b735-419f-abb1-96d52e394195/scratchpad/apple-touch-icon.png\" \"/c/Users/91939/Documents/Travel Agency Booking Site/apple-touch-icon.png\")",
+      "Bash(curl -s -o /dev/null -w \"og-image: %{http_code}\\\\n\" http://localhost:8090/assets/images/og-image.jpg)",
+      "Bash(curl -s -o /dev/null -w \"favicon.ico: %{http_code}\\\\n\" http://localhost:8090/favicon.ico)",
+      "Bash(curl -s -o /dev/null -w \"apple-touch-icon: %{http_code}\\\\n\" http://localhost:8090/apple-touch-icon.png)",
+      "Bash(taskkill //PID 16372 //F)"
     ]
   }
 }

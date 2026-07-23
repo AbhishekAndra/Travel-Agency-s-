@@ -1,0 +1,16 @@
+/* ==========================================================================
+   Stackly — About page styles
+   ========================================================================== */
+
+.about-story-section {
+  padding: var(--space-2xl) 0;
+}
+
+.about-values-section {
+  background-color: var(--color-grey-100);
+  padding: var(--space-2xl) 0;
+}
+
+.about-stats-section {
+  padding: var(--space-2xl) 0;
+}

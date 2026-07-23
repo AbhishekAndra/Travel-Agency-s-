@@ -624,15 +624,6 @@ body.mobile-nav-open {
   color: var(--color-gold);
 }
 
-.social-icon-inert {
-  cursor: default;
-}
-
-.social-icon-inert:hover {
-  border-color: rgba(250, 248, 244, 0.2);
-  color: var(--color-grey-300);
-}
-
 @media (max-width: 899px) {
   .footer-inner {
     grid-template-columns: 1fr 1fr;
